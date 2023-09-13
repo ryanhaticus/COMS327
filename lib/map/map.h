@@ -13,10 +13,11 @@
 
 struct Map {
   int x, y;
-  struct Room rooms[MAP_HEIGHT][MAP_WIDTH];
+  struct Room *rooms[MAP_HEIGHT][MAP_WIDTH];
 };
 
 int createMap(struct Map *map);
+int destroyMap(struct Map *map);
 void renderMap(struct Map *map);
 
 #endif

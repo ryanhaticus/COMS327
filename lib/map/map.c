@@ -2,28 +2,44 @@
 
 #include <math.h>
 #include <stdio.h>
-
-#include "../../util/io/io.h"
+#include <stdlib.h>
 
 int createMap(struct Map *map) {
-  // map->x = (int)floor(MAP_WIDTH / 2);
-  // map->y = (int)floor(MAP_HEIGHT / 2);
-  map->x = 0;
-  map->y = 0;
-
   int y, x;
 
-  int createdRooms = 0;
+  // TODO: May need to revisit this. If these lines are omitted, we may get
+  // pointers to existing garbage memory unrelated to the program.
+  for (y = 0; y < MAP_HEIGHT; y++) {
+    for (x = 0; x < MAP_WIDTH; x++) {
+      map->rooms[y][x] = NULL;
+    }
+  }
+
+  map->x = (int)floor(MAP_WIDTH / 2);
+  map->y = (int)floor(MAP_HEIGHT / 2);
+
+  struct Room *room = malloc(sizeof(struct Room));
+
+  createRoom(map, room, map->x, map->y);
+
+  map->rooms[map->y][map->x] = room;
+
+  return 0;
+}
+
+int destroyMap(struct Map *map) {
+  int y, x;
 
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
-      double percentComplete = createdRooms * 100 / (MAP_WIDTH * MAP_HEIGHT);
+      struct Room *room = map->rooms[y][x];
 
-      printf(CLEAR_SCREEN);
-      printf("Map is loading... %d%% complete.\n", (int)percentComplete);
+      if (room == NULL) {
+        continue;
+      }
 
-      createRoom(map, &map->rooms[y][x], x, y);
-      createdRooms++;
+      destroyRoom(room);
+      map->rooms[y][x] = NULL;
     }
   }
 
@@ -31,9 +47,7 @@ int createMap(struct Map *map) {
 }
 
 void renderMap(struct Map *map) {
-  struct Room currentRoom = map->rooms[map->y][map->x];
-
-  printf(CLEAR_SCREEN);
+  struct Room currentRoom = *map->rooms[map->y][map->x];
 
   renderRoom(&currentRoom);
 }

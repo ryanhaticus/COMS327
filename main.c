@@ -9,11 +9,13 @@
 int main(int argc, char* argv[]) {
   srand(time(NULL));
 
-  struct Game* game = malloc(sizeof(struct Game));
+  struct Game game;
 
-  createGame(game);
+  createGame(&game);
 
-  renderMap(&game->map);
+  startLoop(&game);
+
+  destroyGame(&game);
 
   return 0;
 }

@@ -24,6 +24,7 @@ struct Tile {
 };
 
 int createTile(struct Tile *tile, int type, int x, int y);
+int destroyTile(struct Tile *tile);
 char getTileCharacter(struct Tile *tile);
 double getTileDistance(struct Tile *tile1, struct Tile *tile2);
 

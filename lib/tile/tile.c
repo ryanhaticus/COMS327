@@ -10,6 +10,14 @@ int createTile(struct Tile *tile, int type, int x, int y) {
   return 0;
 }
 
+int destroyTile(struct Tile *tile) {
+  tile->type = EMPTY;
+  tile->x = -1;
+  tile->y = -1;
+
+  return 0;
+}
+
 char getTileCharacter(struct Tile *tile) {
   switch (tile->type) {
     case 0:

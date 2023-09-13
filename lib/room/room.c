@@ -10,6 +10,11 @@ int createRoom(struct Map *map, struct Room *room, int i, int j) {
   room->x = i;
   room->y = j;
 
+  room->entrances[N] = NULL;
+  room->entrances[E] = NULL;
+  room->entrances[S] = NULL;
+  room->entrances[W] = NULL;
+
   int y, x;
 
   for (y = 0; y < ROOM_HEIGHT; y++) {
@@ -20,6 +25,28 @@ int createRoom(struct Map *map, struct Room *room, int i, int j) {
 
   populateRoom(room);
   createPath(map, room);
+
+  return 0;
+}
+
+int destroyRoom(struct Room *room) {
+  room->x = -1;
+  room->y = -1;
+
+  room->entrances[N] = NULL;
+  room->entrances[E] = NULL;
+  room->entrances[S] = NULL;
+  room->entrances[W] = NULL;
+
+  int y, x;
+
+  for (y = 0; y < ROOM_HEIGHT; y++) {
+    for (x = 0; x < ROOM_WIDTH; x++) {
+      destroyTile(&room->tiles[y][x]);
+    }
+  }
+
+  free(room);
 
   return 0;
 }
@@ -142,89 +169,119 @@ int populateRoom(struct Room *room) {
 }
 
 int createPath(struct Map *map, struct Room *room) {
-  int pathAllowed[4] = {room->y > 0, room->x == ROOM_WIDTH,
-                        room->y == ROOM_HEIGHT, room->x > 0};  // N, E, S, W
+  int pathAllowed[4] = {room->y > 0, room->x != MAP_WIDTH - 1,
+                        room->y != MAP_HEIGHT - 1, room->x > 0};  // N, E, S, W
 
-  int y, x;
+  int i;
+  struct Tile *adjacentEntrance;
+  struct Room *adjacentRoom;
 
   if (pathAllowed[W]) {
-    struct Tile *adjacentEntrance =
-        map->rooms[room->y][room->x - 1].entrances[E];
-    room->entrances[W] = &room->tiles[adjacentEntrance->y][0];
-  } else {
-    y = rand() % (ROOM_HEIGHT - 3) + 2;
-    room->entrances[W] = &room->tiles[y][0];
+    adjacentRoom = map->rooms[room->y][room->x - 1];
+
+    if (adjacentRoom != NULL) {
+      adjacentEntrance = adjacentRoom->entrances[E];
+      room->entrances[W] = &room->tiles[adjacentEntrance->y][0];
+    }
+  }
+
+  if (room->entrances[W] == NULL) {
+    i = rand() % (ROOM_HEIGHT - 4) + 2;
+
+    room->entrances[W] = &room->tiles[i][0];
+  }
+
+  if (pathAllowed[E]) {
+    adjacentRoom = map->rooms[room->y][room->x + 1];
+
+    if (adjacentRoom != NULL) {
+      adjacentEntrance = adjacentRoom->entrances[W];
+      room->entrances[E] = &room->tiles[adjacentEntrance->y][ROOM_WIDTH - 1];
+    }
+  }
+
+  if (room->entrances[E] == NULL) {
+    i = rand() % (ROOM_HEIGHT - 4) + 2;
+
+    room->entrances[E] = &room->tiles[i][ROOM_WIDTH - 1];
   }
 
   if (pathAllowed[N]) {
-    struct Tile *adjacentEntrance =
-        map->rooms[room->y - 1][room->x].entrances[S];
-    room->entrances[N] = &room->tiles[0][adjacentEntrance->x];
-  } else {
-    x = rand() % (ROOM_WIDTH - 3) + 2;
-    room->entrances[N] = &room->tiles[0][x];
+    adjacentRoom = map->rooms[room->y - 1][room->x];
+
+    if (adjacentRoom != NULL) {
+      adjacentEntrance = adjacentRoom->entrances[S];
+      room->entrances[N] = &room->tiles[0][adjacentEntrance->x];
+    }
   }
 
-  while (room->entrances[E] == NULL ||
-         room->entrances[E]->x == room->entrances[W]->x) {
-    y = rand() % (ROOM_HEIGHT - 2) + 1;
-    room->entrances[E] = &room->tiles[y][ROOM_WIDTH - 1];
+  if (room->entrances[N] == NULL) {
+    i = rand() % (ROOM_WIDTH - 4) + 2;
+
+    room->entrances[N] = &room->tiles[0][i];
   }
 
-  while (room->entrances[S] == NULL ||
-         room->entrances[S]->y == room->entrances[N]->y) {
-    x = rand() % (ROOM_WIDTH - 2) + 1;
-    room->entrances[S] = &room->tiles[ROOM_HEIGHT - 1][x];
+  if (pathAllowed[S]) {
+    adjacentRoom = map->rooms[room->y + 1][room->x];
+
+    if (adjacentRoom != NULL) {
+      adjacentEntrance = adjacentRoom->entrances[N];
+      room->entrances[S] = &room->tiles[ROOM_HEIGHT - 1][adjacentEntrance->x];
+    }
   }
 
-  int horzPathStartY = room->entrances[W]->y;
-  int horzPathEndY = room->entrances[E]->y;
+  if (room->entrances[S] == NULL) {
+    i = rand() % (ROOM_WIDTH - 4) + 2;
 
-  int horzPivotX = rand() % (ROOM_WIDTH / 2) + 16;
-
-  int i;
-
-  for (i = (pathAllowed[W] ? 0 : 1); i <= horzPivotX; i++) {
-    room->tiles[horzPathStartY][i].type = PATH;
+    room->entrances[S] = &room->tiles[ROOM_HEIGHT - 1][i];
   }
 
-  int vertDirection = horzPathStartY < horzPathEndY ? 1 : -1;
+  printf("%p, %p, %p, %p\n", room->entrances[N], room->entrances[E],
+         room->entrances[S], room->entrances[W]);
 
-  int horzPivotY = horzPathStartY;
+  int NSpivot, EWpivot;
 
-  while (horzPivotY != horzPathEndY) {
-    horzPivotY += vertDirection;
+  NSpivot = rand() % 8 + 6;
+  EWpivot = rand() % 30 + 20;
 
-    room->tiles[horzPivotY][horzPivotX].type = PATH;
+  int y, x, dir;
+
+  // Draw N to S path
+
+  for (y = (pathAllowed[N] ? room->entrances[N]->y : room->entrances[N]->y + 1);
+       y < NSpivot; y++) {
+    room->tiles[y][room->entrances[N]->x].type = PATH;
   }
 
-  for (i = horzPivotX; i < (pathAllowed[E] ? ROOM_WIDTH : ROOM_WIDTH - 1);
-       i++) {
-    room->tiles[horzPathEndY][i].type = PATH;
+  dir = room->entrances[N]->x < room->entrances[S]->x ? 1 : -1;
+
+  for (x = room->entrances[N]->x; x != room->entrances[S]->x; x += dir) {
+    room->tiles[NSpivot][x].type = PATH;
   }
 
-  int vertPathStartX = room->entrances[N]->x;
-  int vertPathEndX = room->entrances[S]->x;
-
-  int vertPivotY = rand() % (ROOM_HEIGHT / 2) + 6;
-
-  for (i = (pathAllowed[N] ? 0 : 1); i <= vertPivotY; i++) {
-    room->tiles[i][vertPathStartX].type = PATH;
+  for (y = NSpivot; y <= (pathAllowed[S] ? room->entrances[S]->y
+                                         : room->entrances[S]->y - 1);
+       y++) {
+    room->tiles[y][room->entrances[S]->x].type = PATH;
   }
 
-  int horzDirection = vertPathStartX < vertPathEndX ? 1 : -1;
+  // Draw W to E path
 
-  int vertPivotX = vertPathStartX;
-
-  while (vertPivotX != vertPathEndX) {
-    vertPivotX += horzDirection;
-
-    room->tiles[vertPivotY][vertPivotX].type = PATH;
+  for (x = (pathAllowed[W] ? room->entrances[W]->x : room->entrances[W]->x + 1);
+       x < EWpivot; x++) {
+    room->tiles[room->entrances[W]->y][x].type = PATH;
   }
 
-  for (i = vertPivotY; i < (pathAllowed[S] ? ROOM_HEIGHT : ROOM_HEIGHT - 1);
-       i++) {
-    room->tiles[i][vertPathEndX].type = PATH;
+  dir = room->entrances[W]->y < room->entrances[E]->y ? 1 : -1;
+
+  for (y = room->entrances[W]->y; y != room->entrances[E]->y; y += dir) {
+    room->tiles[y][EWpivot].type = PATH;
+  }
+
+  for (x = EWpivot; x <= (pathAllowed[E] ? room->entrances[E]->x
+                                         : room->entrances[E]->x - 1);
+       x++) {
+    room->tiles[room->entrances[E]->y][x].type = PATH;
   }
 
   return 0;

@@ -15,6 +15,7 @@ struct Room {
 };
 
 int createRoom(struct Map *map, struct Room *room, int x, int y);
+int destroyRoom(struct Room *room);
 void renderRoom(struct Room *room);
 int chooseRandomTile(struct Room *room, struct Tile **tile);
 int populateRoom(struct Room *room);
