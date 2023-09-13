@@ -236,8 +236,22 @@ int createPath(struct Map *map, struct Room *room) {
     room->entrances[S] = &room->tiles[ROOM_HEIGHT - 1][i];
   }
 
-  printf("%p, %p, %p, %p\n", room->entrances[N], room->entrances[E],
-         room->entrances[S], room->entrances[W]);
+  double distanceFromCenter =
+      getDistance(room->x, room->y, MAP_WIDTH / 2, MAP_HEIGHT / 2);
+
+  int shouldHavePokemonCenter =
+      rand() % 100 < ((-45 * distanceFromCenter) / 200 + 50);
+
+  if (distanceFromCenter >= 200) {
+    shouldHavePokemonCenter = rand() % 20 == 0;
+  }
+
+  int shouldHavePokemart =
+      rand() % 100 < ((-45 * distanceFromCenter) / 200 + 50);
+
+  if (distanceFromCenter >= 200) {
+    shouldHavePokemart = rand() % 20 == 0;
+  }
 
   int NSpivot, EWpivot;
 
@@ -251,6 +265,10 @@ int createPath(struct Map *map, struct Room *room) {
   for (y = (pathAllowed[N] ? room->entrances[N]->y : room->entrances[N]->y + 1);
        y < NSpivot; y++) {
     room->tiles[y][room->entrances[N]->x].type = PATH;
+
+    if (y == NSpivot - 3 && shouldHavePokemonCenter) {
+      room->tiles[y][room->entrances[N]->x + 1].type = POKEMON_CENTER;
+    }
   }
 
   dir = room->entrances[N]->x < room->entrances[S]->x ? 1 : -1;
@@ -270,6 +288,10 @@ int createPath(struct Map *map, struct Room *room) {
   for (x = (pathAllowed[W] ? room->entrances[W]->x : room->entrances[W]->x + 1);
        x < EWpivot; x++) {
     room->tiles[room->entrances[W]->y][x].type = PATH;
+
+    if (x == EWpivot - 5 && shouldHavePokemart) {
+      room->tiles[room->entrances[W]->y + 1][x].type = POKEMART;
+    }
   }
 
   dir = room->entrances[W]->y < room->entrances[E]->y ? 1 : -1;

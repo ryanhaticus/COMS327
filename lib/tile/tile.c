@@ -48,3 +48,7 @@ char getTileCharacter(struct Tile *tile) {
 double getTileDistance(struct Tile *tile1, struct Tile *tile2) {
   return sqrt(pow(tile1->x - tile2->x, 2) + pow(tile1->y - tile2->y, 2));
 }
+
+double getDistance(int x1, int y1, int x2, int y2) {
+  return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+}

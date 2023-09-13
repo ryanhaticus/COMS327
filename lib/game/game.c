@@ -17,7 +17,7 @@ int destroyGame(struct Game *game) {
 
 void renderGame(struct Game *game) {
   printf("\e[1;1H\e[2J");
-  printf("❮ Map Location: (%d, %d) ❯\n", game->map.x, game->map.y);
+  printf("❮ Map Location: (%d, %d) ❯\n", 200 - game->map.x, 200 - game->map.y);
   renderMap(&game->map);
   printf(
       "❮ Enter `n`, `s`, `e`, `w`, or `f x y` to move rooms. Enter `q` to "
