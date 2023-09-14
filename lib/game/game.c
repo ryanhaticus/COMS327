@@ -17,7 +17,7 @@ int destroyGame(struct Game *game) {
 
 void renderGame(struct Game *game) {
   printf("\e[1;1H\e[2J");
-  printf("❮ Map Location: (%d, %d) ❯\n", game->map.x, game->map.y);
+  printf("❮ Map Location: (%d, %d) ❯\n", game->map.x - 200, game->map.y - 200);
   renderMap(&game->map);
   printf(
       "❮ Enter `n`, `s`, `e`, `w`, or `f x y` to move rooms. Enter `q` to "
@@ -59,8 +59,12 @@ void startLoop(struct Game *game) {
         if (numInputs != 3) {
           break;
         }
-        game->map.x = x <= 0 ? 0 : (x >= MAP_WIDTH ? MAP_WIDTH - 1 : x);
-        game->map.y = y <= 0 ? 0 : (y >= MAP_HEIGHT ? MAP_HEIGHT - 1 : y);
+        if (x < -200 || x > 200 || y < -200 || y > 200) {
+          break;
+        }
+
+        game->map.x = x + 200;
+        game->map.y = y + 200;
         break;
       default:
         break;
