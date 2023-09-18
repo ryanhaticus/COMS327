@@ -1,7 +1,7 @@
 all: main
 
-main: tile.o enemy.o player.o room.o map.o game.o queue.o main.o
-	gcc tile.o enemy.o player.o room.o map.o game.o queue.o main.o -o main -Wall -Werror -lm
+main: tile.o enemy.o player.o room.o map.o game.o queue.o fibheap.o main.o
+	gcc tile.o enemy.o player.o room.o map.o game.o queue.o fibheap.o main.o -o main -Wall -Werror -lm
 
 tile.o: ./lib/tile/tile.c ./lib/tile/tile.h
 	gcc -c ./lib/tile/tile.c -o tile.o -Wall -Werror
@@ -23,6 +23,9 @@ game.o: ./lib/game/game.c ./lib/game/game.h
 
 queue.o: ./util/queue/queue.c ./util/queue/queue.h
 	gcc -c ./util/queue/queue.c -o queue.o -Wall -Werror
+
+fibheap.o: ./util/fibheap/fibheap.c ./util/fibheap/fibheap.h
+	gcc -c ./util/fibheap/fibheap.c -o fibheap.o -Wall -Werror
 
 main.o: main.c
 	gcc -c main.c -o main.o -Wall -Werror

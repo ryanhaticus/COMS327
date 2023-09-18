@@ -104,7 +104,7 @@ int cal_degree(int n) {
 void consolidate(struct FibHeap *H) {
   int degree, i, d;
   degree = cal_degree(H->n);
-  struct FibHeapNode *A[degree], *x, *y, *z;
+  struct FibHeapNode *A[degree], *x, *y;
   for (i = 0; i <= degree; i++) {
     A[i] = NULL;
   }
@@ -219,8 +219,6 @@ struct FibHeapNode *extractMin(struct FibHeap *H) {
 
 void cut(struct FibHeap *H, struct FibHeapNode *node_to_be_decrease,
          struct FibHeapNode *parent_node) {
-  struct FibHeapNode *temp_parent_check;
-
   if (node_to_be_decrease == node_to_be_decrease->right_sibling)
     parent_node->child = NULL;
 
@@ -304,12 +302,14 @@ void *findNode(struct FibHeap *H, struct FibHeapNode *n, int key, int new_key) {
   }
 
   find_use->visited = 0;
+
+  return f;
 }
 
 struct FibHeap *insert_procedure() {
   struct FibHeap *temp;
   int no_of_nodes, ele, i;
-  struct FibHeapNode *new_node;
+  struct FibHeapNode *new_node = NULL;
   temp = (struct FibHeap *)malloc(sizeof(struct FibHeap));
   temp = NULL;
   if (temp == NULL) {
