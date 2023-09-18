@@ -11,7 +11,7 @@ int createQueue(struct Queue *queue) {
 }
 
 int enqueue(struct Queue *queue, void *data) {
-  struct Node *node = malloc(sizeof(struct Node));
+  struct QueueNode *node = malloc(sizeof(struct QueueNode));
   node->data = data;
   node->next = NULL;
 
@@ -35,7 +35,7 @@ int dequeue(struct Queue *queue, void **data) {
 
   *data = queue->head->data;
 
-  struct Node *node = queue->head;
+  struct QueueNode *node = queue->head;
   queue->head = queue->head->next;
   free(node);
 
@@ -46,7 +46,7 @@ int dequeue(struct Queue *queue, void **data) {
 
 int destroyQueue(struct Queue *queue) {
   while (queue->size > 0) {
-    struct Node *node = queue->head;
+    struct QueueNode *node = queue->head;
     queue->head = queue->head->next;
     free(node);
 

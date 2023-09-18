@@ -1,14 +1,14 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-struct Node {
+struct QueueNode {
   void* data;
-  struct Node* next;
+  struct QueueNode* next;
 };
 
 struct Queue {
-  struct Node* head;
-  struct Node* tail;
+  struct QueueNode* head;
+  struct QueueNode* tail;
   int size;
 };
 

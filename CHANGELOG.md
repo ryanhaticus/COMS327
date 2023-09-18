@@ -15,3 +15,4 @@
 09/17/2023, 8:30 PM: Displaying the seed in the terminal header
 09/17/2023, 8:47 PM: Implemented Enemy struct and Hiker/Rival tile cost functions
 09/17/2023, 11:10 PM: Made `Makefile` dependent on intermediate object files
+09/17/2023, 12:40 PM: Adapted fibbonacci heap structures and implementation

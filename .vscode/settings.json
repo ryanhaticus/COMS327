@@ -12,6 +12,9 @@
     "time.h": "c",
     "random": "c",
     "__tree": "c",
-    "map": "c"
+    "map": "c",
+    "stdbool.h": "c",
+    "array": "c",
+    "vector": "c"
   }
 }
