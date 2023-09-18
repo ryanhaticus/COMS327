@@ -5,6 +5,7 @@
 
 #include "./lib/game/game.h"
 #include "./lib/map/map.h"
+#include "./util/fibheap/fibheap.h"
 
 int main(int argc, char* argv[]) {
   // Setting the seed for the random number generator.

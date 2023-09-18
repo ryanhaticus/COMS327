@@ -19,15 +19,29 @@ struct FibHeap *createFibHeap() {
   return H;
 }
 
+void destroyHeap(struct FibHeap *H) {
+  struct FibHeapNode *x = H->min;
+  struct FibHeapNode *y;
+  if (x != NULL) {
+    do {
+      y = x;
+      x = x->right_sibling;
+      deleteNode(H, y->key);
+    } while (x != H->min);
+  }
+
+  free(H);
+}
+
 // Printing the heap
-void print_heap(struct FibHeapNode *n) {
+void printHeap(struct FibHeapNode *n) {
   struct FibHeapNode *x;
   for (x = n;; x = x->right_sibling) {
     if (x->child == NULL) {
       printf("node with no child (%d) \n", x->key);
     } else {
       printf("FibHeapNode(%d) with child (%d)\n", x->key, x->child->key);
-      print_heap(x->child);
+      printHeap(x->child);
     }
     if (x->right_sibling == n) {
       break;
@@ -327,10 +341,18 @@ struct FibHeap *insert_procedure() {
 
 void deleteNode(struct FibHeap *H, int dec_key) {
   struct FibHeapNode *p = NULL;
-  findNode(H, H->min, dec_key, -5000);
-  p = extractMin(H);
-  if (p != NULL)
-    printf("\n Node deleted");
-  else
-    printf("\n Node not deleted:some error");
+  if (H->min == NULL) {
+    printf("\n The heap is empty");
+    return;
+  }
+
+  p = findNode(H, H->min, dec_key, 0);
+
+  if (p == NULL) {
+    printf("\n The node is not present in the heap");
+    return;
+  }
+
+  struct FibHeapNode *node = extractMin(H);
+  free(node);
 }

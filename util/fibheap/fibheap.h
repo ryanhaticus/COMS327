@@ -25,6 +25,7 @@ struct FibHeap {
 };
 
 struct FibHeap *createFibHeap();
+void destroyHeap(struct FibHeap *H);
 void insert(struct FibHeap *H, struct FibHeapNode *new, int val);
 struct FibHeapNode *extractMin(struct FibHeap *H);
 void consolidate(struct FibHeap *H);
@@ -36,5 +37,6 @@ void cut(struct FibHeap *H, struct FibHeapNode *node_to_be_decrease,
          struct FibHeapNode *parent_node);
 void cascadingCut(struct FibHeap *H, struct FibHeapNode *parent_node);
 void deleteNode(struct FibHeap *H, int dec_key);
+void printHeap(struct FibHeapNode *n);
 
 #endif
