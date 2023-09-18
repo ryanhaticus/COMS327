@@ -51,20 +51,6 @@ int destroyRoom(struct Room *room) {
   return 0;
 }
 
-void renderRoom(struct Room *room) {
-  int y, x;
-
-  for (y = 0; y < ROOM_HEIGHT; y++) {
-    for (x = 0; x < ROOM_WIDTH; x++) {
-      struct Tile tile = room->tiles[y][x];
-
-      printf("%c", getTileCharacter(&tile));
-    }
-
-    printf("\n");
-  }
-}
-
 int chooseRandomTile(struct Room *room, struct Tile **tile) {
   int y, x;
 

@@ -18,6 +18,5 @@ struct Map {
 
 int createMap(struct Map *map);
 int destroyMap(struct Map *map);
-void renderMap(struct Map *map);
 
 #endif

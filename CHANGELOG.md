@@ -10,3 +10,7 @@
 09/12/2023, 8:55 PM: Finished reading input with `fgets` and parsing with `sscanf`
 09/12/2023, 9:05 PM: Finalized moving between rooms on the map
 09/12/2023, 10:33 PM: Made Pokemon Center and Pokemart. Also ensured probability is based on distance from center
+09/17/2023, 6:30 PM: Created Player struct and appended the memory to the Game struct
+09/17/2023, 8:22 PM: Centralized rendering logic after repeated attempts to replace a terminal character in place failed
+09/17/2023, 8:30 PM: Displaying the seed in the terminal header
+09/17/2023, 8:47 PM: Implemented Enemy struct and Hiker/Rival tile cost functions

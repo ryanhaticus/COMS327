@@ -19,8 +19,7 @@ enum BuildingTile {
 
 struct Tile {
   int type;
-  int x;
-  int y;
+  int x, y;
 };
 
 int createTile(struct Tile *tile, int type, int x, int y);

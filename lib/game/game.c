@@ -3,8 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../player/player.h"
+
 int createGame(struct Game *game) {
   createMap(&game->map);
+  createPlayer(&game->player, ROOM_WIDTH / 2, ROOM_HEIGHT / 2);
 
   return 0;
 }
@@ -16,9 +19,32 @@ int destroyGame(struct Game *game) {
 }
 
 void renderGame(struct Game *game) {
+  // Clear screen
   printf("\e[1;1H\e[2J");
-  printf("❮ Map Location: (%d, %d) ❯\n", game->map.x - 200, game->map.y - 200);
-  renderMap(&game->map);
+
+  // Header
+  printf("❮ Map Location: (%d, %d) ❯ ❮Seed: %d❯ \n", game->map.x - 200,
+         game->map.y - 200, game->seed);
+
+  // Map
+  int y, x;
+
+  for (y = 0; y < ROOM_HEIGHT; y++) {
+    for (x = 0; x < ROOM_WIDTH; x++) {
+      if (x == game->player.x && y == game->player.y) {
+        printf("@");
+        continue;
+      }
+
+      struct Tile tile = game->map.rooms[game->map.y][game->map.x]->tiles[y][x];
+
+      printf("%c", getTileCharacter(&tile));
+    }
+
+    printf("\n");
+  }
+
+  // Footer
   printf(
       "❮ Enter `n`, `s`, `e`, `w`, or `f x y` to move rooms. Enter `q` to "
       "quit. ❯\n");

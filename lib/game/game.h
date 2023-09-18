@@ -1,4 +1,5 @@
 #include "../map/map.h"
+#include "../player/player.h"
 
 #ifndef GAME_H
 #define GAME_H
@@ -7,6 +8,8 @@
 
 struct Game {
   struct Map map;
+  struct Player player;
+  int seed;
 };
 
 int createGame(struct Game *game);

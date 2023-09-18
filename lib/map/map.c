@@ -45,9 +45,3 @@ int destroyMap(struct Map *map) {
 
   return 0;
 }
-
-void renderMap(struct Map *map) {
-  struct Room currentRoom = *map->rooms[map->y][map->x];
-
-  renderRoom(&currentRoom);
-}
