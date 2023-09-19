@@ -1,4 +1,4 @@
-#include "enemy.h"
+#include "trainer.h"
 
 int getHikerTileCost(struct Tile *tile) {
   switch (tile->type) {

@@ -1,13 +1,13 @@
 all: main
 
-main: tile.o enemy.o player.o room.o map.o game.o queue.o fibheap.o main.o
-	gcc tile.o enemy.o player.o room.o map.o game.o queue.o fibheap.o main.o -o main -Wall -Werror -lm
+main: tile.o trainer.o player.o room.o map.o game.o queue.o fibheap.o main.o
+	gcc tile.o trainer.o player.o room.o map.o game.o queue.o fibheap.o main.o -o main -Wall -Werror -lm
 
 tile.o: ./lib/tile/tile.c ./lib/tile/tile.h
 	gcc -c ./lib/tile/tile.c -o tile.o -Wall -Werror
 
-enemy.o: ./lib/enemy/enemy.c ./lib/enemy/enemy.h
-	gcc -c ./lib/enemy/enemy.c -o enemy.o -Wall -Werror
+trainer.o: ./lib/trainer/trainer.c ./lib/trainer/trainer.h
+	gcc -c ./lib/trainer/trainer.c -o trainer.o -Wall -Werror
 
 player.o: ./lib/player/player.c ./lib/player/player.h
 	gcc -c ./lib/player/player.c -o player.o -Wall -Werror

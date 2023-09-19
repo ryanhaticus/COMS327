@@ -3,10 +3,10 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-enum EnemyType { HIKER, RIVAL };
+enum TrainerType { HIKER, RIVAL };
 
-struct Enemy {
-  enum EnemyType type;
+struct Trainer {
+  enum TrainerType type;
   int x, y;
 };
 
