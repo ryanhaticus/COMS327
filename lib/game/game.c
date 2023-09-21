@@ -1,13 +1,21 @@
 #include "game.h"
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "../player/player.h"
+#include "../trainer/trainer.h"
 
 int createGame(struct Game *game) {
   createMap(&game->map);
-  createPlayer(&game->player, ROOM_WIDTH / 2, ROOM_HEIGHT / 2);
+
+  // Pick a random entrance to place the player.
+  struct Tile *entrance =
+      game->map.rooms[(int)floor(MAP_HEIGHT / 2)][(int)floor(MAP_WIDTH / 2)]
+          ->entrances[rand() % 4];
+
+  createPlayer(&game->player, entrance->x, entrance->y);
 
   return 0;
 }
@@ -57,6 +65,11 @@ void startLoop(struct Game *game) {
 
   renderGame(game);
 
+  printf("HIKER:\n");
+  printTrainerTravelCost(game, HIKER);
+  printf("RIVAL:\n");
+  printTrainerTravelCost(game, RIVAL);
+
   while (1) {
     fgets(input, MAX_INPUT_SIZE, stdin);
 
@@ -102,8 +115,18 @@ void startLoop(struct Game *game) {
       room = malloc(sizeof(struct Room));
       game->map.rooms[game->map.y][game->map.x] = room;
       createRoom(&game->map, room, game->map.x, game->map.y);
+
+      // Pick a random entrance to place the player.
+      struct Tile *entrance = room->entrances[rand() % 4];
+      game->player.x = entrance->x;
+      game->player.y = entrance->y;
     }
 
     renderGame(game);
+
+    printf("HIKER:\n");
+    printTrainerTravelCost(game, HIKER);
+    printf("RIVAL:\n");
+    printTrainerTravelCost(game, RIVAL);
   }
 }

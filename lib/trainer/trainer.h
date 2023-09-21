@@ -1,7 +1,9 @@
+#include "../game/game.h"
+#include "../room/room.h"
 #include "../tile/tile.h"
 
-#ifndef ENEMY_H
-#define ENEMY_H
+#ifndef TRAINER_H
+#define TRAINER_H
 
 enum TrainerType { HIKER, RIVAL };
 
@@ -10,7 +12,11 @@ struct Trainer {
   int x, y;
 };
 
-int getHikerTileCost(struct Tile *tile);
-int getRivalTileCost(struct Tile *tile);
+struct Room;
+
+int getTrainerTileCost(struct Trainer *trainer, struct Tile *tile);
+void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
+                          struct Trainer *trainer, int endX, int endY);
+void printTrainerTravelCost(struct Game *game, enum TrainerType type);
 
 #endif

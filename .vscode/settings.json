@@ -15,6 +15,12 @@
     "map": "c",
     "stdbool.h": "c",
     "array": "c",
-    "vector": "c"
+    "vector": "c",
+    "fibheap.h": "c",
+    "heap.h": "c",
+    "assert.h": "c",
+    "trainer.h": "c",
+    "player.h": "c",
+    "game.h": "c"
   }
 }

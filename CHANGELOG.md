@@ -16,3 +16,8 @@
 09/17/2023, 8:47 PM: Implemented Trainer struct and Hiker/Rival tile cost functions
 09/17/2023, 11:10 PM: Made `Makefile` dependent on intermediate object files
 09/17/2023, 12:40 PM: Adapted fibbonacci heap structures and implementation
+09/20/2023, 3:15 PM: Bailed on the fibbonacci heap due to various segfaults
+09/20/2023, 4:24 PM: Used the existing queue to implement dijkstras, rather than a fibonacci heap.
+09/20/2023, 6:53 PM: Finished implementing the cost matrix logic.
+09/20/2023, 7:18 PM: Placed the Player on a random entrance to each room.
+09/20/2023, 8:28 PM: Implemented the matrix output in the game loop when moving rooms.
