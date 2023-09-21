@@ -21,3 +21,5 @@
 09/20/2023, 6:53 PM: Finished implementing the cost matrix logic.
 09/20/2023, 7:18 PM: Placed the Player on a random entrance to each room.
 09/20/2023, 8:28 PM: Implemented the matrix output in the game loop when moving rooms.
+09/21/2023, 11:46 PM: Per assignment guidelines, Player is now placed on a random path in each room
+09/21/2023, 12:07 PM: Made entrances (gates) take on an infinite travel cost, per assignment guidelines

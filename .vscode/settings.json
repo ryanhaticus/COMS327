@@ -21,6 +21,7 @@
     "assert.h": "c",
     "trainer.h": "c",
     "player.h": "c",
-    "game.h": "c"
+    "game.h": "c",
+    "priorityqueue.h": "c"
   }
 }

@@ -7,13 +7,10 @@ enum SpecialTile { EMPTY = 0 };
 #define NUM_REGION_TILES 6
 enum RegionTile { GRASS = 1, GRASS_2, TALL_GRASS, TALL_GRASS_2, FOREST, WATER };
 
-enum EnvironmentTile {
-  BOULDER = 7,
-  PATH,
-};
+enum EnvironmentTile { BOULDER = 7, PATH, ENTRANCE };
 
 enum BuildingTile {
-  POKEMON_CENTER = 9,
+  POKEMON_CENTER = 10,
   POKEMART,
 };
 

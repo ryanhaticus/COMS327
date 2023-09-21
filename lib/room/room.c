@@ -292,5 +292,10 @@ int createPath(struct Map *map, struct Room *room) {
     room->tiles[room->entrances[E]->y][x].type = PATH;
   }
 
+  room->entrances[N]->type = ENTRANCE;
+  room->entrances[E]->type = ENTRANCE;
+  room->entrances[S]->type = ENTRANCE;
+  room->entrances[W]->type = ENTRANCE;
+
   return 0;
 }

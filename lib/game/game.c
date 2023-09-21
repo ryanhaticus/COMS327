@@ -7,15 +7,27 @@
 #include "../player/player.h"
 #include "../trainer/trainer.h"
 
+void placePlayerRandomly(struct Map *map, struct Player *player) {
+  struct Room *currentRoom = map->rooms[map->y][map->x];
+
+  int y = rand() % (ROOM_HEIGHT - 2) + 1;
+  int x = rand() % (ROOM_WIDTH - 2) + 1;
+
+  while (currentRoom->tiles[y][x].type != PATH) {
+    y = rand() % (ROOM_HEIGHT - 2) + 1;
+    x = rand() % (ROOM_WIDTH - 2) + 1;
+  }
+
+  player->x = x;
+  player->y = y;
+}
+
 int createGame(struct Game *game) {
   createMap(&game->map);
 
-  // Pick a random entrance to place the player.
-  struct Tile *entrance =
-      game->map.rooms[(int)floor(MAP_HEIGHT / 2)][(int)floor(MAP_WIDTH / 2)]
-          ->entrances[rand() % 4];
+  createPlayer(&game->player, 0, 0);
 
-  createPlayer(&game->player, entrance->x, entrance->y);
+  placePlayerRandomly(&game->map, &game->player);
 
   return 0;
 }
@@ -116,10 +128,7 @@ void startLoop(struct Game *game) {
       game->map.rooms[game->map.y][game->map.x] = room;
       createRoom(&game->map, room, game->map.x, game->map.y);
 
-      // Pick a random entrance to place the player.
-      struct Tile *entrance = room->entrances[rand() % 4];
-      game->player.x = entrance->x;
-      game->player.y = entrance->y;
+      placePlayerRandomly(&game->map, &game->player);
     }
 
     renderGame(game);

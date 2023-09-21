@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../../util/queue/queue.h"
+#include "../../util/priorityqueue/priorityqueue.h"
 #include "../room/room.h"
 
 int getTrainerTileCost(struct Trainer *trainer, struct Tile *tile) {
@@ -26,9 +26,11 @@ int getTrainerTileCost(struct Trainer *trainer, struct Tile *tile) {
           return __INT_MAX__;
         case 8:  // PATH
           return 10;
-        case 9:  // POKEMON_CENTER
+        case 9:  // ENTRANCE
+          return __INT_MAX__;
+        case 10:  // POKEMON_CENTER
           return 50;
-        case 10:  // POKEMART
+        case 11:  // POKEMART
           return 50;
       }
       break;
@@ -50,10 +52,14 @@ int getTrainerTileCost(struct Trainer *trainer, struct Tile *tile) {
           return __INT_MAX__;
         case 8:  // PATH
           return 10;
-        case 9:  // POKEMON_CENTER
+        case 9:  // ENTRANCE
+          return __INT_MAX__;
+        case 10:  // POKEMON_CENTER
           return 50;
-        case 10:  // POKEMART
+        case 11:  // POKEMART
           return 50;
+        case 12:  // GATE
+          return __INT_MAX__;
       }
       break;
   }
@@ -74,18 +80,18 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
     }
   }
 
-  struct Queue queue;
-  createQueue(&queue);
+  struct PriorityQueue queue;
+  createPriorityQueue(&queue);
 
   struct TileWithCost *tileWithCost = malloc(sizeof(struct TileWithCost));
   tileWithCost->tile = &room->tiles[endY][endX];
   tileWithCost->cost = 0;
 
-  enqueue(&queue, tileWithCost);
+  enqueueWithPriority(&queue, tileWithCost, 0);
 
   while (queue.size > 0) {
     struct TileWithCost *tileWithCost;
-    dequeue(&queue, (void **)&tileWithCost);
+    dequeueWithPriority(&queue, (void **)&tileWithCost);
 
     int x = tileWithCost->tile->x;
     int y = tileWithCost->tile->y;
@@ -108,7 +114,8 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
 
         if (room->tiles[i][j].type == BOULDER ||
             room->tiles[i][j].type == WATER ||
-            room->tiles[i][j].type == FOREST) {
+            room->tiles[i][j].type == FOREST ||
+            room->tiles[i][j].type == ENTRANCE) {
           continue;
         }
 
@@ -121,12 +128,12 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
         tileWithCost->cost =
             costs[y][x] + getTrainerTileCost(trainer, &room->tiles[i][j]);
 
-        enqueue(&queue, tileWithCost);
+        enqueueWithPriority(&queue, tileWithCost, tileWithCost->cost);
       }
     }
   }
 
-  destroyQueue(&queue);
+  destroyPriorityQueue(&queue);
 }
 
 void printTrainerTravelCost(struct Game *game, enum TrainerType type) {

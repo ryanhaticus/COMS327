@@ -36,9 +36,11 @@ char getTileCharacter(struct Tile *tile) {
       return '%';
     case 8:  // PATH
       return '#';
-    case 9:  // POKEMON_CENTER
+    case 9:  // GATE
+      return '#';
+    case 10:  // POKEMON_CENTER
       return 'C';
-    case 10:  // POKEMART
+    case 11:  // POKEMART
       return 'M';
   }
 

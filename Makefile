@@ -1,7 +1,7 @@
 all: main
 
-main: tile.o trainer.o player.o room.o map.o game.o queue.o main.o
-	gcc tile.o trainer.o player.o room.o map.o game.o queue.o main.o -o main -Wall -Werror -lm
+main: tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o main.o
+	gcc tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o main.o -o main -Wall -Werror -lm
 
 tile.o: ./lib/tile/tile.c ./lib/tile/tile.h
 	gcc -c ./lib/tile/tile.c -o tile.o -Wall -Werror
@@ -23,6 +23,9 @@ game.o: ./lib/game/game.c ./lib/game/game.h
 
 queue.o: ./util/queue/queue.c ./util/queue/queue.h
 	gcc -c ./util/queue/queue.c -o queue.o -Wall -Werror
+
+priorityqueue.o: ./util/priorityqueue/priorityqueue.c ./util/priorityqueue/priorityqueue.h
+	gcc -c ./util/priorityqueue/priorityqueue.c -o priorityqueue.o -Wall -Werror
 
 main.o: main.c
 	gcc -c main.c -o main.o -Wall -Werror
