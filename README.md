@@ -13,7 +13,7 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 - Procedurally generated world with various region types, Pokemon Centers, and Pokemarts.
 - Ability to travel between rooms in a 401x401 map (each room is 80x21)
 - Coordinate display, along with the current seed
-- Display of a cost map for two enemy types, Hiker and Rival, to travel towards the player
+- Display of a cost map for two enemy types, Hiker and Rival, to travel towards the player using dijkstras algorithm
 - Upon entering a room, your player character '@' is placed on a random entrance
 
 ## Building the Project
