@@ -126,7 +126,7 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
         struct TileWithCost *tileWithCost = malloc(sizeof(struct TileWithCost));
         tileWithCost->tile = &room->tiles[i][j];
         tileWithCost->cost =
-            costs[y][x] + getTrainerTileCost(trainer, &room->tiles[i][j]);
+            costs[y][x] + getTrainerTileCost(trainer, &room->tiles[y][x]);
 
         enqueueWithPriority(&queue, tileWithCost, tileWithCost->cost);
       }

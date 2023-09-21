@@ -24,3 +24,4 @@
 09/21/2023, 11:33 AM: Finished reimplementing
 09/21/2023, 11:46 AM: Per assignment guidelines, Player is now placed on a random path in each room
 09/21/2023, 12:07 PM: Made entrances (gates) take on an infinite travel cost, per assignment guidelines
+09/21/2023, 12:40 PM: Cost is considered when traveling to a tile, not from.
