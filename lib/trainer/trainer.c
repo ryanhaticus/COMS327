@@ -130,14 +130,14 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
 }
 
 void printTrainerTravelCost(struct Game *game, enum TrainerType type) {
-  struct Trainer trainer;
-  trainer.type = type;
-  trainer.x = 0;
-  trainer.y = 0;
+  struct Trainer *trainer = malloc(sizeof(struct Trainer));
+  trainer->type = type;
+  trainer->x = 0;
+  trainer->y = 0;
 
   int arr[ROOM_HEIGHT][ROOM_WIDTH] = {0};
 
-  getTrainerTravelCost(arr, game->map.rooms[game->map.y][game->map.x], &trainer,
+  getTrainerTravelCost(arr, game->map.rooms[game->map.y][game->map.x], trainer,
                        game->player.x, game->player.y);
 
   for (int i = 0; i < ROOM_HEIGHT; i++) {
@@ -158,4 +158,6 @@ void printTrainerTravelCost(struct Game *game, enum TrainerType type) {
     }
     printf("\n");
   }
+
+  free(trainer);
 }
