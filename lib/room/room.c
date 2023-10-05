@@ -5,8 +5,10 @@
 
 #include "../../util/queue/queue.h"
 #include "../map/map.h"
+#include "../trainer/trainer.h"
 
-int createRoom(struct Map *map, struct Room *room, int i, int j) {
+int createRoom(struct Map *map, struct Room *room, int i, int j,
+               int numTrainers) {
   room->x = i;
   room->y = j;
 
@@ -20,11 +22,25 @@ int createRoom(struct Map *map, struct Room *room, int i, int j) {
   for (y = 0; y < ROOM_HEIGHT; y++) {
     for (x = 0; x < ROOM_WIDTH; x++) {
       createTile(&room->tiles[y][x], EMPTY, x, y);
+      room->trainers[y][x] = NULL;
     }
   }
 
   populateRoom(room);
   createPath(map, room);
+
+  room->numTrainers = numTrainers;
+
+  for (int i = 0; i <= numTrainers; i++) {
+    struct Trainer *trainer;
+    createTrainer(&trainer);
+
+    if (i <= 1) {
+      trainer->type = i;
+    }
+
+    placeTrainerInRoom(room->trainers, trainer, room);
+  }
 
   return 0;
 }
@@ -43,6 +59,10 @@ int destroyRoom(struct Room *room) {
   for (y = 0; y < ROOM_HEIGHT; y++) {
     for (x = 0; x < ROOM_WIDTH; x++) {
       destroyTile(&room->tiles[y][x]);
+
+      if (room->trainers[y][x] != NULL) {
+        destroyTrainer(room->trainers[y][x]);
+      }
     }
   }
 
@@ -85,7 +105,7 @@ int populateRoom(struct Room *room) {
       int j;
 
       for (j = 0; j < i; j++) {
-        if (getTileDistance(tile[i], tile[j]) < 12) {
+        if (getTileDistance(*tile[i], *tile[j]) < 12) {
           hasDistance = 0;
           break;
         }

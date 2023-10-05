@@ -1,7 +1,7 @@
-#include "../room/room.h"
-
 #ifndef MAP_H
 #define MAP_H
+
+#include "../room/room.h"
 
 #define MAP_WIDTH 401
 #define MAP_HEIGHT 401
@@ -11,7 +11,8 @@
 #define S 2
 #define W 3
 
-struct Map {
+struct Map
+{
   int x, y;
   struct Room *rooms[MAP_HEIGHT][MAP_WIDTH];
 };

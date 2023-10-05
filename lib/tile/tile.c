@@ -18,8 +18,8 @@ int destroyTile(struct Tile *tile) {
   return 0;
 }
 
-char getTileCharacter(struct Tile *tile) {
-  switch (tile->type) {
+char getTileCharacter(struct Tile tile) {
+  switch (tile.type) {
     case 0:
       break;  // EMPTY
     case 1:   // GRASS
@@ -47,8 +47,8 @@ char getTileCharacter(struct Tile *tile) {
   return '?';  // EMPTY
 }
 
-double getTileDistance(struct Tile *tile1, struct Tile *tile2) {
-  return sqrt(pow(tile1->x - tile2->x, 2) + pow(tile1->y - tile2->y, 2));
+double getTileDistance(struct Tile tile1, struct Tile tile2) {
+  return sqrt(pow(tile1.x - tile2.x, 2) + pow(tile1.y - tile2.y, 2));
 }
 
 double getDistance(int x1, int y1, int x2, int y2) {

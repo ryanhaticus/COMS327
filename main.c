@@ -1,4 +1,5 @@
 #include <math.h>
+#include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -6,13 +7,15 @@
 #include "./lib/game/game.h"
 #include "./lib/map/map.h"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
+  // Making ncurses do its magic
+  initscr();
+  noecho();
+  curs_set(0);
+
   // Setting the seed for the random number generator.
   time_t seed = time(NULL);
   srand(seed);
-
-  // Setting the title of the terminal window.
-  printf("\033]0;Ryan Huellen\'s Pokemon Game\007");
 
   // Creating the game.
   struct Game game;
@@ -26,8 +29,8 @@ int main(int argc, char* argv[]) {
   // Destroying the game (freeing dynamically allocated memory).
   destroyGame(&game);
 
-  // Resetting the title of the terminal window.
-  printf("\033]0;\007");
+  // Killing ncurses
+  endwin();
 
   return 0;
 }

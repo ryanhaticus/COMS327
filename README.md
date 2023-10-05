@@ -6,15 +6,36 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 
 1. Features
 2. Building the Project
-3. Controls
+3. Trainers
+4. Controls
 
 ## Features
 
 - Procedurally generated world with various region types, Pokemon Centers, and Pokemarts.
-- Ability to travel between rooms in a 401x401 map (each room is 80x21)
-- Coordinate display, along with the current seed
-- Display of a cost map for two enemy types, Hiker and Rival, to travel towards the player using dijkstras algorithm
 - Upon entering a room, your player character '@' is placed on the path
+- 6 types of trainers exist. We have Hikers, Rivals, Pacers, Wanderers, Sentries, and Explorers.
+
+## Trainers
+
+### Hikers and Rivals
+
+Hikers and Rivals follow an efficient path to the player based on their respective cost maps.
+
+### Pacers
+
+Pacers choose a single direction and move in that direction until they hit an immovable object. Then, they turn around and repeat.
+
+### Wanderers
+
+Wanderers move in a random directon and continue that direction until they reach the end of their current terrain type. Then, they pick another direction to stay within the terrain limits.
+
+### Explorers
+
+Explorers move like wanderers, except they can leave the current terrain type.
+
+### Sentries
+
+Sentries don't move at all! Be wary!
 
 ## Building the Project
 
@@ -23,10 +44,4 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 
 ## Controls
 
-The game is command based. In other words, you have the opportunity to enter one command each time the game "loops". The available commands are as follows:
-
-1. n - travel one room north
-2. e - travel one room east
-3. s - travel one room south
-4. w - travel one room west
-5. f x y - travel to room located at map coordinates (x,y)
+In this iteration, the player cannot be controlled and the player cannot move rooms. Instead, we observe the priority queue driven movement of the various trainers.

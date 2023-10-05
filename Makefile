@@ -1,7 +1,7 @@
 all: main
 
 main: tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o main.o
-	gcc tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o main.o -o main -Wall -Werror -lm
+	gcc tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o main.o -o main -Wall -Werror -lm -lncurses
 
 tile.o: ./lib/tile/tile.c ./lib/tile/tile.h
 	gcc -c ./lib/tile/tile.c -o tile.o -Wall -Werror

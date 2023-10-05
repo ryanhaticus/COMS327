@@ -20,7 +20,7 @@ int createMap(struct Map *map) {
 
   struct Room *room = malloc(sizeof(struct Room));
 
-  createRoom(map, room, map->x, map->y);
+  createRoom(map, room, map->x, map->y, 10);
 
   map->rooms[map->y][map->x] = room;
 
