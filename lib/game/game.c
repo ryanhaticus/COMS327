@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "../../util/priorityqueue/priorityqueue.h"
 #include "../player/player.h"
@@ -69,7 +70,7 @@ void startLoop(struct Game *game) {
   renderGame(game);
 
   while (1) {
-    usleep(3);
+    usleep(10000);
 
     moveTrainers(game->map.rooms[game->map.y][game->map.x], &game->player);
 

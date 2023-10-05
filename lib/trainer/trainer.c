@@ -261,6 +261,8 @@ void moveTrainers(struct Room *room, struct Player *player) {
   struct Trainer *trainer;
   dequeueWithPriority(&queue, (void **)&trainer);
 
+  curTime++;
+
   switch (trainer->type) {
     case RIVAL:
     case HIKER: {

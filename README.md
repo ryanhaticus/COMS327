@@ -19,7 +19,7 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 
 ### Hikers and Rivals
 
-Hikers and Rivals follow an efficient path to the player based on their respective cost maps.
+Hikers and Rivals follow an efficient path to the player based on their respective cost maps. Note that if there is no valid path to the player as that player is blocked by other trainers or immovable terrain, then hikers and rivals will not move.
 
 ### Pacers
 
