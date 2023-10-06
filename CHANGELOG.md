@@ -34,3 +34,4 @@
 - 10/04/2023, 7:41 PM: Fixed a bug where some trainers were entered the player character's tile.
 - 10/04/2023, 8:18 PM: Rewrote `README.md`
 - 10/05/2023, 11:45 AM: Fixed implicit import of `usleep`
+- 10/05/2023, 11:34 PM: Forgot `--numtrainers` switch. Implemented!

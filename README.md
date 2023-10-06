@@ -14,8 +14,13 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 - Procedurally generated world with various region types, Pokemon Centers, and Pokemarts.
 - Upon entering a room, your player character '@' is placed on the path
 - 6 types of trainers exist. We have Hikers, Rivals, Pacers, Wanderers, Sentries, and Explorers.
+- Ability to choose how many trainers spawn in.
 
 ## Trainers
+
+In order to pick the number of trainers that spawn on the map, you can run the binary with the `--numtrainers` flag. Here's a sample of choosing 7 trainers:
+
+`./main --numtrainers 7`
 
 ### Hikers and Rivals
 
