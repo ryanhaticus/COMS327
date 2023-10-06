@@ -14,11 +14,9 @@ struct Room {
   struct Tile tiles[ROOM_HEIGHT][ROOM_WIDTH];
   struct Tile *entrances[4];
   struct Trainer *trainers[ROOM_HEIGHT][ROOM_WIDTH];
-  int numTrainers;
 };
 
-int createRoom(struct Map *map, struct Room *room, int x, int y,
-               int numTrainers);
+int createRoom(struct Map *map, struct Room *room, int x, int y);
 int destroyRoom(struct Room *room);
 int chooseRandomTile(struct Room *room, struct Tile **tile);
 int populateRoom(struct Room *room);

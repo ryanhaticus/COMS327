@@ -11,13 +11,13 @@
 #define S 2
 #define W 3
 
-struct Map
-{
+struct Map {
   int x, y;
   struct Room *rooms[MAP_HEIGHT][MAP_WIDTH];
+  int trainersPerRoom;
 };
 
-int createMap(struct Map *map);
+int createMap(struct Map *map, int trainersPerRoom);
 int destroyMap(struct Map *map);
 
 #endif

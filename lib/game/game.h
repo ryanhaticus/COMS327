@@ -6,14 +6,13 @@
 
 #define MAX_INPUT_SIZE 256
 
-struct Game
-{
+struct Game {
   struct Map map;
   struct Player player;
   int seed;
 };
 
-int createGame(struct Game *game);
+int createGame(struct Game *game, int trainersPerRoom);
 int destroyGame(struct Game *game);
 void renderGame(struct Game *game);
 void startLoop(struct Game *game);

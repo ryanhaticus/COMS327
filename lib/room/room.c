@@ -7,8 +7,7 @@
 #include "../map/map.h"
 #include "../trainer/trainer.h"
 
-int createRoom(struct Map *map, struct Room *room, int i, int j,
-               int numTrainers) {
+int createRoom(struct Map *map, struct Room *room, int i, int j) {
   room->x = i;
   room->y = j;
 
@@ -29,9 +28,7 @@ int createRoom(struct Map *map, struct Room *room, int i, int j,
   populateRoom(room);
   createPath(map, room);
 
-  room->numTrainers = numTrainers;
-
-  for (int i = 0; i <= numTrainers; i++) {
+  for (int i = 0; i < map->trainersPerRoom; i++) {
     struct Trainer *trainer;
     createTrainer(&trainer);
 

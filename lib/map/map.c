@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int createMap(struct Map *map) {
+int createMap(struct Map *map, int trainersPerRoom) {
   int y, x;
 
   // TODO: May need to revisit this. If these lines are omitted, we may get
@@ -18,9 +18,11 @@ int createMap(struct Map *map) {
   map->x = (int)floor(MAP_WIDTH / 2);
   map->y = (int)floor(MAP_HEIGHT / 2);
 
+  map->trainersPerRoom = trainersPerRoom;
+
   struct Room *room = malloc(sizeof(struct Room));
 
-  createRoom(map, room, map->x, map->y, 10);
+  createRoom(map, room, map->x, map->y);
 
   map->rooms[map->y][map->x] = room;
 

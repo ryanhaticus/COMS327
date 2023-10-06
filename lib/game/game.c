@@ -26,8 +26,8 @@ void placePlayerRandomly(struct Map *map, struct Player *player) {
   player->y = y;
 }
 
-int createGame(struct Game *game) {
-  createMap(&game->map);
+int createGame(struct Game *game, int trainersPerRoom) {
+  createMap(&game->map, trainersPerRoom);
 
   createPlayer(&game->player, 0, 0);
 

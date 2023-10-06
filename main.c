@@ -2,12 +2,24 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #include "./lib/game/game.h"
 #include "./lib/map/map.h"
 
 int main(int argc, char *argv[]) {
+  int numTrainers = 10;
+
+  if (argc > 1 && strcmp(argv[1], "--numtrainers") == 0) {
+    if (argc == 2) {
+      printf("Proper usage: %s --numtrainers <number>\n", argv[0]);
+      return 1;
+    }
+
+    numTrainers = atoi(argv[2]);
+  }
+
   // Making ncurses do its magic
   initscr();
   noecho();
@@ -21,7 +33,7 @@ int main(int argc, char *argv[]) {
   struct Game game;
   game.seed = seed;
 
-  createGame(&game);
+  createGame(&game, numTrainers);
 
   // Starting the game loop
   startLoop(&game);
