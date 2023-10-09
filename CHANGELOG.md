@@ -35,3 +35,4 @@
 - 10/04/2023, 8:18 PM: Rewrote `README.md`
 - 10/05/2023, 11:45 AM: Fixed implicit import of `usleep`
 - 10/05/2023, 11:34 PM: Forgot `--numtrainers` switch. Implemented!
+- 10/09/2023, 12:55 PM: Added colors
