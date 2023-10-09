@@ -14,7 +14,6 @@ struct Game {
 
 int createGame(struct Game *game, int trainersPerRoom);
 int destroyGame(struct Game *game);
-void renderGame(struct Game *game);
 void startLoop(struct Game *game);
 
 #endif

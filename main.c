@@ -7,6 +7,7 @@
 
 #include "./lib/game/game.h"
 #include "./lib/map/map.h"
+#include "./lib/render/render.h"
 
 int main(int argc, char *argv[]) {
   int numTrainers = 10;
@@ -34,6 +35,9 @@ int main(int argc, char *argv[]) {
   game.seed = seed;
 
   createGame(&game, numTrainers);
+
+  // Initialize colors
+  initializeColors();
 
   // Starting the game loop
   startLoop(&game);

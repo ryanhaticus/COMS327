@@ -8,6 +8,7 @@
 
 #include "../../util/priorityqueue/priorityqueue.h"
 #include "../player/player.h"
+#include "../render/render.h"
 #include "../trainer/trainer.h"
 
 void placePlayerRandomly(struct Map *map, struct Player *player) {
@@ -38,30 +39,6 @@ int destroyGame(struct Game *game) {
   destroyMap(&game->map);
 
   return 0;
-}
-
-void renderGame(struct Game *game) {
-  int y, x;
-
-  for (y = 0; y < ROOM_HEIGHT; y++) {
-    for (x = 0; x < ROOM_WIDTH; x++) {
-      if (x == game->player.x && y == game->player.y) {
-        mvaddch(y, x, '@');
-        continue;
-      }
-
-      struct Room room = *game->map.rooms[game->map.y][game->map.x];
-
-      mvaddch(y, x, getTileCharacter(room.tiles[y][x]));
-
-      if (room.trainers[y][x] != NULL) {
-        mvaddch(y, x, getTrainerCharacter(room.trainers[y][x]));
-        continue;
-      }
-    }
-  }
-
-  refresh();
 }
 
 void startLoop(struct Game *game) {

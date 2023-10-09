@@ -20,27 +20,27 @@ int destroyTile(struct Tile *tile) {
 
 char getTileCharacter(struct Tile tile) {
   switch (tile.type) {
-    case 0:
-      break;  // EMPTY
-    case 1:   // GRASS
-    case 2:   // GRASS_2
+    case EMPTY:
+      break;       // EMPTY
+    case GRASS:    // GRASS
+    case GRASS_2:  // GRASS_2
       return '.';
-    case 3:  // TALL_GRASS
-    case 4:  // TALL_GRASS_2
+    case TALL_GRASS:    // TALL_GRASS
+    case TALL_GRASS_2:  // TALL_GRASS_2
       return ':';
-    case 5:  // FOREST
+    case FOREST:  // FOREST
       return '^';
-    case 6:  // WATER
+    case WATER:  // WATER
       return '~';
-    case 7:  // BOULDER
+    case BOULDER:  // BOULDER
       return '%';
-    case 8:  // PATH
+    case PATH:  // PATH
       return '#';
-    case 9:  // GATE
+    case ENTRANCE:  // GATE
       return '#';
-    case 10:  // POKEMON_CENTER
+    case POKEMON_CENTER:  // POKEMON_CENTER
       return 'C';
-    case 11:  // POKEMART
+    case POKEMART:  // POKEMART
       return 'M';
   }
 
