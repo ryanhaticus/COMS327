@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "../../util/priorityqueue/priorityqueue.h"
@@ -31,6 +32,8 @@ int createGame(struct Game *game, int trainersPerRoom) {
   createMap(&game->map, trainersPerRoom);
 
   createPlayer(&game->player, 0, 0);
+
+  strcpy(game->status, "Welcome to Ryan Huellen's Pokemon Game!");
 
   return 0;
 }

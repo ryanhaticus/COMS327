@@ -14,7 +14,7 @@ void initializeColors() {
   init_pair(COLOR_TRAINER, COLOR_RED, COLOR_BLACK);
   init_pair(COLOR_GRASS, COLOR_GREEN, COLOR_BLACK);
   init_pair(COLOR_TALL_GRASS, COLOR_GREEN, COLOR_BLACK);
-  init_pair(COLOR_FOREST, COLOR_GREEN, COLOR_BLACK);
+  init_pair(COLOR_FOREST, COLOR_MAGENTA, COLOR_BLACK);
   init_pair(COLOR_WATER, COLOR_BLUE, COLOR_BLACK);
   init_pair(COLOR_BOULDER, COLOR_WHITE, COLOR_BLACK);
   init_pair(COLOR_PATH, COLOR_WHITE, COLOR_BLACK);
@@ -59,6 +59,8 @@ int getTileColor(struct Tile tile) {
 
 void renderGame(struct Game *game) {
   useDefaultColor();
+
+  mvprintw(0, 0, game->status);
 
   int y, x;
 

@@ -36,3 +36,4 @@
 - 10/05/2023, 11:45 AM: Fixed implicit import of `usleep`
 - 10/05/2023, 11:34 PM: Forgot `--numtrainers` switch. Implemented!
 - 10/09/2023, 12:55 PM: Added colors
+- 10/10/2023, 1:13 PM: Changed forest color and added status message

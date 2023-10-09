@@ -10,6 +10,7 @@ struct Game {
   struct Map map;
   struct Player player;
   int seed;
+  char status[128];
 };
 
 int createGame(struct Game *game, int trainersPerRoom);
