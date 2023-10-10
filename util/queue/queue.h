@@ -1,20 +1,20 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-struct QueueNode {
+typedef struct QueueNode {
   void* data;
   struct QueueNode* next;
-};
+} QueueNode;
 
-struct Queue {
-  struct QueueNode* head;
-  struct QueueNode* tail;
+typedef struct Queue {
+  QueueNode* head;
+  QueueNode* tail;
   int size;
-};
+} Queue;
 
-int createQueue(struct Queue* queue);
-int enqueue(struct Queue* queue, void* data);
-int dequeue(struct Queue* queue, void** data);
-int destroyQueue(struct Queue* queue);
+int createQueue(Queue* queue);
+int enqueue(Queue* queue, void* data);
+int dequeue(Queue* queue, void** data);
+int destroyQueue(Queue* queue);
 
 #endif

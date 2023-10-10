@@ -1,21 +1,21 @@
 #ifndef PRIORITY_QUEUE_H
 #define PRIORITY_QUEUE_H
 
-struct PriorityQueueNode {
+typedef struct PriorityQueueNode {
   void* data;
   int priority;
   struct PriorityQueueNode* next;
-};
+} PriorityQueueNode;
 
-struct PriorityQueue {
-  struct PriorityQueueNode* head;
-  struct PriorityQueueNode* tail;
+typedef struct PriorityQueue {
+  PriorityQueueNode* head;
+  PriorityQueueNode* tail;
   int size;
-};
+} PriorityQueue;
 
-int createPriorityQueue(struct PriorityQueue* queue);
-int enqueueWithPriority(struct PriorityQueue* queue, void* data, int priority);
-int dequeueWithPriority(struct PriorityQueue* queue, void** data);
-int destroyPriorityQueue(struct PriorityQueue* queue);
+int createPriorityQueue(PriorityQueue* queue);
+int enqueueWithPriority(PriorityQueue* queue, void* data, int priority);
+int dequeueWithPriority(PriorityQueue* queue, void** data);
+int destroyPriorityQueue(PriorityQueue* queue);
 
 #endif

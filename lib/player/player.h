@@ -1,10 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-struct Player {
+typedef struct Player {
   int x, y;
-};
+} Player;
 
-void createPlayer(struct Player *player, int x, int y);
+void createPlayer(Player *player, int x, int y);
 
 #endif

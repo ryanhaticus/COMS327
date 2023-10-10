@@ -1,19 +1,16 @@
 #include "game.h"
 
-#include <math.h>
 #include <ncurses.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-#include "../../util/priorityqueue/priorityqueue.h"
-#include "../player/player.h"
 #include "../render/render.h"
+#include "../room/room.h"
 #include "../trainer/trainer.h"
 
-void placePlayerRandomly(struct Map *map, struct Player *player) {
-  struct Room *currentRoom = map->rooms[map->y][map->x];
+void placePlayerRandomly(Map *map, Player *player) {
+  Room *currentRoom = map->rooms[map->y][map->x];
 
   int y = rand() % (ROOM_HEIGHT - 2) + 1;
   int x = rand() % (ROOM_WIDTH - 2) + 1;
@@ -28,7 +25,7 @@ void placePlayerRandomly(struct Map *map, struct Player *player) {
   player->y = y;
 }
 
-int createGame(struct Game *game, int trainersPerRoom) {
+int createGame(Game *game, int trainersPerRoom) {
   createMap(&game->map, trainersPerRoom);
 
   createPlayer(&game->player, 0, 0);
@@ -38,13 +35,13 @@ int createGame(struct Game *game, int trainersPerRoom) {
   return 0;
 }
 
-int destroyGame(struct Game *game) {
+int destroyGame(Game *game) {
   destroyMap(&game->map);
 
   return 0;
 }
 
-void startLoop(struct Game *game) {
+void startLoop(Game *game) {
   placePlayerRandomly(&game->map, &game->player);
 
   renderGame(game);

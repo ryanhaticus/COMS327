@@ -49,6 +49,8 @@
     "ncurses.h": "c",
     "character.h": "c",
     "unistd.h": "c",
-    "renderer.h": "c"
+    "renderer.h": "c",
+    "math.h": "c",
+    "render.h": "c"
   }
 }

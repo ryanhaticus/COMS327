@@ -14,15 +14,15 @@ enum BuildingTile {
   POKEMART,
 };
 
-struct Tile {
+typedef struct Tile {
   int type;
   int x, y;
-};
+} Tile;
 
-int createTile(struct Tile *tile, int type, int x, int y);
-int destroyTile(struct Tile *tile);
-char getTileCharacter(struct Tile tile);
-double getTileDistance(struct Tile tile1, struct Tile tile2);
+int createTile(Tile *tile, int type, int x, int y);
+int destroyTile(Tile *tile);
+char getTileCharacter(Tile tile);
+double getTileDistance(Tile tile1, Tile tile2);
 double getDistance(int x1, int y1, int x2, int y2);
 
 #endif

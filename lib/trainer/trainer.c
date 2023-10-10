@@ -5,10 +5,8 @@
 #include <stdlib.h>
 
 #include "../../util/priorityqueue/priorityqueue.h"
-#include "../room/room.h"
 
-int getTrainerTileCost(struct Trainer *trainer, struct Room *room,
-                       struct Tile *tile) {
+int getTrainerTileCost(Trainer *trainer, Room *room, Tile *tile) {
   if (room->trainers[tile->y][tile->x] != NULL) {
     return __INT_MAX__;
   }
@@ -101,30 +99,30 @@ int getTrainerTileCost(struct Trainer *trainer, struct Room *room,
   return 0;
 }
 
-struct TileWithCost {
-  struct Tile *tile;
+typedef struct {
+  Tile *tile;
   int cost;
-};
+} TileWithCost;
 
-void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
-                          struct Trainer *trainer, struct Player *player) {
+void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], Room *room,
+                          Trainer *trainer, Player *player) {
   for (int i = 0; i < ROOM_HEIGHT; i++) {
     for (int j = 0; j < ROOM_WIDTH; j++) {
       costs[i][j] = __INT_MAX__;
     }
   }
 
-  struct PriorityQueue queue;
+  PriorityQueue queue;
   createPriorityQueue(&queue);
 
-  struct TileWithCost *tileWithCost = malloc(sizeof(struct TileWithCost));
+  TileWithCost *tileWithCost = malloc(sizeof(TileWithCost));
   tileWithCost->tile = &room->tiles[player->y][player->x];
   tileWithCost->cost = 0;
 
   enqueueWithPriority(&queue, tileWithCost, 0);
 
   while (queue.size > 0) {
-    struct TileWithCost *tileWithCost;
+    TileWithCost *tileWithCost;
     dequeueWithPriority(&queue, (void **)&tileWithCost);
 
     int x = tileWithCost->tile->x;
@@ -157,7 +155,7 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
           continue;
         }
 
-        struct TileWithCost *tileWithCost = malloc(sizeof(struct TileWithCost));
+        TileWithCost *tileWithCost = malloc(sizeof(TileWithCost));
         tileWithCost->tile = &room->tiles[i][j];
 
         tileWithCost->cost = costs[y][x] + trainerTileCost;
@@ -172,8 +170,8 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
   destroyPriorityQueue(&queue);
 }
 
-void placeTrainerInRoom(struct Trainer *trainersInRoom[ROOM_HEIGHT][ROOM_WIDTH],
-                        struct Trainer *trainer, struct Room *room) {
+void placeTrainerInRoom(Trainer *trainersInRoom[ROOM_HEIGHT][ROOM_WIDTH],
+                        Trainer *trainer, Room *room) {
   int x, y;
 
   do {
@@ -189,7 +187,7 @@ void placeTrainerInRoom(struct Trainer *trainersInRoom[ROOM_HEIGHT][ROOM_WIDTH],
   trainersInRoom[y][x] = trainer;
 }
 
-char getTrainerCharacter(struct Trainer *trainer) {
+char getTrainerCharacter(Trainer *trainer) {
   switch (trainer->type) {
     case HIKER:
       return 'h';
@@ -208,8 +206,8 @@ char getTrainerCharacter(struct Trainer *trainer) {
   return '?';
 }
 
-int createTrainer(struct Trainer **trainer) {
-  *trainer = malloc(sizeof(struct Trainer));
+int createTrainer(Trainer **trainer) {
+  *trainer = malloc(sizeof(Trainer));
 
   if (trainer == NULL) {
     return 1;
@@ -223,11 +221,11 @@ int createTrainer(struct Trainer **trainer) {
   return 0;
 }
 
-void destroyTrainer(struct Trainer *trainer) { free(trainer); }
+void destroyTrainer(Trainer *trainer) { free(trainer); }
 
-void moveTrainers(struct Room *room, struct Player *player) {
+void moveTrainers(Room *room, Player *player) {
   static int initialized = 0;
-  static struct PriorityQueue queue;
+  static PriorityQueue queue;
   static int curTime = 0;
 
   int y, x;
@@ -243,7 +241,7 @@ void moveTrainers(struct Room *room, struct Player *player) {
           continue;
         }
 
-        struct Trainer *trainer = room->trainers[y][x];
+        Trainer *trainer = room->trainers[y][x];
 
         if (trainer->type == SENTRY) {
           continue;
@@ -258,7 +256,7 @@ void moveTrainers(struct Room *room, struct Player *player) {
     return;
   }
 
-  struct Trainer *trainer;
+  Trainer *trainer;
   dequeueWithPriority(&queue, (void **)&trainer);
 
   curTime++;
@@ -270,7 +268,7 @@ void moveTrainers(struct Room *room, struct Player *player) {
       getTrainerTravelCost(costs, room, trainer, player);
 
       int minCost = __INT_MAX__;
-      struct Tile *minTile = NULL;
+      Tile *minTile = NULL;
 
       for (int y = -1; y <= 1; y++) {
         for (int x = -1; x <= 1; x++) {

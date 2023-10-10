@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-int createTile(struct Tile *tile, int type, int x, int y) {
+int createTile(Tile *tile, int type, int x, int y) {
   tile->type = type;
   tile->x = x;
   tile->y = y;
@@ -10,7 +10,7 @@ int createTile(struct Tile *tile, int type, int x, int y) {
   return 0;
 }
 
-int destroyTile(struct Tile *tile) {
+int destroyTile(Tile *tile) {
   tile->type = EMPTY;
   tile->x = -1;
   tile->y = -1;
@@ -18,7 +18,7 @@ int destroyTile(struct Tile *tile) {
   return 0;
 }
 
-char getTileCharacter(struct Tile tile) {
+char getTileCharacter(Tile tile) {
   switch (tile.type) {
     case EMPTY:
       break;       // EMPTY
@@ -47,7 +47,7 @@ char getTileCharacter(struct Tile tile) {
   return '?';  // EMPTY
 }
 
-double getTileDistance(struct Tile tile1, struct Tile tile2) {
+double getTileDistance(Tile tile1, Tile tile2) {
   return sqrt(pow(tile1.x - tile2.x, 2) + pow(tile1.y - tile2.y, 2));
 }
 

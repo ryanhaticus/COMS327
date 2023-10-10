@@ -4,17 +4,15 @@
 #include "../map/map.h"
 #include "../player/player.h"
 
-#define MAX_INPUT_SIZE 256
-
-struct Game {
-  struct Map map;
-  struct Player player;
+typedef struct Game {
+  Map map;
+  Player player;
   int seed;
   char status[128];
-};
+} Game;
 
-int createGame(struct Game *game, int trainersPerRoom);
-int destroyGame(struct Game *game);
-void startLoop(struct Game *game);
+int createGame(Game *game, int trainersPerRoom);
+int destroyGame(Game *game);
+void startLoop(Game *game);
 
 #endif

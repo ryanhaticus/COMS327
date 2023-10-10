@@ -4,10 +4,8 @@
 #include <stdlib.h>
 
 #include "../../util/queue/queue.h"
-#include "../map/map.h"
-#include "../trainer/trainer.h"
 
-int createRoom(struct Map *map, struct Room *room, int i, int j) {
+int createRoom(Map *map, Room *room, int i, int j) {
   room->x = i;
   room->y = j;
 
@@ -29,7 +27,7 @@ int createRoom(struct Map *map, struct Room *room, int i, int j) {
   createPath(map, room);
 
   for (int i = 0; i < map->trainersPerRoom; i++) {
-    struct Trainer *trainer;
+    Trainer *trainer;
     createTrainer(&trainer);
 
     if (i <= 1) {
@@ -42,7 +40,7 @@ int createRoom(struct Map *map, struct Room *room, int i, int j) {
   return 0;
 }
 
-int destroyRoom(struct Room *room) {
+int destroyRoom(Room *room) {
   room->x = -1;
   room->y = -1;
 
@@ -68,7 +66,7 @@ int destroyRoom(struct Room *room) {
   return 0;
 }
 
-int chooseRandomTile(struct Room *room, struct Tile **tile) {
+int chooseRandomTile(Room *room, Tile **tile) {
   int y, x;
 
   y = rand() % ROOM_HEIGHT;
@@ -79,10 +77,10 @@ int chooseRandomTile(struct Room *room, struct Tile **tile) {
   return 0;
 }
 
-int populateRoom(struct Room *room) {
-  struct Tile *tile[NUM_REGION_TILES];
+int populateRoom(Room *room) {
+  Tile *tile[NUM_REGION_TILES];
 
-  struct Queue regionQueue;
+  Queue regionQueue;
   createQueue(&regionQueue);
 
   int i;
@@ -119,7 +117,7 @@ int populateRoom(struct Room *room) {
   }
 
   while (regionQueue.size > 0) {
-    struct Tile *currentTile;
+    Tile *currentTile;
     dequeue(&regionQueue, (void **)&currentTile);
 
     int y, x;
@@ -131,7 +129,7 @@ int populateRoom(struct Room *room) {
           continue;
         }
 
-        struct Tile *adjacentTile = &room->tiles[y][x];
+        Tile *adjacentTile = &room->tiles[y][x];
 
         if (adjacentTile->type != EMPTY) {
           continue;
@@ -157,7 +155,7 @@ int populateRoom(struct Room *room) {
   int numBoulders = rand() % 5 + 8;
 
   for (i = 0; i < numBoulders; i++) {
-    struct Tile *currentTile;
+    Tile *currentTile;
 
     chooseRandomTile(room, &currentTile);
 
@@ -171,13 +169,13 @@ int populateRoom(struct Room *room) {
   return 0;
 }
 
-int createPath(struct Map *map, struct Room *room) {
+int createPath(Map *map, Room *room) {
   int pathAllowed[4] = {room->y > 0, room->x != MAP_WIDTH - 1,
                         room->y != MAP_HEIGHT - 1, room->x > 0};  // N, E, S, W
 
   int i;
-  struct Tile *adjacentEntrance;
-  struct Room *adjacentRoom;
+  Tile *adjacentEntrance;
+  Room *adjacentRoom;
 
   if (pathAllowed[W]) {
     adjacentRoom = map->rooms[room->y][room->x - 1];

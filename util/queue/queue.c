@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-int createQueue(struct Queue *queue) {
+int createQueue(Queue *queue) {
   queue->head = NULL;
   queue->tail = NULL;
   queue->size = 0;
@@ -10,8 +10,8 @@ int createQueue(struct Queue *queue) {
   return 0;
 }
 
-int enqueue(struct Queue *queue, void *data) {
-  struct QueueNode *node = malloc(sizeof(struct QueueNode));
+int enqueue(Queue *queue, void *data) {
+  QueueNode *node = malloc(sizeof(QueueNode));
   node->data = data;
   node->next = NULL;
 
@@ -28,14 +28,14 @@ int enqueue(struct Queue *queue, void *data) {
   return 0;
 }
 
-int dequeue(struct Queue *queue, void **data) {
+int dequeue(Queue *queue, void **data) {
   if (queue->size == 0) {
     return 1;
   }
 
   *data = queue->head->data;
 
-  struct QueueNode *node = queue->head;
+  QueueNode *node = queue->head;
   queue->head = queue->head->next;
   free(node);
 
@@ -44,9 +44,9 @@ int dequeue(struct Queue *queue, void **data) {
   return 0;
 }
 
-int destroyQueue(struct Queue *queue) {
+int destroyQueue(Queue *queue) {
   while (queue->size > 0) {
-    struct QueueNode *node = queue->head;
+    QueueNode *node = queue->head;
     queue->head = queue->head->next;
     free(node);
 

@@ -4,11 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int createMap(struct Map *map, int trainersPerRoom) {
+int createMap(Map *map, int trainersPerRoom) {
   int y, x;
 
-  // TODO: May need to revisit this. If these lines are omitted, we may get
-  // pointers to existing garbage memory unrelated to the program.
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
       map->rooms[y][x] = NULL;
@@ -20,7 +18,7 @@ int createMap(struct Map *map, int trainersPerRoom) {
 
   map->trainersPerRoom = trainersPerRoom;
 
-  struct Room *room = malloc(sizeof(struct Room));
+  Room *room = malloc(sizeof(Room));
 
   createRoom(map, room, map->x, map->y);
 
@@ -29,12 +27,12 @@ int createMap(struct Map *map, int trainersPerRoom) {
   return 0;
 }
 
-int destroyMap(struct Map *map) {
+int destroyMap(Map *map) {
   int y, x;
 
   for (y = 0; y < MAP_HEIGHT; y++) {
     for (x = 0; x < MAP_WIDTH; x++) {
-      struct Room *room = map->rooms[y][x];
+      Room *room = map->rooms[y][x];
 
       if (room == NULL) {
         continue;

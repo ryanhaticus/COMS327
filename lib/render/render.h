@@ -18,6 +18,8 @@ enum Colors {
 };
 
 void initializeColors();
-void renderGame(struct Game *game);
+
+typedef struct Game Game;
+void renderGame(Game *game);
 
 #endif

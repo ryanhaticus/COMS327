@@ -1,32 +1,30 @@
 #ifndef TRAINER_H
 #define TRAINER_H
 
-#include "../game/game.h"
 #include "../player/player.h"
 #include "../room/room.h"
 #include "../tile/tile.h"
+
+typedef struct Room Room;
 
 #define NUM_TRAINERS 6
 
 enum TrainerType { HIKER, RIVAL, PACER, WANDERER, SENTRY, EXPLORER };
 
-struct Trainer {
+typedef struct Trainer {
   enum TrainerType type;
   int x, y;
-  int dir;  // N = 0, E = 1, S = 2, W = 3
-};
+  int dir;
+} Trainer;
 
-struct Room;
-
-int getTrainerTileCost(struct Trainer *trainer, struct Room *room,
-                       struct Tile *tile);
-void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], struct Room *room,
-                          struct Trainer *trainer, struct Player *player);
-void placeTrainerInRoom(struct Trainer *trainersInRoom[ROOM_HEIGHT][ROOM_WIDTH],
-                        struct Trainer *trainer, struct Room *room);
-char getTrainerCharacter(struct Trainer *trainer);
-int createTrainer(struct Trainer **trainer);
-void destroyTrainer(struct Trainer *trainer);
-void moveTrainers(struct Room *room, struct Player *player);
+int getTrainerTileCost(Trainer *trainer, Room *room, Tile *tile);
+void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], Room *room,
+                          Trainer *trainer, Player *player);
+void placeTrainerInRoom(Trainer *trainersInRoom[ROOM_HEIGHT][ROOM_WIDTH],
+                        Trainer *trainer, Room *room);
+char getTrainerCharacter(Trainer *trainer);
+int createTrainer(Trainer **trainer);
+void destroyTrainer(Trainer *trainer);
+void moveTrainers(Room *room, Player *player);
 
 #endif

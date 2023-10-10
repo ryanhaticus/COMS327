@@ -1,8 +1,3 @@
-#ifndef MAP_H
-#define MAP_H
-
-#include "../room/room.h"
-
 #define MAP_WIDTH 401
 #define MAP_HEIGHT 401
 
@@ -11,13 +6,19 @@
 #define S 2
 #define W 3
 
-struct Map {
-  int x, y;
-  struct Room *rooms[MAP_HEIGHT][MAP_WIDTH];
-  int trainersPerRoom;
-};
+#ifndef MAP_H
+#define MAP_H
 
-int createMap(struct Map *map, int trainersPerRoom);
-int destroyMap(struct Map *map);
+#include "../room/room.h"
+typedef struct Room Room;
+
+typedef struct Map {
+  int x, y;
+  Room *rooms[MAP_HEIGHT][MAP_WIDTH];
+  int trainersPerRoom;
+} Map;
+
+int createMap(Map *map, int trainersPerRoom);
+int destroyMap(Map *map);
 
 #endif
