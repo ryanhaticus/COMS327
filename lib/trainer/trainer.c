@@ -5,6 +5,9 @@
 #include <stdlib.h>
 
 #include "../../util/priorityqueue/priorityqueue.h"
+#include "../map/map.h"
+#include "../player/player.h"
+#include "../tile/tile.h"
 
 int getTrainerTileCost(Trainer *trainer, Room *room, Tile *tile) {
   if (room->trainers[tile->y][tile->x] != NULL) {

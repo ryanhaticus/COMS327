@@ -3,6 +3,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
+#include "../game/game.h"
 #include "../room/room.h"
 #include "../tile/tile.h"
 #include "../trainer/trainer.h"

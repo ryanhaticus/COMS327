@@ -1,3 +1,6 @@
+#ifndef MAP_H
+#define MAP_H
+
 #define MAP_WIDTH 401
 #define MAP_HEIGHT 401
 
@@ -6,10 +9,6 @@
 #define S 2
 #define W 3
 
-#ifndef MAP_H
-#define MAP_H
-
-#include "../room/room.h"
 typedef struct Room Room;
 
 typedef struct Map {

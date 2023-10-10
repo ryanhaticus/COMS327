@@ -4,6 +4,9 @@
 #include <stdlib.h>
 
 #include "../../util/queue/queue.h"
+#include "../map/map.h"
+#include "../room/room.h"
+#include "../trainer/trainer.h"
 
 int createRoom(Map *map, Room *room, int i, int j) {
   room->x = i;

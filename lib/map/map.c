@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../room/room.h"
+
 int createMap(Map *map, int trainersPerRoom) {
   int y, x;
 

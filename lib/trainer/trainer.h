@@ -1,11 +1,11 @@
 #ifndef TRAINER_H
 #define TRAINER_H
 
-#include "../player/player.h"
 #include "../room/room.h"
-#include "../tile/tile.h"
 
 typedef struct Room Room;
+typedef struct Player Player;
+typedef struct Tile Tile;
 
 #define NUM_TRAINERS 6
 

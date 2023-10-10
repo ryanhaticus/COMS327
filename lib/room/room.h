@@ -1,16 +1,14 @@
-#define ROOM_WIDTH 80
-#define ROOM_HEIGHT 21
-
 #ifndef ROOM_H
 #define ROOM_H
 
-#include "../map/map.h"
-#include "../room/room.h"
-#include "../tile/tile.h"
-#include "../trainer/trainer.h"
+#define ROOM_WIDTH 80
+#define ROOM_HEIGHT 21
 
-typedef struct Trainer Trainer;
+#include "../tile/tile.h"
+
 typedef struct Map Map;
+typedef struct Room Room;
+typedef struct Trainer Trainer;
 
 typedef struct Room {
   int x, y;
