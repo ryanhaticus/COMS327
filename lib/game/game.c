@@ -25,12 +25,19 @@ void placePlayerRandomly(Map *map, Player *player) {
   player->y = y;
 }
 
+void setStatus(Game *game, char *status) {
+  memset(game->status, 0, sizeof(game->status));
+  strcpy(game->status, status);
+}
+
 int createGame(Game *game, int trainersPerRoom) {
   createMap(&game->map, trainersPerRoom);
 
   createPlayer(&game->player, 0, 0);
 
-  strcpy(game->status, "Welcome to Ryan Huellen's Pokemon Game!");
+  setStatus(game, "");
+
+  game->state = GAME_STATE_PLAYING;
 
   return 0;
 }
@@ -46,11 +53,21 @@ void startLoop(Game *game) {
 
   renderGame(game);
 
-  while (1) {
+  setStatus(game, "It's your move!");
+
+  while (game->state != GAME_STATE_QUIT) {
     usleep(10000);
 
-    moveTrainers(game->map.rooms[game->map.y][game->map.x], &game->player);
-
     renderGame(game);
+
+    int move = getch();
+
+    while (movePlayer(move, game)) {
+      move = getch();
+    }
+
+    if (game->state == GAME_STATE_PLAYING) {
+      moveTrainers(game->map.rooms[game->map.y][game->map.x], &game->player);
+    }
   }
 }

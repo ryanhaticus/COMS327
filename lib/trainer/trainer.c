@@ -259,184 +259,189 @@ void moveTrainers(Room *room, Player *player) {
     return;
   }
 
-  Trainer *trainer;
-  dequeueWithPriority(&queue, (void **)&trainer);
+  int trainersMoved = 0;
 
-  curTime++;
+  while (trainersMoved < queue.size) {
+    Trainer *trainer;
+    dequeueWithPriority(&queue, (void **)&trainer);
 
-  switch (trainer->type) {
-    case RIVAL:
-    case HIKER: {
-      int costs[ROOM_HEIGHT][ROOM_WIDTH];
-      getTrainerTravelCost(costs, room, trainer, player);
+    curTime++;
 
-      int minCost = __INT_MAX__;
-      Tile *minTile = NULL;
+    switch (trainer->type) {
+      case RIVAL:
+      case HIKER: {
+        int costs[ROOM_HEIGHT][ROOM_WIDTH];
+        getTrainerTravelCost(costs, room, trainer, player);
 
-      for (int y = -1; y <= 1; y++) {
-        for (int x = -1; x <= 1; x++) {
-          if (y == 0 && x == 0) {
-            continue;
-          }
+        int minCost = __INT_MAX__;
+        Tile *minTile = NULL;
 
-          if (trainer->y + y < 0 || trainer->y + y >= ROOM_HEIGHT ||
-              trainer->x + x < 0 || trainer->x + x >= ROOM_WIDTH) {
-            continue;
-          }
+        for (int y = -1; y <= 1; y++) {
+          for (int x = -1; x <= 1; x++) {
+            if (y == 0 && x == 0) {
+              continue;
+            }
 
-          if (costs[trainer->y + y][trainer->x + x] < minCost) {
-            minCost = costs[trainer->y + y][trainer->x + x];
-            minTile = &room->tiles[trainer->y + y][trainer->x + x];
+            if (trainer->y + y < 0 || trainer->y + y >= ROOM_HEIGHT ||
+                trainer->x + x < 0 || trainer->x + x >= ROOM_WIDTH) {
+              continue;
+            }
+
+            if (costs[trainer->y + y][trainer->x + x] < minCost) {
+              minCost = costs[trainer->y + y][trainer->x + x];
+              minTile = &room->tiles[trainer->y + y][trainer->x + x];
+            }
           }
         }
-      }
 
-      if (minTile == NULL) {
-        enqueueWithPriority(&queue, trainer, curTime);
+        if (minTile == NULL) {
+          enqueueWithPriority(&queue, trainer, curTime);
+          break;
+        }
+
+        room->trainers[trainer->y][trainer->x] = NULL;
+        room->trainers[minTile->y][minTile->x] = trainer;
+
+        trainer->x = minTile->x;
+        trainer->y = minTile->y;
+
+        enqueueWithPriority(&queue, trainer, curTime + minCost);
+
+        curTime += minCost;
+
         break;
       }
+      case PACER: {
+        switch (trainer->dir) {
+          case N:
+            if (getTrainerTileCost(trainer, room,
+                                   &room->tiles[trainer->y - 1][trainer->x]) !=
+                __INT_MAX__) {
+              room->trainers[trainer->y][trainer->x] = NULL;
+              room->trainers[trainer->y - 1][trainer->x] = trainer;
 
-      room->trainers[trainer->y][trainer->x] = NULL;
-      room->trainers[minTile->y][minTile->x] = trainer;
+              trainer->y--;
+            } else {
+              trainer->dir = E;
+            }
+            break;
+          case E:
+            if (getTrainerTileCost(trainer, room,
+                                   &room->tiles[trainer->y][trainer->x + 1]) !=
+                __INT_MAX__) {
+              room->trainers[trainer->y][trainer->x] = NULL;
+              room->trainers[trainer->y][trainer->x + 1] = trainer;
 
-      trainer->x = minTile->x;
-      trainer->y = minTile->y;
+              trainer->x++;
+            } else {
+              trainer->dir = W;
+            }
 
-      enqueueWithPriority(&queue, trainer, curTime + minCost);
+            break;
+          case S:
+            if (getTrainerTileCost(trainer, room,
+                                   &room->tiles[trainer->y + 1][trainer->x]) !=
+                __INT_MAX__) {
+              room->trainers[trainer->y][trainer->x] = NULL;
+              room->trainers[trainer->y + 1][trainer->x] = trainer;
 
-      curTime += minCost;
+              trainer->y++;
+            } else {
+              trainer->dir = N;
+            }
 
-      break;
-    }
-    case PACER: {
-      switch (trainer->dir) {
-        case N:
-          if (getTrainerTileCost(trainer, room,
-                                 &room->tiles[trainer->y - 1][trainer->x]) !=
-              __INT_MAX__) {
-            room->trainers[trainer->y][trainer->x] = NULL;
-            room->trainers[trainer->y - 1][trainer->x] = trainer;
+            break;
+          case W:
+            if (getTrainerTileCost(trainer, room,
+                                   &room->tiles[trainer->y][trainer->x - 1]) !=
+                __INT_MAX__) {
+              room->trainers[trainer->y][trainer->x] = NULL;
+              room->trainers[trainer->y][trainer->x - 1] = trainer;
 
-            trainer->y--;
-          } else {
-            trainer->dir = E;
-          }
-          break;
-        case E:
-          if (getTrainerTileCost(trainer, room,
-                                 &room->tiles[trainer->y][trainer->x + 1]) !=
-              __INT_MAX__) {
-            room->trainers[trainer->y][trainer->x] = NULL;
-            room->trainers[trainer->y][trainer->x + 1] = trainer;
+              trainer->x--;
+            } else {
+              trainer->dir = E;
+            }
 
-            trainer->x++;
-          } else {
-            trainer->dir = W;
-          }
+            break;
+        }
 
-          break;
-        case S:
-          if (getTrainerTileCost(trainer, room,
-                                 &room->tiles[trainer->y + 1][trainer->x]) !=
-              __INT_MAX__) {
-            room->trainers[trainer->y][trainer->x] = NULL;
-            room->trainers[trainer->y + 1][trainer->x] = trainer;
+        enqueueWithPriority(&queue, trainer, curTime);
 
-            trainer->y++;
-          } else {
-            trainer->dir = N;
-          }
-
-          break;
-        case W:
-          if (getTrainerTileCost(trainer, room,
-                                 &room->tiles[trainer->y][trainer->x - 1]) !=
-              __INT_MAX__) {
-            room->trainers[trainer->y][trainer->x] = NULL;
-            room->trainers[trainer->y][trainer->x - 1] = trainer;
-
-            trainer->x--;
-          } else {
-            trainer->dir = E;
-          }
-
-          break;
+        break;
       }
+      case WANDERER:
+      case EXPLORER: {
+        switch (trainer->dir) {
+          case N:
+            if (getTrainerTileCost(trainer, room,
+                                   &room->tiles[trainer->y - 1][trainer->x]) !=
+                    __INT_MAX__ &&
+                (trainer->type == EXPLORER ||
+                 room->tiles[trainer->y - 1][trainer->x].type ==
+                     room->tiles[trainer->y][trainer->x].type)) {
+              room->trainers[trainer->y][trainer->x] = NULL;
+              room->trainers[trainer->y - 1][trainer->x] = trainer;
 
-      enqueueWithPriority(&queue, trainer, curTime);
+              trainer->y--;
+            } else {
+              trainer->dir = rand() % 4;
+            }
+            break;
+          case E:
+            if (getTrainerTileCost(trainer, room,
+                                   &room->tiles[trainer->y][trainer->x + 1]) !=
+                    __INT_MAX__ &&
+                (trainer->type == EXPLORER ||
+                 room->tiles[trainer->y][trainer->x + 1].type ==
+                     room->tiles[trainer->y][trainer->x].type)) {
+              room->trainers[trainer->y][trainer->x] = NULL;
+              room->trainers[trainer->y][trainer->x + 1] = trainer;
 
-      break;
-    }
-    case WANDERER:
-    case EXPLORER: {
-      switch (trainer->dir) {
-        case N:
-          if (getTrainerTileCost(trainer, room,
-                                 &room->tiles[trainer->y - 1][trainer->x]) !=
-                  __INT_MAX__ &&
-              (trainer->type == EXPLORER ||
-               room->tiles[trainer->y - 1][trainer->x].type ==
-                   room->tiles[trainer->y][trainer->x].type)) {
-            room->trainers[trainer->y][trainer->x] = NULL;
-            room->trainers[trainer->y - 1][trainer->x] = trainer;
+              trainer->x++;
+            } else {
+              trainer->dir = rand() % 4;
+            }
+            break;
+          case S:
+            if (getTrainerTileCost(trainer, room,
+                                   &room->tiles[trainer->y + 1][trainer->x]) !=
+                    __INT_MAX__ &&
+                (trainer->type == EXPLORER ||
+                 room->tiles[trainer->y + 1][trainer->x].type ==
+                     room->tiles[trainer->y][trainer->x].type)) {
+              room->trainers[trainer->y][trainer->x] = NULL;
+              room->trainers[trainer->y + 1][trainer->x] = trainer;
 
-            trainer->y--;
-          } else {
-            trainer->dir = rand() % 4;
-          }
-          break;
-        case E:
-          if (getTrainerTileCost(trainer, room,
-                                 &room->tiles[trainer->y][trainer->x + 1]) !=
-                  __INT_MAX__ &&
-              (trainer->type == EXPLORER ||
-               room->tiles[trainer->y][trainer->x + 1].type ==
-                   room->tiles[trainer->y][trainer->x].type)) {
-            room->trainers[trainer->y][trainer->x] = NULL;
-            room->trainers[trainer->y][trainer->x + 1] = trainer;
+              trainer->y++;
+            } else {
+              trainer->dir = rand() % 4;
+            }
+            break;
+          case W:
+            if (getTrainerTileCost(trainer, room,
+                                   &room->tiles[trainer->y][trainer->x - 1]) !=
+                    __INT_MAX__ &&
+                (trainer->type == EXPLORER ||
+                 room->tiles[trainer->y][trainer->x - 1].type ==
+                     room->tiles[trainer->y][trainer->x].type)) {
+              room->trainers[trainer->y][trainer->x] = NULL;
+              room->trainers[trainer->y][trainer->x - 1] = trainer;
 
-            trainer->x++;
-          } else {
-            trainer->dir = rand() % 4;
-          }
-          break;
-        case S:
-          if (getTrainerTileCost(trainer, room,
-                                 &room->tiles[trainer->y + 1][trainer->x]) !=
-                  __INT_MAX__ &&
-              (trainer->type == EXPLORER ||
-               room->tiles[trainer->y + 1][trainer->x].type ==
-                   room->tiles[trainer->y][trainer->x].type)) {
-            room->trainers[trainer->y][trainer->x] = NULL;
-            room->trainers[trainer->y + 1][trainer->x] = trainer;
+              trainer->x--;
+            } else {
+              trainer->dir = rand() % 4;
+            }
+            break;
+        }
 
-            trainer->y++;
-          } else {
-            trainer->dir = rand() % 4;
-          }
-          break;
-        case W:
-          if (getTrainerTileCost(trainer, room,
-                                 &room->tiles[trainer->y][trainer->x - 1]) !=
-                  __INT_MAX__ &&
-              (trainer->type == EXPLORER ||
-               room->tiles[trainer->y][trainer->x - 1].type ==
-                   room->tiles[trainer->y][trainer->x].type)) {
-            room->trainers[trainer->y][trainer->x] = NULL;
-            room->trainers[trainer->y][trainer->x - 1] = trainer;
+        enqueueWithPriority(&queue, trainer, curTime);
 
-            trainer->x--;
-          } else {
-            trainer->dir = rand() % 4;
-          }
-          break;
+        break;
       }
-
-      enqueueWithPriority(&queue, trainer, curTime);
-
-      break;
+      case SENTRY:
+        break;
     }
-    case SENTRY:
-      break;
+    trainersMoved++;
   }
 }

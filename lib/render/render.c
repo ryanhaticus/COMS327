@@ -59,6 +59,7 @@ int getTileColor(struct Tile tile) {
 }
 
 void renderGame(struct Game *game) {
+  clear();
   useDefaultColor();
 
   mvprintw(0, 0, game->status);
