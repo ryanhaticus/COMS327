@@ -67,7 +67,7 @@ int movePlayer(int move, Game *game) {
           player->y--;
           return 0;
         }
-        setStatus(game, "Can't go there! Something is in the way.");
+        setStatus(game, "Can't travel to upper left! Something is in the way.");
         break;
       case '8':
       case 'k':
@@ -75,7 +75,7 @@ int movePlayer(int move, Game *game) {
           player->y--;
           return 0;
         }
-        setStatus(game, "Can't go there! Something is in the way.");
+        setStatus(game, "Can't travel up! Something is in the way.");
         break;
       case '9':
       case 'u':
@@ -85,7 +85,8 @@ int movePlayer(int move, Game *game) {
           player->y--;
           return 0;
         }
-        setStatus(game, "Can't go there! Something is in the way.");
+        setStatus(game,
+                  "Can't travel to upper right! Something is in the way.");
         break;
       case '6':
       case 'l':
@@ -93,7 +94,7 @@ int movePlayer(int move, Game *game) {
           player->x++;
           return 0;
         }
-        setStatus(game, "Can't go there! Something is in the way.");
+        setStatus(game, "Can't travel right! Something is in the way.");
         break;
       case '3':
       case 'n':
@@ -103,7 +104,8 @@ int movePlayer(int move, Game *game) {
           player->y++;
           return 0;
         }
-        setStatus(game, "Can't go there! Something is in the way.");
+        setStatus(game,
+                  "Can't travel to lower right! Something is in the way.");
         break;
       case '2':
       case 'j':
@@ -111,7 +113,7 @@ int movePlayer(int move, Game *game) {
           player->y++;
           return 0;
         }
-        setStatus(game, "Can't go there! Something is in the way.");
+        setStatus(game, "Can't travel down! Something is in the way.");
         break;
       case '1':
       case 'b':
@@ -121,7 +123,7 @@ int movePlayer(int move, Game *game) {
           player->y++;
           return 0;
         }
-        setStatus(game, "Can't go there! Something is in the way.");
+        setStatus(game, "Can't travel to lower left! Something is in the way.");
         break;
       case '4':
       case 'h':
@@ -129,7 +131,7 @@ int movePlayer(int move, Game *game) {
           player->x--;
           return 0;
         }
-        setStatus(game, "Can't go there! Something is in the way.");
+        setStatus(game, "Can't travel left! Something is in the way.");
         break;
       case '>':
         game->state = GAME_STATE_IN_MENU;
