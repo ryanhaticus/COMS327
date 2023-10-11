@@ -92,5 +92,8 @@ void renderGame(struct Game *game) {
     }
   }
 
+  if (game->state == GAME_STATE_IN_MENU) {
+  }
+
   refresh();
 }

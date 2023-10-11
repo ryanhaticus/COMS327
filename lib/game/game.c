@@ -63,11 +63,13 @@ void startLoop(Game *game) {
     int move = getch();
 
     while (movePlayer(move, game)) {
+      renderGame(game);
       move = getch();
     }
 
     if (game->state == GAME_STATE_PLAYING) {
       moveTrainers(game->map.rooms[game->map.y][game->map.x], &game->player);
+      setStatus(game, "It's your move!");
     }
   }
 }
