@@ -38,3 +38,4 @@
 - 10/09/2023, 12:55 PM: Added colors
 - 10/10/2023, 1:13 AM: Changed forest color and added status message
 - 10/10/2023, 12:09 PM: Added typedefs to shorten code and refactored include statements
+- 10/10/2023, 9:02 PM: Aded game sate enum and player movement functionality
