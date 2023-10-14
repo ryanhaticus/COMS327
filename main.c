@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
   initscr();
   noecho();
   curs_set(0);
+  keypad(stdscr, TRUE);
 
   // Setting the seed for the random number generator.
   time_t seed = time(NULL);

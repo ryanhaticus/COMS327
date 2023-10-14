@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "../map/map.h"
+#include "../menu/menu.h"
 #include "../player/player.h"
 
 typedef enum GameState {
@@ -16,6 +17,7 @@ typedef struct Game {
   int seed;
   char status[128];
   GameState state;
+  Menu menu;
 } Game;
 
 int createGame(Game *game, int trainersPerRoom);

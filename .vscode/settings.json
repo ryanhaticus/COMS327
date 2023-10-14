@@ -51,6 +51,8 @@
     "unistd.h": "c",
     "renderer.h": "c",
     "math.h": "c",
-    "render.h": "c"
+    "render.h": "c",
+    "typeinfo": "c",
+    "menu.h": "c"
   }
 }

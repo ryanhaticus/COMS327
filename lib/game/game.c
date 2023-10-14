@@ -56,8 +56,6 @@ void startLoop(Game *game) {
   setStatus(game, "It's your move!");
 
   while (game->state != GAME_STATE_QUIT) {
-    usleep(10000);
-
     renderGame(game);
 
     int move = getch();

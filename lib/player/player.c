@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "../game/game.h"
+#include "../menu/menu.h"
 #include "../room/room.h"
 
 void createPlayer(Player *player, int x, int y) {
@@ -37,14 +38,12 @@ int movePlayer(int move, Game *game) {
 
   if (game->state == GAME_STATE_IN_MENU) {
     switch (move) {
-      case 't':
-        break;
-      case 65:  // up arrow
-        break;
-      case 66:  // down arrow
-        break;
+      case '<':
       case 27:  // escape
-        break;
+        game->state = GAME_STATE_PLAYING;
+        return 0;
+      default:
+        return game->menu.move(move, game);
     }
 
     return 1;
@@ -55,6 +54,11 @@ int movePlayer(int move, Game *game) {
 
   if (game->state == GAME_STATE_PLAYING) {
     switch (move) {
+      case 't':
+        setStatus(game, "Viewing Menu");
+        prepareMenu(MENU_TYPE_TRAINER_LIST, &game->menu);
+        game->state = GAME_STATE_IN_MENU;
+        return 0;
       case '5':
       case ' ':
       case '.':
@@ -133,10 +137,25 @@ int movePlayer(int move, Game *game) {
         }
         setStatus(game, "Can't travel left! Something is in the way.");
         break;
-      case '>':
-        game->state = GAME_STATE_IN_MENU;
-        setStatus(game, "Viewing menu");
-        return 0;
+      case '>': {
+        int tileType = game->map.rooms[game->map.y][game->map.x]
+                           ->tiles[player->y][player->x]
+                           .type;
+        if (tileType == POKEMON_CENTER) {
+          game->state = GAME_STATE_IN_MENU;
+          prepareMenu(MENU_TYPE_POKEMON_CENTER, &game->menu);
+          setStatus(game, "Viewing Menu");
+          return 0;
+        }
+
+        if (tileType == POKEMART) {
+          game->state = GAME_STATE_IN_MENU;
+          prepareMenu(MENU_TYPE_POKEMART, &game->menu);
+          setStatus(game, "Viewing Menu");
+          return 0;
+        }
+        break;
+      }
     }
   }
 
