@@ -13,6 +13,7 @@ typedef enum MenuType {
   MENU_TYPE_TRAINER_LIST,
   MENU_TYPE_POKEMON_CENTER,
   MENU_TYPE_POKEMART,
+  MENU_TYPE_BATTLE
 } MenuType;
 
 typedef struct Menu {

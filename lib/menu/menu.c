@@ -88,6 +88,9 @@ void renderTrainerList(Game *game) {
 
 int moveTrainerList(int move, Game *game) {
   switch (move) {
+    case 27:  // Escape
+      game->state = GAME_STATE_PLAYING;
+      return 0;
     case KEY_UP:
       if (game->menu.position > 0) {
         game->menu.position--;
@@ -105,11 +108,47 @@ int moveTrainerList(int move, Game *game) {
 
 void renderPokemonCenter(Game *game) { renderBaseMenu("Pokemon Center"); }
 
-int movePokemonCenter(int move, Game *game) { return 1; }
+int movePokemonCenter(int move, Game *game) {
+  switch (move) {
+    case '<':
+      game->state = GAME_STATE_PLAYING;
+      return 0;
+  }
+
+  return 1;
+}
 
 void renderPokemart(Game *game) { renderBaseMenu("Pokemart"); }
 
-int movePokemart(int move, Game *game) { return 1; }
+int movePokemart(int move, Game *game) {
+  switch (move) {
+    case '<':
+      game->state = GAME_STATE_PLAYING;
+      return 0;
+  }
+
+  return 1;
+}
+
+void renderBattle(Game *game) {
+  renderBaseMenu("Battle");
+  Trainer *against = game->battle.against;
+
+  int x, y;
+  calculateStartPosition(&x, &y);
+
+  mvprintw(y, x, "You are battling %c!", getTrainerCharacter(against));
+}
+
+int moveBattle(int move, Game *game) {
+  switch (move) {
+    case 27:  // Escape
+      game->state = GAME_STATE_PLAYING;
+      return 0;
+  }
+
+  return 1;
+}
 
 int prepareMenu(MenuType type, Menu *menu) {
   menu->type = type;
@@ -127,6 +166,10 @@ int prepareMenu(MenuType type, Menu *menu) {
     case MENU_TYPE_POKEMART:
       menu->move = movePokemart;
       menu->render = renderPokemart;
+      break;
+    case MENU_TYPE_BATTLE:
+      menu->move = moveBattle;
+      menu->render = renderBattle;
       break;
   }
 

@@ -66,7 +66,17 @@ void startLoop(Game *game) {
     }
 
     if (game->state == GAME_STATE_PLAYING) {
-      moveTrainers(game->map.rooms[game->map.y][game->map.x], &game->player);
+      Trainer *trainerToBattle = NULL;
+
+      moveTrainers(game->map.rooms[game->map.y][game->map.x], &game->player,
+                   &trainerToBattle);
+
+      if (trainerToBattle != NULL) {
+        startBattle(game, trainerToBattle);
+
+        continue;
+      }
+
       setStatus(game, "It's your move!");
     }
   }

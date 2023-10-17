@@ -41,3 +41,4 @@
 - 10/10/2023, 9:02 PM: Added game sate enum and player movement functionality
 - 10/10/2023, 9:30 PM: Implemented player movement
 - 10/14/2023, 4:46 PM: Did a complete rehaul of the menu system and added the trainer list, pokemon center menu, and pokemart menu
+- 10/17/2023, 1:27 AM: Completed battle screens for both the player entering a trainer and vice versa.

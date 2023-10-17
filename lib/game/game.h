@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "../battle/battle.h"
 #include "../map/map.h"
 #include "../menu/menu.h"
 #include "../player/player.h"
@@ -18,6 +19,7 @@ typedef struct Game {
   char status[128];
   GameState state;
   Menu menu;
+  Battle battle;
 } Game;
 
 int createGame(Game *game, int trainersPerRoom);

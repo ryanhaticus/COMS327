@@ -15,6 +15,7 @@ typedef struct Trainer {
   enum TrainerType type;
   int x, y;
   int dir;
+  int defeated;
 } Trainer;
 
 int getTrainerTileCost(Trainer *trainer, Room *room, Tile *tile);
@@ -25,6 +26,6 @@ void placeTrainerInRoom(Trainer *trainersInRoom[ROOM_HEIGHT][ROOM_WIDTH],
 char getTrainerCharacter(Trainer *trainer);
 int createTrainer(Trainer **trainer);
 void destroyTrainer(Trainer *trainer);
-void moveTrainers(Room *room, Player *player);
+void moveTrainers(Room *room, Player *player, Trainer **trainerToBattle);
 
 #endif

@@ -5,6 +5,7 @@
 #include "../game/game.h"
 #include "../menu/menu.h"
 #include "../room/room.h"
+#include "../trainer/trainer.h"
 
 void createPlayer(Player *player, int x, int y) {
   player->x = x;
@@ -24,6 +25,10 @@ int canPlayerTravelTo(Player *player, Room *currentRoom, int x, int y) {
   }
 
   if (currentRoom->trainers[y][x] != NULL) {
+    if (currentRoom->trainers[y][x]->defeated == 0) {
+      return 2;
+    }
+
     return 0;
   }
 
@@ -31,28 +36,20 @@ int canPlayerTravelTo(Player *player, Room *currentRoom, int x, int y) {
 }
 
 int movePlayer(int move, Game *game) {
-  if (move == 'q') {
+  if (move == 'q' || move == 'Q') {
     game->state = GAME_STATE_QUIT;
     return 0;
   }
 
   if (game->state == GAME_STATE_IN_MENU) {
-    switch (move) {
-      case '<':
-      case 27:  // escape
-        game->state = GAME_STATE_PLAYING;
-        return 0;
-      default:
-        return game->menu.move(move, game);
-    }
-
-    return 1;
+    return game->menu.move(move, game);
   }
 
   Room *currentRoom = game->map.rooms[game->map.y][game->map.x];
   Player *player = &game->player;
 
   if (game->state == GAME_STATE_PLAYING) {
+    int dx = 0, dy = 0;
     switch (move) {
       case 't':
         setStatus(game, "Viewing Menu");
@@ -65,97 +62,70 @@ int movePlayer(int move, Game *game) {
         return 0;
       case '7':
       case 'y':
-        if (canPlayerTravelTo(player, currentRoom, player->x - 1,
-                              player->y - 1)) {
-          player->x--;
-          player->y--;
-          return 0;
-        }
-        setStatus(game, "Can't travel to upper left! Something is in the way.");
+        dx = -1;
+        dy = -1;
         break;
       case '8':
       case 'k':
-        if (canPlayerTravelTo(player, currentRoom, player->x, player->y - 1)) {
-          player->y--;
-          return 0;
-        }
-        setStatus(game, "Can't travel up! Something is in the way.");
+        dy = -1;
         break;
       case '9':
       case 'u':
-        if (canPlayerTravelTo(player, currentRoom, player->x + 1,
-                              player->y - 1)) {
-          player->x++;
-          player->y--;
-          return 0;
-        }
-        setStatus(game,
-                  "Can't travel to upper right! Something is in the way.");
+        dx = 1;
+        dy = -1;
         break;
       case '6':
       case 'l':
-        if (canPlayerTravelTo(player, currentRoom, player->x + 1, player->y)) {
-          player->x++;
-          return 0;
-        }
-        setStatus(game, "Can't travel right! Something is in the way.");
+        dx = 1;
         break;
       case '3':
       case 'n':
-        if (canPlayerTravelTo(player, currentRoom, player->x + 1,
-                              player->y + 1)) {
-          player->x++;
-          player->y++;
-          return 0;
-        }
-        setStatus(game,
-                  "Can't travel to lower right! Something is in the way.");
+        dx = 1;
+        dy = 1;
         break;
       case '2':
       case 'j':
-        if (canPlayerTravelTo(player, currentRoom, player->x, player->y + 1)) {
-          player->y++;
-          return 0;
-        }
-        setStatus(game, "Can't travel down! Something is in the way.");
+        dy = 1;
         break;
       case '1':
       case 'b':
-        if (canPlayerTravelTo(player, currentRoom, player->x - 1,
-                              player->y + 1)) {
-          player->x--;
-          player->y++;
-          return 0;
-        }
-        setStatus(game, "Can't travel to lower left! Something is in the way.");
+        dx = -1;
+        dy = 1;
         break;
       case '4':
       case 'h':
-        if (canPlayerTravelTo(player, currentRoom, player->x - 1, player->y)) {
-          player->x--;
-          return 0;
-        }
-        setStatus(game, "Can't travel left! Something is in the way.");
+        dx = -1;
         break;
       case '>': {
-        int tileType = game->map.rooms[game->map.y][game->map.x]
-                           ->tiles[player->y][player->x]
-                           .type;
-        if (tileType == POKEMON_CENTER) {
+        int tileType = currentRoom->tiles[player->y][player->x].type;
+        if (tileType == POKEMON_CENTER || tileType == POKEMART) {
           game->state = GAME_STATE_IN_MENU;
-          prepareMenu(MENU_TYPE_POKEMON_CENTER, &game->menu);
-          setStatus(game, "Viewing Menu");
-          return 0;
-        }
-
-        if (tileType == POKEMART) {
-          game->state = GAME_STATE_IN_MENU;
-          prepareMenu(MENU_TYPE_POKEMART, &game->menu);
+          prepareMenu(tileType == POKEMON_CENTER ? MENU_TYPE_POKEMON_CENTER
+                                                 : MENU_TYPE_POKEMART,
+                      &game->menu);
           setStatus(game, "Viewing Menu");
           return 0;
         }
         break;
       }
+    }
+
+    if (dx != 0 || dy != 0) {
+      int travelStatus = canPlayerTravelTo(player, currentRoom, player->x + dx,
+                                           player->y + dy);
+
+      if (travelStatus == 2) {
+        startBattle(game,
+                    currentRoom->trainers[player->y + dy][player->x + dx]);
+        return 0;
+      }
+
+      if (travelStatus) {
+        player->x += dx;
+        player->y += dy;
+        return 0;
+      }
+      setStatus(game, "Can't travel! Something is in the way.");
     }
   }
 

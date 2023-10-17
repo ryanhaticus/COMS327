@@ -168,7 +168,7 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], Room *room,
     }
   }
 
-  costs[player->y][player->x] = __INT_MAX__;
+  costs[player->y][player->x] = trainer->defeated ? __INT_MAX__ : 0;
 
   destroyPriorityQueue(&queue);
 }
@@ -220,13 +220,14 @@ int createTrainer(Trainer **trainer) {
   (*trainer)->type = rand() % NUM_TRAINERS;
   (*trainer)->x = 0;
   (*trainer)->y = 0;
+  (*trainer)->defeated = 0;
 
   return 0;
 }
 
 void destroyTrainer(Trainer *trainer) { free(trainer); }
 
-void moveTrainers(Room *room, Player *player) {
+void moveTrainers(Room *room, Player *player, Trainer **trainerToBattle) {
   static int initialized = 0;
   static PriorityQueue queue;
   static int curTime = 0;
@@ -270,6 +271,85 @@ void moveTrainers(Room *room, Player *player) {
     switch (trainer->type) {
       case RIVAL:
       case HIKER: {
+        if (trainer->defeated) {
+          // move in a random direction, after defeat cannot battle again
+          int dir = rand() % 4;
+
+          switch (dir) {
+            case N:
+              if (getTrainerTileCost(
+                      trainer, room,
+                      &room->tiles[trainer->y - 1][trainer->x]) !=
+                  __INT_MAX__) {
+                if (!trainer->defeated && trainer->x == player->x &&
+                    trainer->y - 1 == player->y) {
+                  *trainerToBattle = trainer;
+                  break;
+                }
+
+                room->trainers[trainer->y][trainer->x] = NULL;
+                room->trainers[trainer->y - 1][trainer->x] = trainer;
+
+                trainer->y--;
+              }
+              break;
+            case E:
+              if (getTrainerTileCost(
+                      trainer, room,
+                      &room->tiles[trainer->y][trainer->x + 1]) !=
+                  __INT_MAX__) {
+                if (!trainer->defeated && trainer->x + 1 == player->x &&
+                    trainer->y == player->y) {
+                  *trainerToBattle = trainer;
+                  break;
+                }
+
+                room->trainers[trainer->y][trainer->x] = NULL;
+                room->trainers[trainer->y][trainer->x + 1] = trainer;
+
+                trainer->x++;
+              }
+              break;
+            case S:
+              if (getTrainerTileCost(
+                      trainer, room,
+                      &room->tiles[trainer->y + 1][trainer->x]) !=
+                  __INT_MAX__) {
+                if (!trainer->defeated && trainer->x == player->x &&
+                    trainer->y + 1 == player->y) {
+                  *trainerToBattle = trainer;
+                  break;
+                }
+
+                room->trainers[trainer->y][trainer->x] = NULL;
+                room->trainers[trainer->y + 1][trainer->x] = trainer;
+
+                trainer->y++;
+              }
+              break;
+            case W:
+              if (getTrainerTileCost(
+                      trainer, room,
+                      &room->tiles[trainer->y][trainer->x - 1]) !=
+                  __INT_MAX__) {
+                if (!trainer->defeated && trainer->x - 1 == player->x &&
+                    trainer->y == player->y) {
+                  *trainerToBattle = trainer;
+                  break;
+                }
+
+                room->trainers[trainer->y][trainer->x] = NULL;
+                room->trainers[trainer->y][trainer->x - 1] = trainer;
+
+                trainer->x--;
+              }
+              break;
+          }
+
+          enqueueWithPriority(&queue, trainer, curTime);
+          break;
+        }
+
         int costs[ROOM_HEIGHT][ROOM_WIDTH];
         getTrainerTravelCost(costs, room, trainer, player);
 
@@ -299,6 +379,13 @@ void moveTrainers(Room *room, Player *player) {
           break;
         }
 
+        if (!trainer->defeated && minTile->x == player->x &&
+            minTile->y == player->y) {
+          *trainerToBattle = trainer;
+          enqueueWithPriority(&queue, trainer, curTime);
+          break;
+        }
+
         room->trainers[trainer->y][trainer->x] = NULL;
         room->trainers[minTile->y][minTile->x] = trainer;
 
@@ -317,6 +404,12 @@ void moveTrainers(Room *room, Player *player) {
             if (getTrainerTileCost(trainer, room,
                                    &room->tiles[trainer->y - 1][trainer->x]) !=
                 __INT_MAX__) {
+              if (!trainer->defeated && trainer->x == player->x &&
+                  trainer->y - 1 == player->y) {
+                *trainerToBattle = trainer;
+                break;
+              }
+
               room->trainers[trainer->y][trainer->x] = NULL;
               room->trainers[trainer->y - 1][trainer->x] = trainer;
 
@@ -329,6 +422,12 @@ void moveTrainers(Room *room, Player *player) {
             if (getTrainerTileCost(trainer, room,
                                    &room->tiles[trainer->y][trainer->x + 1]) !=
                 __INT_MAX__) {
+              if (!trainer->defeated && trainer->x + 1 == player->x &&
+                  trainer->y == player->y) {
+                *trainerToBattle = trainer;
+                break;
+              }
+
               room->trainers[trainer->y][trainer->x] = NULL;
               room->trainers[trainer->y][trainer->x + 1] = trainer;
 
@@ -342,6 +441,12 @@ void moveTrainers(Room *room, Player *player) {
             if (getTrainerTileCost(trainer, room,
                                    &room->tiles[trainer->y + 1][trainer->x]) !=
                 __INT_MAX__) {
+              if (!trainer->defeated && trainer->x == player->x &&
+                  trainer->y + 1 == player->y) {
+                *trainerToBattle = trainer;
+                break;
+              }
+
               room->trainers[trainer->y][trainer->x] = NULL;
               room->trainers[trainer->y + 1][trainer->x] = trainer;
 
@@ -355,6 +460,12 @@ void moveTrainers(Room *room, Player *player) {
             if (getTrainerTileCost(trainer, room,
                                    &room->tiles[trainer->y][trainer->x - 1]) !=
                 __INT_MAX__) {
+              if (!trainer->defeated && trainer->x - 1 == player->x &&
+                  trainer->y == player->y) {
+                *trainerToBattle = trainer;
+                break;
+              }
+
               room->trainers[trainer->y][trainer->x] = NULL;
               room->trainers[trainer->y][trainer->x - 1] = trainer;
 
@@ -380,6 +491,12 @@ void moveTrainers(Room *room, Player *player) {
                 (trainer->type == EXPLORER ||
                  room->tiles[trainer->y - 1][trainer->x].type ==
                      room->tiles[trainer->y][trainer->x].type)) {
+              if (!trainer->defeated && trainer->x == player->x &&
+                  trainer->y - 1 == player->y) {
+                *trainerToBattle = trainer;
+                break;
+              }
+
               room->trainers[trainer->y][trainer->x] = NULL;
               room->trainers[trainer->y - 1][trainer->x] = trainer;
 
@@ -395,6 +512,12 @@ void moveTrainers(Room *room, Player *player) {
                 (trainer->type == EXPLORER ||
                  room->tiles[trainer->y][trainer->x + 1].type ==
                      room->tiles[trainer->y][trainer->x].type)) {
+              if (!trainer->defeated && trainer->x + 1 == player->x &&
+                  trainer->y == player->y) {
+                *trainerToBattle = trainer;
+                break;
+              }
+
               room->trainers[trainer->y][trainer->x] = NULL;
               room->trainers[trainer->y][trainer->x + 1] = trainer;
 
@@ -410,6 +533,12 @@ void moveTrainers(Room *room, Player *player) {
                 (trainer->type == EXPLORER ||
                  room->tiles[trainer->y + 1][trainer->x].type ==
                      room->tiles[trainer->y][trainer->x].type)) {
+              if (!trainer->defeated && trainer->x == player->x &&
+                  trainer->y + 1 == player->y) {
+                *trainerToBattle = trainer;
+                break;
+              }
+
               room->trainers[trainer->y][trainer->x] = NULL;
               room->trainers[trainer->y + 1][trainer->x] = trainer;
 
@@ -425,6 +554,12 @@ void moveTrainers(Room *room, Player *player) {
                 (trainer->type == EXPLORER ||
                  room->tiles[trainer->y][trainer->x - 1].type ==
                      room->tiles[trainer->y][trainer->x].type)) {
+              if (!trainer->defeated && trainer->x - 1 == player->x &&
+                  trainer->y == player->y) {
+                *trainerToBattle = trainer;
+                break;
+              }
+
               room->trainers[trainer->y][trainer->x] = NULL;
               room->trainers[trainer->y][trainer->x - 1] = trainer;
 
