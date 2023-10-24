@@ -1,7 +1,8 @@
 #include "render.h"
 
 #include <ncurses.h>
-#include <stdlib.h>
+
+#include <cstdlib>
 
 #include "../game/game.h"
 #include "../room/room.h"

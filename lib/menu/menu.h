@@ -20,8 +20,10 @@ typedef struct Menu {
   MenuType type;
   int position;
   int (*move)(int move, Game *game);
-  void (*render)();
+  void (*render)(Game *game);
 } Menu;
+
+extern const char *menuHeaders[];
 
 int prepareMenu(MenuType type, Menu *menu);
 int destroyMenu(Menu *menu);

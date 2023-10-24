@@ -1,15 +1,18 @@
 #include "menu.h"
 
-#include <math.h>
+const char *menuHeaders[] = {"Trainer List", "Pokemon Center", "Pokemart",
+                             "Battle"};
+
 #include <ncurses.h>
-#include <stdlib.h>
-#include <string.h>
+
+#include <cstdlib>
+#include <cstring>
 
 #include "../game/game.h"
 #include "../room/room.h"
 #include "../trainer/trainer.h"
 
-void renderBaseMenu(char *title) {
+void renderBaseMenu(const char *title) {
   int boxX = (WINDOW_WIDTH - MENU_WIDTH) / 2;
   int boxY = (WINDOW_HEIGHT - MENU_HEIGHT) / 2;
 
@@ -45,7 +48,7 @@ void calculateStartPosition(int *x, int *y) {
 }
 
 void renderTrainerList(Game *game) {
-  renderBaseMenu("Trainer List");
+  renderBaseMenu(menuHeaders[0]);
 
   int x, y;
   calculateStartPosition(&x, &y);
@@ -106,7 +109,7 @@ int moveTrainerList(int move, Game *game) {
   return 1;
 }
 
-void renderPokemonCenter(Game *game) { renderBaseMenu("Pokemon Center"); }
+void renderPokemonCenter(Game *game) { renderBaseMenu(menuHeaders[1]); }
 
 int movePokemonCenter(int move, Game *game) {
   switch (move) {
@@ -118,7 +121,7 @@ int movePokemonCenter(int move, Game *game) {
   return 1;
 }
 
-void renderPokemart(Game *game) { renderBaseMenu("Pokemart"); }
+void renderPokemart(Game *game) { renderBaseMenu(menuHeaders[2]); }
 
 int movePokemart(int move, Game *game) {
   switch (move) {
@@ -131,7 +134,7 @@ int movePokemart(int move, Game *game) {
 }
 
 void renderBattle(Game *game) {
-  renderBaseMenu("Battle");
+  renderBaseMenu(menuHeaders[3]);
   Trainer *against = game->battle.against;
 
   int x, y;

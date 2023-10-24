@@ -6,7 +6,7 @@ void startBattle(Game* game, Trainer* against) {
   against->defeated = 1;
   game->battle.against = against;
 
-  setStatus(game, "Battling a trainer");
+  setStatus(game, gameStatuses[1]);
 
   prepareMenu(MENU_TYPE_BATTLE, &game->menu);
 

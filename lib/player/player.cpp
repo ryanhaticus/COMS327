@@ -1,6 +1,6 @@
 #include "player.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "../game/game.h"
 #include "../menu/menu.h"
@@ -52,7 +52,7 @@ int movePlayer(int move, Game *game) {
     int dx = 0, dy = 0;
     switch (move) {
       case 't':
-        setStatus(game, "Viewing Menu");
+        setStatus(game, gameStatuses[3]);
         prepareMenu(MENU_TYPE_TRAINER_LIST, &game->menu);
         game->state = GAME_STATE_IN_MENU;
         return 0;
@@ -103,7 +103,7 @@ int movePlayer(int move, Game *game) {
           prepareMenu(tileType == POKEMON_CENTER ? MENU_TYPE_POKEMON_CENTER
                                                  : MENU_TYPE_POKEMART,
                       &game->menu);
-          setStatus(game, "Viewing Menu");
+          setStatus(game, gameStatuses[3]);
           return 0;
         }
         break;
@@ -125,7 +125,7 @@ int movePlayer(int move, Game *game) {
         player->y += dy;
         return 0;
       }
-      setStatus(game, "Can't travel! Something is in the way.");
+      setStatus(game, gameStatuses[4]);
     }
   }
 

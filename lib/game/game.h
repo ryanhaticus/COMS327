@@ -22,9 +22,11 @@ typedef struct Game {
   Battle battle;
 } Game;
 
+extern const char *gameStatuses[];
+
 int createGame(Game *game, int trainersPerRoom);
 int destroyGame(Game *game);
 void startLoop(Game *game);
-void setStatus(Game *game, char *status);
+void setStatus(Game *game, const char *status);
 
 #endif

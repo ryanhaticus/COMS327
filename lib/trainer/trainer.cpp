@@ -1,10 +1,12 @@
 #include "trainer.h"
 
 #include <ncurses.h>
-#include <stdio.h>
-#include <stdlib.h>
 
+#include <cstdlib>
+
+extern "C" {
 #include "../../util/priorityqueue/priorityqueue.h"
+}
 #include "../map/map.h"
 #include "../player/player.h"
 #include "../tile/tile.h"
@@ -118,7 +120,7 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], Room *room,
   PriorityQueue queue;
   createPriorityQueue(&queue);
 
-  TileWithCost *tileWithCost = malloc(sizeof(TileWithCost));
+  TileWithCost *tileWithCost = (TileWithCost *)malloc(sizeof(TileWithCost));
   tileWithCost->tile = &room->tiles[player->y][player->x];
   tileWithCost->cost = 0;
 
@@ -158,7 +160,8 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], Room *room,
           continue;
         }
 
-        TileWithCost *tileWithCost = malloc(sizeof(TileWithCost));
+        TileWithCost *tileWithCost =
+            (TileWithCost *)malloc(sizeof(TileWithCost));
         tileWithCost->tile = &room->tiles[i][j];
 
         tileWithCost->cost = costs[y][x] + trainerTileCost;
@@ -210,14 +213,14 @@ char getTrainerCharacter(Trainer *trainer) {
 }
 
 int createTrainer(Trainer **trainer) {
-  *trainer = malloc(sizeof(Trainer));
+  *trainer = (Trainer *)malloc(sizeof(Trainer));
 
   if (trainer == NULL) {
     return 1;
   }
 
   (*trainer)->dir = rand() % 4;
-  (*trainer)->type = rand() % NUM_TRAINERS;
+  (*trainer)->type = (TrainerType)(rand() % NUM_TRAINERS);
   (*trainer)->x = 0;
   (*trainer)->y = 0;
   (*trainer)->defeated = 0;

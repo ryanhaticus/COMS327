@@ -1,9 +1,10 @@
 #include "room.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdlib>
 
+extern "C" {
 #include "../../util/queue/queue.h"
+}
 #include "../map/map.h"
 #include "../room/room.h"
 #include "../trainer/trainer.h"
@@ -34,7 +35,7 @@ int createRoom(Map *map, Room *room, int i, int j) {
     createTrainer(&trainer);
 
     if (i <= 1) {
-      trainer->type = i;
+      trainer->type = (TrainerType)i;
     }
 
     placeTrainerInRoom(room->trainers, trainer, room);

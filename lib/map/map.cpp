@@ -1,8 +1,7 @@
 #include "map.h"
 
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cmath>
+#include <cstdlib>
 
 #include "../room/room.h"
 
@@ -20,7 +19,7 @@ int createMap(Map *map, int trainersPerRoom) {
 
   map->trainersPerRoom = trainersPerRoom;
 
-  Room *room = malloc(sizeof(Room));
+  Room *room = (Room *)malloc(sizeof(Room));
 
   createRoom(map, room, map->x, map->y);
 

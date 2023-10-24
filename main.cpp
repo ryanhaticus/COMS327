@@ -1,9 +1,7 @@
-#include <math.h>
 #include <ncurses.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+
+#include <iostream>
+#include <cstring>
 
 #include "./lib/game/game.h"
 #include "./lib/map/map.h"
@@ -14,7 +12,8 @@ int main(int argc, char *argv[]) {
 
   if (argc > 1 && strcmp(argv[1], "--numtrainers") == 0) {
     if (argc == 2) {
-      printf("Proper usage: %s --numtrainers <number>\n", argv[0]);
+      std::cout << "Proper usage: " << argv[0] << " --numtrainers <number>"
+                << std::endl;
       return 1;
     }
 

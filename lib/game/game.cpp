@@ -1,9 +1,13 @@
 #include "game.h"
 
+const char *gameStatuses[] = {"", "Battling a trainer", "It's your move!",
+                              "Viewing Menu",
+                              "Can't travel! Something is in the way."};
+
 #include <ncurses.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+
+#include <cstdlib>
+#include <cstring>
 
 #include "../render/render.h"
 #include "../room/room.h"
@@ -25,7 +29,7 @@ void placePlayerRandomly(Map *map, Player *player) {
   player->y = y;
 }
 
-void setStatus(Game *game, char *status) {
+void setStatus(Game *game, const char *status) {
   memset(game->status, 0, sizeof(game->status));
   strcpy(game->status, status);
 }
@@ -35,7 +39,7 @@ int createGame(Game *game, int trainersPerRoom) {
 
   createPlayer(&game->player, 0, 0);
 
-  setStatus(game, "");
+  setStatus(game, gameStatuses[0]);
 
   game->state = GAME_STATE_PLAYING;
 
@@ -53,7 +57,7 @@ void startLoop(Game *game) {
 
   renderGame(game);
 
-  setStatus(game, "It's your move!");
+  setStatus(game, gameStatuses[2]);
 
   while (game->state != GAME_STATE_QUIT) {
     renderGame(game);
@@ -77,7 +81,7 @@ void startLoop(Game *game) {
         continue;
       }
 
-      setStatus(game, "It's your move!");
+      setStatus(game, gameStatuses[2]);
     }
   }
 }

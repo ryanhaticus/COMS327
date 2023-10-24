@@ -1,6 +1,6 @@
 #include "tile.h"
 
-#include <math.h>
+#include <cmath>
 
 int createTile(Tile *tile, int type, int x, int y) {
   tile->type = type;
