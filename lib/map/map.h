@@ -9,13 +9,14 @@
 #define S 2
 #define W 3
 
-typedef struct Room Room;
+typedef class Room Room;
 
-typedef struct Map {
+class Map {
+ public:
   int x, y;
   Room *rooms[MAP_HEIGHT][MAP_WIDTH];
   int trainersPerRoom;
-} Map;
+};
 
 int createMap(Map *map, int trainersPerRoom);
 int destroyMap(Map *map);

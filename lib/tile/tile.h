@@ -14,10 +14,11 @@ enum BuildingTile {
   POKEMART,
 };
 
-typedef struct Tile {
+class Tile {
+ public:
   int type;
   int x, y;
-} Tile;
+};
 
 int createTile(Tile *tile, int type, int x, int y);
 int destroyTile(Tile *tile);

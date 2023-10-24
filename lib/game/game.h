@@ -12,7 +12,8 @@ typedef enum GameState {
   GAME_STATE_QUIT
 } GameState;
 
-typedef struct Game {
+class Game {
+ public:
   Map map;
   Player player;
   int seed;
@@ -20,7 +21,7 @@ typedef struct Game {
   GameState state;
   Menu menu;
   Battle battle;
-} Game;
+};
 
 extern const char *gameStatuses[];
 

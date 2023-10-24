@@ -1,7 +1,7 @@
 #ifndef RENDER_H
 #define RENDER_H
 
-typedef struct Game Game;
+typedef class Game Game;
 
 enum Colors {
   COLOR_PLAYER = 1,
@@ -19,7 +19,7 @@ enum Colors {
 
 void initializeColors();
 
-typedef struct Game Game;
+typedef class Game Game;
 void renderGame(Game *game);
 
 #endif

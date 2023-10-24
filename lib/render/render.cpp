@@ -30,7 +30,7 @@ void stopUsingColor(int color) { attroff(COLOR_PAIR(color)); }
 
 void useDefaultColor() { attroff(COLOR_PAIR(0)); }
 
-int getTileColor(struct Tile tile) {
+int getTileColor(Tile tile) {
   switch (tile.type) {
     case EMPTY:
       break;
@@ -59,7 +59,7 @@ int getTileColor(struct Tile tile) {
   return 0;
 }
 
-void renderGame(struct Game *game) {
+void renderGame(Game *game) {
   clear();
   useDefaultColor();
 
@@ -76,7 +76,7 @@ void renderGame(struct Game *game) {
         continue;
       }
 
-      struct Room room = *game->map.rooms[game->map.y][game->map.x];
+      Room room = *game->map.rooms[game->map.y][game->map.x];
 
       int tileColor = getTileColor(room.tiles[y][x]);
 

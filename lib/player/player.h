@@ -1,11 +1,12 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-typedef struct Game Game;
+typedef class Game Game;
 
-typedef struct Player {
+class Player {
+ public:
   int x, y;
-} Player;
+};
 
 void createPlayer(Player *player, int x, int y);
 int movePlayer(int move, Game *game);

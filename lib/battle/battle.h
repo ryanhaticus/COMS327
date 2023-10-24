@@ -1,12 +1,13 @@
 #ifndef BATTLE_H
 #define BATTLE_H
 
-typedef struct Trainer Trainer;
-typedef struct Game Game;
+typedef class Trainer Trainer;
+typedef class Game Game;
 
-typedef struct Battle {
+class Battle {
+ public:
   Trainer* against;
-} Battle;
+};
 
 void startBattle(Game* game, Trainer* against);
 

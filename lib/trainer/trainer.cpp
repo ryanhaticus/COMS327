@@ -104,10 +104,11 @@ int getTrainerTileCost(Trainer *trainer, Room *room, Tile *tile) {
   return 0;
 }
 
-typedef struct {
-  Tile *tile;
+class TileWithCost {
+ public:
   int cost;
-} TileWithCost;
+  Tile *tile;
+};
 
 void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], Room *room,
                           Trainer *trainer, Player *player) {
@@ -121,7 +122,7 @@ void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], Room *room,
   createPriorityQueue(&queue);
 
   TileWithCost *tileWithCost = (TileWithCost *)malloc(sizeof(TileWithCost));
-  tileWithCost->tile = &room->tiles[player->y][player->x];
+  tileWithCost->tile = &room->tiles[trainer->y][trainer->x];
   tileWithCost->cost = 0;
 
   enqueueWithPriority(&queue, tileWithCost, 0);

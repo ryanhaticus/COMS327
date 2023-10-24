@@ -6,16 +6,17 @@
 
 #include "../tile/tile.h"
 
-typedef struct Map Map;
-typedef struct Room Room;
-typedef struct Trainer Trainer;
+typedef class Map Map;
+typedef class Room Room;
+typedef class Trainer Trainer;
 
-typedef struct Room {
+class Room {
+ public:
   int x, y;
   Tile tiles[ROOM_HEIGHT][ROOM_WIDTH];
   Tile *entrances[4];
   Trainer *trainers[ROOM_HEIGHT][ROOM_WIDTH];
-} Room;
+};
 
 int createRoom(Map *map, Room *room, int x, int y);
 int destroyRoom(Room *room);

@@ -3,20 +3,21 @@
 
 #include "../room/room.h"
 
-typedef struct Room Room;
-typedef struct Player Player;
-typedef struct Tile Tile;
+typedef class Room Room;
+typedef class Player Player;
+typedef class Tile Tile;
 
 #define NUM_TRAINERS 6
 
 enum TrainerType { HIKER, RIVAL, PACER, WANDERER, SENTRY, EXPLORER };
 
-typedef struct Trainer {
+class Trainer {
+ public:
   enum TrainerType type;
   int x, y;
   int dir;
   int defeated;
-} Trainer;
+};
 
 int getTrainerTileCost(Trainer *trainer, Room *room, Tile *tile);
 void getTrainerTravelCost(int costs[ROOM_HEIGHT][ROOM_WIDTH], Room *room,

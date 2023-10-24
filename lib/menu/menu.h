@@ -7,7 +7,7 @@
 #define MENU_WIDTH 72
 #define MENU_HEIGHT 19
 
-typedef struct Game Game;
+typedef class Game Game;
 
 typedef enum MenuType {
   MENU_TYPE_TRAINER_LIST,
@@ -16,12 +16,13 @@ typedef enum MenuType {
   MENU_TYPE_BATTLE
 } MenuType;
 
-typedef struct Menu {
+class Menu {
+ public:
   MenuType type;
   int position;
   int (*move)(int move, Game *game);
   void (*render)(Game *game);
-} Menu;
+};
 
 extern const char *menuHeaders[];
 
