@@ -1,41 +1,51 @@
 #include "debug.h"
 
-#include <cstdio>
+#include <fstream>
+#include <iostream>
 
-FILE* destination = NULL;
+std::ofstream destination;
 
-int isDebugging() { return destination != NULL; }
+int isDebugging() { return destination.is_open(); }
 
 void startDebugging() {
-  if (destination != NULL) {
+  if (isDebugging()) {
     return;
   }
-  destination = fopen("debug.txt", "w");
+
+  destination.open("debug.txt");
 };
 
 void debug(const char* message) {
-  if (destination == NULL) {
+  if (!isDebugging()) {
     return;
   }
 
-  fprintf(destination, "%s\n", message);
-  fflush(destination);
+  destination << message << std::endl;
+  destination.flush();
 }
 
 void debug(const char* identifier, int i) {
-  if (destination == NULL) {
+  if (!isDebugging()) {
     return;
   }
 
-  fprintf(destination, "%s: %d\n", identifier, i);
-  fflush(destination);
+  destination << identifier << ": " << i << std::endl;
+  destination.flush();
+}
+
+void debug(int i) {
+  if (!isDebugging()) {
+    return;
+  }
+
+  destination << i << std::endl;
+  destination.flush();
 }
 
 void stopDebugging() {
-  if (destination == NULL) {
+  if (!isDebugging()) {
     return;
   }
 
-  fclose(destination);
-  destination = NULL;
+  destination.close();
 }

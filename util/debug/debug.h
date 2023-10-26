@@ -4,6 +4,7 @@
 void startDebugging();
 void debug(const char* message);
 void debug(const char* identifier, int i);
+void debug(int i);
 void stopDebugging();
 int isDebugging();
 
