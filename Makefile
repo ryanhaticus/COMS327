@@ -1,7 +1,7 @@
 all: main
 
-main: tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o main.o
-	g++ tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o main.o -o main -Wall -Werror -lm -lncurses
+main: tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o main.o
+	g++ tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o main.o -o main -Wall -Werror -lm -lncurses
 
 tile.o: ./lib/tile/tile.cpp ./lib/tile/tile.h
 	g++ -c ./lib/tile/tile.cpp -o tile.o -Wall -Werror
@@ -36,8 +36,11 @@ menu.o: ./lib/menu/menu.cpp ./lib/menu/menu.h
 battle.o: ./lib/battle/battle.cpp ./lib/battle/battle.h
 	g++ -c ./lib/battle/battle.cpp -o battle.o -Wall -Werror
 
+debug.o: ./util/debug/debug.cpp ./util/debug/debug.h
+	g++ -c ./util/debug/debug.cpp -o debug.o -Wall -Werror
+
 main.o: main.cpp
 	g++ -c main.cpp -o main.o -Wall -Werror
 
 clean:
-	rm -rf main *.o *.dSYM
+	rm -rf main *.o *.dSYM *.txt
