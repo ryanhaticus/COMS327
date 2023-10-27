@@ -11,21 +11,6 @@
 int main(int argc, char *argv[]) {
   int numTrainers = 10;
 
-  /*
-  if (argc > 1 && strcmp(argv[1], "--numtrainers") == 0) {
-    if (argc == 2) {
-      std::cout << "Proper usage: " << argv[0] << " --numtrainers <number>"
-                << std::endl;
-      return 1;
-    }
-
-    numTrainers = atoi(argv[2]);
-  }*/
-
-  // rewrite where I have two flags:
-  // --numtrainer <number>
-  // --debug
-
   for (int i = 1; i < argc; i++) {
     if (strcmp(argv[i], "--numtrainers") == 0) {
       if (i + 1 == argc) {

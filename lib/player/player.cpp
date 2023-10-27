@@ -2,6 +2,7 @@
 
 #include <cstdlib>
 
+#include "../../util/debug/debug.h"
 #include "../game/game.h"
 #include "../menu/menu.h"
 #include "../room/room.h"
@@ -19,8 +20,7 @@ int canPlayerTravelTo(Player *player, Room *currentRoom, int x, int y) {
 
   int tileType = currentRoom->tiles[y][x].type;
 
-  if (tileType == BOULDER || tileType == ENTRANCE || tileType == FOREST ||
-      tileType == WATER) {
+  if (tileType == BOULDER || tileType == FOREST || tileType == WATER) {
     return 0;
   }
 
@@ -123,8 +123,70 @@ int movePlayer(int move, Game *game) {
       if (travelStatus) {
         player->x += dx;
         player->y += dy;
+
+        if (game->map.rooms[game->map.y][game->map.x]
+                ->tiles[player->y][player->x]
+                .type == ENTRANCE) {
+          int toDirection;
+
+          int x = game->map.x;
+          int y = game->map.y;
+
+          if (player->x == 0) {
+            toDirection = E;
+            x--;
+          }
+
+          if (player->x == ROOM_WIDTH - 1) {
+            toDirection = W;
+            x++;
+          }
+
+          if (player->y == 0) {
+            toDirection = S;
+            y--;
+          }
+
+          if (player->y == ROOM_HEIGHT - 1) {
+            toDirection = N;
+            y++;
+          }
+
+          Room *room = game->map.rooms[y][x];
+
+          if (room == NULL) {
+            room = (Room *)malloc(sizeof(Room));
+            createRoom(&game->map, room, x, y);
+          }
+
+          game->map.rooms[y][x] = room;
+          game->map.y = y;
+          game->map.x = x;
+
+          Tile *entrance = room->entrances[toDirection];
+
+          player->x = entrance->x;
+          player->y = entrance->y;
+
+          switch (toDirection) {
+            case N:
+              player->y++;
+              break;
+            case E:
+              player->x--;
+              break;
+            case S:
+              player->y--;
+              break;
+            case W:
+              player->x++;
+              break;
+          }
+        }
+
         return 0;
       }
+
       setStatus(game, gameStatuses[4]);
     }
   }

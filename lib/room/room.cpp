@@ -18,6 +18,8 @@ int createRoom(Map *map, Room *room, int i, int j) {
   room->entrances[S] = NULL;
   room->entrances[W] = NULL;
 
+  room->curTime = 0;
+
   int y, x;
 
   for (y = 0; y < ROOM_HEIGHT; y++) {
