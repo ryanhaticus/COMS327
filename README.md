@@ -9,6 +9,7 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 3. Trainers
 4. Controls
 5. Buildings
+6. Debugging
 
 ## Features
 
@@ -21,6 +22,9 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 - Pokemart interface
 - Pokemon Center interface
 - Trainer interface
+- Traveling between maps
+- Flying between maps
+- Debugging
 
 ## Trainers
 
@@ -80,7 +84,12 @@ The game features a variety of controls. Building or interface specific controls
 - `escape` to exit any interface.
 - `up arrow` to navigate in certain interfaces.
 - `down arrow` to navigate in certain interfaces.
+- `f` to fly between maps. After enabling fly, you'll be prompted to enter coordinates `x` and `y` like so: `<x> <y>`. When you hit enter, you will land in the desired map.
 
 ## Buildings
 
 The game features two buildings, a Pokemon Center (C) and a Pokemart (M). Upon pathing to a respective building, you can open the building's interface with the `>` key. In order to close the interface, press the `<` key. In the future, you'll be able to buy power ups and items in these two buildings.
+
+## Debugging
+
+This iteration of the project contains a `--debug` flag. You can run the sudo debugger by using this flag. If the developers left any debugging comments in the code, they will be output to a `debug.txt` in the same direction as `./main` when the flag is enabled. Feel free to enable this feature for some easter eggs.
