@@ -69,7 +69,7 @@ void renderGame(Game *game) {
 
   for (y = 0; y < ROOM_HEIGHT; y++) {
     for (x = 0; x < ROOM_WIDTH; x++) {
-      if (x == game->player.x && y == game->player.y) {
+      if (x == game->player->x && y == game->player->y) {
         startUsingColor(COLOR_PLAYER);
         mvaddch(y + 1, x, '@');
         stopUsingColor(COLOR_PLAYER);
@@ -95,6 +95,10 @@ void renderGame(Game *game) {
 
   if (game->state == GAME_STATE_IN_MENU) {
     game->menu.render(game);
+  }
+
+  if (game->player->input != "") {
+    mvprintw(ROOM_HEIGHT + 1, 0, "Input: %s", game->player->input.c_str());
   }
 
   refresh();

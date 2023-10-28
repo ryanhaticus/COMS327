@@ -53,7 +53,7 @@ void renderTrainerList(Game *game) {
   int x, y;
   calculateStartPosition(&x, &y);
 
-  Player player = game->player;
+  Player *player = game->player;
 
   int j, i;
   int seen = 0;
@@ -78,8 +78,8 @@ void renderTrainerList(Game *game) {
 
       char name = getTrainerCharacter(trainer);
 
-      int horizDist = player.x - i;
-      int vertDist = player.y - j;
+      int horizDist = player->x - i;
+      int vertDist = player->y - j;
 
       mvprintw(y, x, "%c, %d %s and %d %s", name, abs(horizDist),
                horizDist > 0 ? "west" : "east", abs(vertDist),

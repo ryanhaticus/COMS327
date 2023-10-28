@@ -15,15 +15,13 @@ typedef enum GameState {
 class Game {
  public:
   Map map;
-  Player player;
+  Player *player;
   int seed;
   char status[128];
   GameState state;
   Menu menu;
   Battle battle;
 };
-
-extern const char *gameStatuses[];
 
 int createGame(Game *game, int trainersPerRoom);
 int destroyGame(Game *game);

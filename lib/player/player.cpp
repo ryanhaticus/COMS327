@@ -1,5 +1,7 @@
 #include "player.h"
 
+#include <ncurses.h>
+
 #include <cstdlib>
 
 #include "../../util/debug/debug.h"
@@ -7,11 +9,6 @@
 #include "../menu/menu.h"
 #include "../room/room.h"
 #include "../trainer/trainer.h"
-
-void createPlayer(Player *player, int x, int y) {
-  player->x = x;
-  player->y = y;
-}
 
 int canPlayerTravelTo(Player *player, Room *currentRoom, int x, int y) {
   if (currentRoom == NULL) {
@@ -35,6 +32,53 @@ int canPlayerTravelTo(Player *player, Room *currentRoom, int x, int y) {
   return 1;
 }
 
+int fly(int move, Game *game) {
+  if (move == '\n') {
+    int x, y;
+
+    if (sscanf(game->player->input.c_str(), "%d %d", &x, &y) != 2) {
+      setStatus(game,
+                "Invalid fly parameters! Please enter two numbers: `<x> <y>`");
+      game->player->input.clear();
+      return 1;
+    }
+
+    if (x < 0 || x >= ROOM_WIDTH || y < 0 || y >= ROOM_HEIGHT) {
+      setStatus(game,
+                "Invalid fly parameters! Please enter two numbers in bounds: "
+                "`<x> <y>`");
+      game->player->input.clear();
+      return 1;
+    }
+
+    game->player->input.clear();
+
+    Room *room = game->map.rooms[y][x];
+
+    if (room == NULL) {
+      room = (Room *)malloc(sizeof(Room));
+      createRoom(&game->map, room, x, y);
+
+      setStatus(game, "Your flight has landed!");
+      game->player->flying = 0;
+
+      game->map.rooms[y][x] = room;
+      game->map.x = x;
+      game->map.y = y;
+
+      Tile *entrance = room->entrances[N];
+      game->player->x = entrance->x;
+      game->player->y = entrance->y + 1;
+
+      return 0;
+    }
+  }
+
+  game->player->input.push_back(move);
+
+  return 1;
+}
+
 int movePlayer(int move, Game *game) {
   if (move == 'q' || move == 'Q') {
     game->state = GAME_STATE_QUIT;
@@ -46,13 +90,21 @@ int movePlayer(int move, Game *game) {
   }
 
   Room *currentRoom = game->map.rooms[game->map.y][game->map.x];
-  Player *player = &game->player;
+  Player *player = game->player;
+
+  if (player->flying) {
+    return fly(move, game);
+  }
 
   if (game->state == GAME_STATE_PLAYING) {
     int dx = 0, dy = 0;
     switch (move) {
+      case 'f':
+        setStatus(game, "Flying! Enter coordinates `<x> <y>` to land.");
+        player->flying = 1;
+        return 1;
       case 't':
-        setStatus(game, gameStatuses[3]);
+        setStatus(game, "Viewing Menu");
         prepareMenu(MENU_TYPE_TRAINER_LIST, &game->menu);
         game->state = GAME_STATE_IN_MENU;
         return 0;
@@ -103,7 +155,7 @@ int movePlayer(int move, Game *game) {
           prepareMenu(tileType == POKEMON_CENTER ? MENU_TYPE_POKEMON_CENTER
                                                  : MENU_TYPE_POKEMART,
                       &game->menu);
-          setStatus(game, gameStatuses[3]);
+          setStatus(game, "Viewing Menu");
           return 0;
         }
         break;
@@ -187,7 +239,7 @@ int movePlayer(int move, Game *game) {
         return 0;
       }
 
-      setStatus(game, gameStatuses[4]);
+      setStatus(game, "Can't travel! Something is in the way!");
     }
   }
 

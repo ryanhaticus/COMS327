@@ -1,9 +1,5 @@
 #include "game.h"
 
-const char *gameStatuses[] = {"", "Battling a trainer", "It's your move!",
-                              "Viewing Menu",
-                              "Can't travel! Something is in the way."};
-
 #include <ncurses.h>
 
 #include <cstdlib>
@@ -37,9 +33,9 @@ void setStatus(Game *game, const char *status) {
 int createGame(Game *game, int trainersPerRoom) {
   createMap(&game->map, trainersPerRoom);
 
-  createPlayer(&game->player, 0, 0);
+  game->player = new Player();
 
-  setStatus(game, gameStatuses[0]);
+  setStatus(game, "");
 
   game->state = GAME_STATE_PLAYING;
 
@@ -53,11 +49,11 @@ int destroyGame(Game *game) {
 }
 
 void startLoop(Game *game) {
-  placePlayerRandomly(&game->map, &game->player);
+  placePlayerRandomly(&game->map, game->player);
 
   renderGame(game);
 
-  setStatus(game, gameStatuses[2]);
+  setStatus(game, "It's your move!");
 
   while (game->state != GAME_STATE_QUIT) {
     renderGame(game);
@@ -72,7 +68,7 @@ void startLoop(Game *game) {
     if (game->state == GAME_STATE_PLAYING) {
       Trainer *trainerToBattle = NULL;
 
-      moveTrainers(game->map.rooms[game->map.y][game->map.x], &game->player,
+      moveTrainers(game->map.rooms[game->map.y][game->map.x], game->player,
                    &trainerToBattle);
 
       if (trainerToBattle != NULL) {
@@ -81,7 +77,7 @@ void startLoop(Game *game) {
         continue;
       }
 
-      setStatus(game, gameStatuses[2]);
+      setStatus(game, "It's your move!");
     }
   }
 }
