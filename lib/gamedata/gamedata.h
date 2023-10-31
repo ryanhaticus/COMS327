@@ -58,7 +58,7 @@ class GameData {
     struct stat buffer;
 
     if (stat("/share/cs327/", &buffer) == 0) {
-      this->sourceDirectory = "/share/cs327/";
+      this->sourceDirectory = "/share/cs327/pokedex/pokedex/data/csv";
     } else if (stat((std::string(std::getenv("HOME")) + "/.poke327/").c_str(),
                     &buffer) == 0) {
       this->sourceDirectory = std::string(std::getenv("HOME")) + "/.poke327/";

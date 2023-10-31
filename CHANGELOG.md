@@ -42,3 +42,7 @@
 - 10/10/2023, 9:30 PM: Implemented player movement
 - 10/14/2023, 4:46 PM: Did a complete rehaul of the menu system and added the trainer list, pokemon center menu, and pokemart menu
 - 10/17/2023, 1:27 AM: Completed battle screens for both the player entering a trainer and vice versa.
+- 10/26/2023, 1:53 PM: Finished room to room travel
+- 10/29/2023, 5:43 PM: Wrote the CSV parser and game data class
+- 10/30/2023, 11:30 AM - 10:46 PM: Introduced the various classes for loading in experience, moves, pokemon, pokemon moves, pokemon species, pokemon stats, pokemon types, stats, and type names.
+- 10/30/2023, 11:19: Finalized the implementation of the CLI to load in only requested data and print it.

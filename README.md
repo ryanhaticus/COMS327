@@ -5,11 +5,12 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 ## Table of Contents
 
 1. Features
-2. Building the Project
-3. Trainers
-4. Controls
-5. Buildings
-6. Debugging
+2. Game Data
+3. Building the Project
+4. Trainers
+5. Controls
+6. Buildings
+7. Debugging
 
 ## Features
 
@@ -25,6 +26,44 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 - Traveling between maps
 - Flying between maps
 - Debugging
+- Integration with a sizeable Pokemon database
+
+## Game Data
+
+Data is loaded in from one of three locations, relative to the executable, including:
+
+- `/share/cs327/pokedex/pokedex/data/csv/`
+- `~/.cs327/`
+- `../data/`
+
+Important: the various .csv files MUST be directly within these directories. If they aren't found, the program will panic and throw an error.
+
+To continue, we load the following data types:
+
+- Experience (experience.csv)
+- Moves (moves.csv)
+- Pokemon (pokemon.csv)
+- Pokemon Moves (pokemon_moves.csv)
+- Pokemon Species (pokemon_species.csv)
+- Pokemon Stats (pokemon_stats.csv)
+- Pokemon Types (pokemon_types.csv)
+- Stats (stats.csv)
+- Type Names (type_names.csv)
+
+Moreover, this particular build requires you specify a data type, and then that data will be displayed. The game is not accessible from this version, by design.
+
+Format: `./main <flag>`
+Flags:
+
+- `experience`
+- `moves`
+- `pokemon`
+- `pokemon_moves`
+- `pokemon_species`
+- `pokemon_stats`
+- `pokemon_types`
+- `stats`
+- `type_names`
 
 ## Trainers
 
