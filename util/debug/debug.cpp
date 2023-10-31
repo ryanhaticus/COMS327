@@ -24,7 +24,25 @@ void debug(const char* message) {
   destination.flush();
 }
 
+void debug(std::string message) {
+  if (!isDebugging()) {
+    return;
+  }
+
+  destination << message << std::endl;
+  destination.flush();
+}
+
 void debug(const char* identifier, int i) {
+  if (!isDebugging()) {
+    return;
+  }
+
+  destination << identifier << ": " << i << std::endl;
+  destination.flush();
+}
+
+void debug(std::string identifier, int i) {
   if (!isDebugging()) {
     return;
   }

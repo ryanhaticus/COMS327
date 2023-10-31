@@ -1,7 +1,7 @@
 all: main
 
-main: tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o main.o
-	g++ tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o main.o -o main -Wall -Werror -lm -lncurses
+main: tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o gamedata.o move.o stat.o experience.o typename.o pokemonmove.o pokemonspecies.o pokemonstat.o pokemontype.o pokemon.o csv.o main.o
+	g++ tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o gamedata.o move.o stat.o experience.o typename.o pokemonmove.o pokemonspecies.o pokemonstat.o pokemontype.o pokemon.o csv.o main.o -o main -Wall -Werror -lm -lncurses
 
 tile.o: ./lib/tile/tile.cpp ./lib/tile/tile.h
 	g++ -c ./lib/tile/tile.cpp -o tile.o -Wall -Werror
@@ -38,6 +38,39 @@ battle.o: ./lib/battle/battle.cpp ./lib/battle/battle.h
 
 debug.o: ./util/debug/debug.cpp ./util/debug/debug.h
 	g++ -c ./util/debug/debug.cpp -o debug.o -Wall -Werror
+
+gamedata.o: ./lib/gamedata/gamedata.cpp ./lib/gamedata/gamedata.h
+	g++ -c ./lib/gamedata/gamedata.cpp -o gamedata.o -Wall -Werror
+
+csv.o: ./util/csv/csv.cpp ./util/csv/csv.h
+	g++ -c ./util/csv/csv.cpp -o csv.o -Wall -Werror
+
+move.o: ./lib/gamedata/move/move.cpp ./lib/gamedata/move/move.h
+	g++ -c ./lib/gamedata/move/move.cpp -o move.o -Wall -Werror
+
+stat.o: ./lib/gamedata/stat/stat.cpp ./lib/gamedata/stat/stat.h
+	g++ -c ./lib/gamedata/stat/stat.cpp -o stat.o -Wall -Werror
+
+experience.o: ./lib/gamedata/experience/experience.cpp ./lib/gamedata/experience/experience.h
+	g++ -c ./lib/gamedata/experience/experience.cpp -o experience.o -Wall -Werror
+
+typename.o: ./lib/gamedata/typename/typename.cpp ./lib/gamedata/typename/typename.h
+	g++ -c ./lib/gamedata/typename/typename.cpp -o typename.o -Wall -Werror
+
+pokemonmove.o: ./lib/gamedata/pokemonmove/pokemonmove.cpp ./lib/gamedata/pokemonmove/pokemonmove.h
+	g++ -c ./lib/gamedata/pokemonmove/pokemonmove.cpp -o pokemonmove.o -Wall -Werror
+
+pokemonspecies.o: ./lib/gamedata/pokemonspecies/pokemonspecies.cpp ./lib/gamedata/pokemonspecies/pokemonspecies.h
+	g++ -c ./lib/gamedata/pokemonspecies/pokemonspecies.cpp -o pokemonspecies.o -Wall -Werror
+
+pokemonstat.o: ./lib/gamedata/pokemonstat/pokemonstat.cpp ./lib/gamedata/pokemonstat/pokemonstat.h
+	g++ -c ./lib/gamedata/pokemonstat/pokemonstat.cpp -o pokemonstat.o -Wall -Werror
+
+pokemontype.o: ./lib/gamedata/pokemontype/pokemontype.cpp ./lib/gamedata/pokemontype/pokemontype.h
+	g++ -c ./lib/gamedata/pokemontype/pokemontype.cpp -o pokemontype.o -Wall -Werror
+
+pokemon.o: ./lib/gamedata/pokemon/pokemon.cpp ./lib/gamedata/pokemon/pokemon.h
+	g++ -c ./lib/gamedata/pokemon/pokemon.cpp -o pokemon.o -Wall -Werror
 
 main.o: main.cpp
 	g++ -c main.cpp -o main.o -Wall -Werror
