@@ -44,16 +44,6 @@ class GameData {
   std::vector<PokemonType> pokemonTypes;
   std::unordered_map<int, Pokemon> pokemon;
 
-  void printMoves();
-  void printStats();
-  void printExperience();
-  void printTypeNames();
-  void printPokemonMoves();
-  void printPokemonSpecies();
-  void printPokemonStats();
-  void printPokemonTypes();
-  void printPokemon();
-
   GameData() {
     struct stat buffer;
 
@@ -72,8 +62,10 @@ class GameData {
 
     debug("Using data directory: " + this->sourceDirectory);
 
-    // load();
+    load();
   }
 };
+
+extern GameData* gameData;
 
 #endif

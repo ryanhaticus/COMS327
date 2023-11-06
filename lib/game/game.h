@@ -23,6 +23,8 @@ class Game {
   Battle battle;
 };
 
+extern Game *game;
+
 int createGame(Game *game, int trainersPerRoom);
 int destroyGame(Game *game);
 void startLoop(Game *game);

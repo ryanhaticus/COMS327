@@ -9,10 +9,12 @@
 #include "./lib/render/render.h"
 #include "./util/debug/debug.h"
 
+GameData* gameData = new GameData();
+Game* game = new Game();
+
 int main(int argc, char* argv[]) {
   int numTrainers = 10;
 
-  /*
   for (int i = 1; i < argc; i++) {
     if (strcmp(argv[i], "--numtrainers") == 0) {
       if (i + 1 == argc) {
@@ -25,56 +27,7 @@ int main(int argc, char* argv[]) {
     } else if (strcmp(argv[i], "--debug") == 0) {
       startDebugging();
     }
-  }*/
-
-  std::string properUsage = "Proper usage: " + std::string(argv[0]) +
-                            " <flag>\n" +
-                            "Valid flags: pokemon, moves, pokemon_moves, "
-                            "pokemon_species,\nexperience, type_names, "
-                            "pokemon_stats, stats, pokemon_types";
-
-  if (argc < 2) {
-    std::cout << properUsage << std::endl;
-    return 1;
   }
-
-  GameData* gameData = new GameData();
-
-  if (strcmp(argv[1], "pokemon") == 0) {
-    gameData->loadPokemon();
-    gameData->printPokemon();
-  } else if (strcmp(argv[1], "moves") == 0) {
-    gameData->loadMoves();
-    gameData->printMoves();
-  } else if (strcmp(argv[1], "pokemon_moves") == 0) {
-    gameData->loadPokemonMoves();
-    gameData->printPokemonMoves();
-  } else if (strcmp(argv[1], "pokemon_species") == 0) {
-    gameData->loadPokemonSpecies();
-    gameData->printPokemonSpecies();
-  } else if (strcmp(argv[1], "experience") == 0) {
-    gameData->loadExperience();
-    gameData->printExperience();
-  } else if (strcmp(argv[1], "type_names") == 0) {
-    gameData->loadTypeNames();
-    gameData->printTypeNames();
-  } else if (strcmp(argv[1], "pokemon_stats") == 0) {
-    gameData->loadPokemonStats();
-    gameData->printPokemonStats();
-  } else if (strcmp(argv[1], "stats") == 0) {
-    gameData->loadStats();
-    gameData->printStats();
-  } else if (strcmp(argv[1], "pokemon_types") == 0) {
-    gameData->loadPokemonTypes();
-    gameData->printPokemonTypes();
-  } else {
-    std::cout << properUsage << std::endl;
-    return 1;
-  }
-
-  delete gameData;
-
-  return 0;
 
   debug("Starting the game.");
 
@@ -89,19 +42,18 @@ int main(int argc, char* argv[]) {
   srand(seed);
 
   // Creating the game.
-  Game game;
-  game.seed = seed;
+  game->seed = seed;
 
-  createGame(&game, numTrainers);
+  createGame(game, numTrainers);
 
   // Initialize colors
   initializeColors();
 
   // Starting the game loop
-  startLoop(&game);
+  startLoop(game);
 
   // Destroying the game (freeing dynamically allocated memory).
-  destroyGame(&game);
+  destroyGame(game);
 
   // Killing ncurses
   endwin();
