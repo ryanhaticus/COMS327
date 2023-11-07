@@ -1,3 +1,9 @@
+# Disclaimer
+
+The code found in this repository was written during my time at Iowa State University. Throughout the semester, the code has seen a variety of requirement changes, a port to C++, etc. etc. etc.
+
+As such, the code within this repository is compiling and running on a dream, and shouldn't be used as a reference on how to write good code. Put simply, it's here for posterity alone.
+
 # Ryan Huellen's Pokemon Game
 
 Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game written in C, heavily inspired by the Pokemon franchise. Players will embark on an adventure, capturing and battling creatures in a procedurally generated world.
