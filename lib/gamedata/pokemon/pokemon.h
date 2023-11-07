@@ -1,6 +1,8 @@
 #ifndef POKEMON_H
 #define POKEMON_H
 
+#define POSSIBLE_POKEMON 898
+
 #include <string>
 #include <vector>
 

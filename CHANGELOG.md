@@ -47,3 +47,4 @@
 - 10/30/2023, 11:30 AM: Introduced the various classes for loading in experience, moves, pokemon, pokemon moves, pokemon species, pokemon stats, pokemon types, stats, and type names.
 - 10/30/2023, 11:19 PM: Finalized the implementation of the CLI to load in only requested data and print it.
 - 11/05/2023, 11:37 PM: Added a cohesive pokemon class that combines relevant data for a Pokemon from the various CSVs.
+- 11/07/2023, 11:43 AM: Added a starter pokemon menu and implemented the ability to select a starter pokemon.

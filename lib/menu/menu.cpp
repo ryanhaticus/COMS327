@@ -1,14 +1,16 @@
 #include "menu.h"
 
 const char *menuHeaders[] = {"Trainer List", "Pokemon Center", "Pokemart",
-                             "Battle"};
+                             "Battle", "Choose Starter Pokemon"};
 
 #include <ncurses.h>
 
 #include <cstdlib>
 #include <cstring>
 
+#include "../cohesivepokemon/cohesivepokemon.h"
 #include "../game/game.h"
+#include "../gamedata/gamedata.h"
 #include "../room/room.h"
 #include "../trainer/trainer.h"
 
@@ -153,6 +155,43 @@ int moveBattle(int move, Game *game) {
   return 1;
 }
 
+void renderChooseStarter(Game *game) {
+  renderBaseMenu(menuHeaders[4]);
+
+  int x, y;
+  calculateStartPosition(&x, &y);
+
+  for (int i = 0; i < 3; i++) {
+    mvprintw(y + i, x, "%d. %s", (i + 1),
+             gameData->pokemon[game->player->possibleStarters[i]]
+                 .identifier.c_str());
+  }
+
+  mvprintw(y + 5, x, "Choose your starter by hitting 1, 2, or 3!");
+}
+
+int moveChooseStarter(int move, Game *game) {
+  switch (move) {
+    case '1':
+      game->player->pokemon.push_back(new CohesivePokemon(
+          gameData->pokemon[game->player->possibleStarters[0]]));
+      game->state = GAME_STATE_PLAYING;
+      return 0;
+    case '2':
+      game->player->pokemon.push_back(new CohesivePokemon(
+          gameData->pokemon[game->player->possibleStarters[1]]));
+      game->state = GAME_STATE_PLAYING;
+      return 0;
+    case '3':
+      game->player->pokemon.push_back(new CohesivePokemon(
+          gameData->pokemon[game->player->possibleStarters[2]]));
+      game->state = GAME_STATE_PLAYING;
+      return 0;
+  }
+
+  return 1;
+}
+
 int prepareMenu(MenuType type, Menu *menu) {
   menu->type = type;
   menu->position = 0;
@@ -173,6 +212,10 @@ int prepareMenu(MenuType type, Menu *menu) {
     case MENU_TYPE_BATTLE:
       menu->move = moveBattle;
       menu->render = renderBattle;
+      break;
+    case MENU_TYPE_CHOOSE_STARTER:
+      menu->move = moveChooseStarter;
+      menu->render = renderChooseStarter;
       break;
   }
 

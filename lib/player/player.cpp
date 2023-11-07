@@ -5,7 +5,9 @@
 #include <cstdlib>
 
 #include "../../util/debug/debug.h"
+#include "../cohesivepokemon/cohesivepokemon.h"
 #include "../game/game.h"
+#include "../gamedata/gamedata.h"
 #include "../menu/menu.h"
 #include "../room/room.h"
 #include "../trainer/trainer.h"
@@ -244,4 +246,13 @@ int movePlayer(int move, Game *game) {
   }
 
   return 1;
+}
+
+void Player::generateStarters() {
+  int i;
+
+  for (i = 0; i < 3; i++) {
+    int pokemonId = rand() % POSSIBLE_POKEMON + 1;
+    this->possibleStarters[i] = pokemonId;
+  }
 }

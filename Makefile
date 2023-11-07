@@ -1,7 +1,7 @@
 all: main
 
-main: tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o gamedata.o move.o stat.o experience.o typename.o pokemonmove.o pokemonspecies.o pokemonstat.o pokemontype.o pokemon.o csv.o cohesive_pokemon.o main.o
-	g++ tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o gamedata.o move.o stat.o experience.o typename.o pokemonmove.o pokemonspecies.o pokemonstat.o pokemontype.o pokemon.o csv.o cohesive_pokemon.o main.o -o main -Wall -Werror -lm -lncurses
+main: tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o gamedata.o move.o stat.o experience.o typename.o pokemonmove.o pokemonspecies.o pokemonstat.o pokemontype.o pokemon.o csv.o cohesivepokemon.o main.o
+	g++ tile.o trainer.o player.o room.o map.o game.o queue.o priorityqueue.o render.o menu.o battle.o debug.o gamedata.o move.o stat.o experience.o typename.o pokemonmove.o pokemonspecies.o pokemonstat.o pokemontype.o pokemon.o csv.o cohesivepokemon.o main.o -o main -Wall -Werror -lm -lncurses
 
 tile.o: ./lib/tile/tile.cpp ./lib/tile/tile.h
 	g++ -c ./lib/tile/tile.cpp -o tile.o -Wall -Werror
@@ -72,8 +72,8 @@ pokemontype.o: ./lib/gamedata/pokemontype/pokemontype.cpp ./lib/gamedata/pokemon
 pokemon.o: ./lib/gamedata/pokemon/pokemon.cpp ./lib/gamedata/pokemon/pokemon.h
 	g++ -c ./lib/gamedata/pokemon/pokemon.cpp -o pokemon.o -Wall -Werror
 
-cohesive_pokemon.o: ./lib/cohesive_pokemon/cohesive_pokemon.cpp ./lib/cohesive_pokemon/cohesive_pokemon.h
-	g++ -c ./lib/cohesive_pokemon/cohesive_pokemon.cpp -o cohesive_pokemon.o -Wall -Werror
+cohesivepokemon.o: ./lib/cohesivepokemon/cohesivepokemon.cpp ./lib/cohesivepokemon/cohesivepokemon.h
+	g++ -c ./lib/cohesivepokemon/cohesivepokemon.cpp -o cohesivepokemon.o -Wall -Werror
 
 main.o: main.cpp
 	g++ -c main.cpp -o main.o -Wall -Werror

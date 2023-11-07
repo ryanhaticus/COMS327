@@ -3,14 +3,15 @@
 #include <cstring>
 #include <iostream>
 
+#include "./lib/cohesivepokemon/cohesivepokemon.h"
 #include "./lib/game/game.h"
 #include "./lib/gamedata/gamedata.h"
 #include "./lib/map/map.h"
 #include "./lib/render/render.h"
 #include "./util/debug/debug.h"
 
-GameData* gameData = new GameData();
-Game* game = new Game();
+GameData* gameData;
+Game* game;
 
 int main(int argc, char* argv[]) {
   int numTrainers = 10;
@@ -31,6 +32,9 @@ int main(int argc, char* argv[]) {
 
   debug("Starting the game.");
 
+  gameData = new GameData();
+  game = new Game();
+
   // Making ncurses do its magic
   initscr();
   noecho();
@@ -48,6 +52,10 @@ int main(int argc, char* argv[]) {
 
   // Initialize colors
   initializeColors();
+
+  // Open the starter menu
+  prepareMenu(MENU_TYPE_CHOOSE_STARTER, &game->menu);
+  game->state = GAME_STATE_IN_MENU;
 
   // Starting the game loop
   startLoop(game);

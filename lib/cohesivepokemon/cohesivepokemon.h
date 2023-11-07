@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <map>
+#include <string>
 #include <vector>
 
 #include "../game/game.h"
@@ -24,22 +25,38 @@ class CohesivePokemon : public Pokemon {
   int level;
   int generateIV(Statum statum);
   void setLevel(int level);
+  void decideMoves();
 
  public:
   int HP;
   int attack;
   int defense;
   int speed;
-  int special_attack;
-  int special_defense;
+  int specialAttack;
+  int specialDefense;
   Gender gender;
   bool shiny;
+  int typeId;
+  std::string type;
+  std::vector<PokemonMove> moves;
   CohesivePokemon(Pokemon pokemon) : Pokemon(pokemon) {
     this->shiny = rand() % 8912 == 0;
     this->gender = rand() % 2 ? GENDER_MALE : GENDER_FEMALE;
 
+    for (int i = 0; i < gameData->pokemonTypes.size(); i++) {
+      if (gameData->pokemonTypes[i].pokemon_id == this->id) {
+        this->typeId = gameData->pokemonTypes[i].type_id;
+        this->type = gameData->typeNames[this->typeId - 1].name;
+        break;
+      }
+    }
+
     int manhattanDistance =
         abs(game->map.x - MAP_WIDTH / 2) + abs(game->map.y - MAP_HEIGHT / 2);
+
+    if (manhattanDistance < 2) {
+      manhattanDistance = 2;
+    }
 
     if (manhattanDistance <= 200) {
       this->setLevel(rand() % (manhattanDistance / 2) + 1);
@@ -47,7 +64,10 @@ class CohesivePokemon : public Pokemon {
       this->setLevel(rand() % (100 - (manhattanDistance - 200) / 2) +
                      (manhattanDistance - 200) / 2);
     }
+
+    this->decideMoves();
   }
+
   int getLevel() { return this->level; }
 };
 
