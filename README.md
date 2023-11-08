@@ -16,7 +16,8 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 4. Trainers
 5. Controls
 6. Buildings
-7. Debugging
+7. Battles
+8. Debugging
 
 ## Features
 
@@ -33,6 +34,8 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 - Flying between maps
 - Debugging
 - Integration with a sizeable Pokemon database
+- Ability to choose a starter Pokemon (three options are randomly generated from the aforementioned database)
+- List of the opponent(s) Pokemon(s) when in battle.
 
 ## Game Data
 
@@ -56,21 +59,6 @@ To continue, we load the following data types:
 - Stats (stats.csv)
 - Type Names (type_names.csv)
 
-Moreover, this particular build requires you specify a data type, and then that data will be displayed. The game is not accessible from this version, by design.
-
-Format: `./main <flag>`
-Flags:
-
-- `experience`
-- `moves`
-- `pokemon`
-- `pokemon_moves`
-- `pokemon_species`
-- `pokemon_stats`
-- `pokemon_types`
-- `stats`
-- `type_names`
-
 ## Trainers
 
 In order to pick the number of trainers that spawn on the map, you can run the binary with the `--numtrainers` flag. Here's a sample of choosing 7 trainers:
@@ -83,7 +71,7 @@ In order to open the trainer interface, you can hit `t`. To close this interface
 
 ### Trainer Battles
 
-All trainers are undefeated when they initially spawn. When you move into a trainer's tile or a trainer moves in your tile, a battle is initiated. At this time, battles do not have any gameplay mechanics. You can simply hit `escape` to exit. After doing so, the respective trainer becomes defeated.
+All trainers are undefeated when they initially spawn. When you move into a trainer's tile or a trainer moves in your tile, a battle is initiated. At this time, the game simply display's the trainer's pokemon. A trainer has a 60% chance of receiving an n+1 pokemon, however all trainers have at least 1 pokemon. You can simply hit `escape` to exit. After doing so, the respective trainer becomes defeated.
 
 ### Hikers and Rivals
 
@@ -134,6 +122,15 @@ The game features a variety of controls. Building or interface specific controls
 ## Buildings
 
 The game features two buildings, a Pokemon Center (C) and a Pokemart (M). Upon pathing to a respective building, you can open the building's interface with the `>` key. In order to close the interface, press the `<` key. In the future, you'll be able to buy power ups and items in these two buildings.
+
+## Battles
+
+Battles are currently not implemented. At this time, should you enter a battle by doing one of the following:
+
+1. Encountering a wild Pokemon in tall grass (10% chance)
+2. Entering a trainer's tile
+
+You will be presented with a screen that displays the Pokemon you're battling. You can hit `escape` to exit the battle. In the future, you'll be able to select moves and battle the Pokemon.
 
 ## Debugging
 
