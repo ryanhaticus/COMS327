@@ -8,6 +8,8 @@ extern "C" {
 #include "../../util/priorityqueue/priorityqueue.h"
 }
 #include "../../util/debug/debug.h"
+#include "../cohesivepokemon/cohesivepokemon.h"
+#include "../gamedata/pokemon/pokemon.h"
 #include "../map/map.h"
 #include "../player/player.h"
 #include "../tile/tile.h"
@@ -212,22 +214,6 @@ char getTrainerCharacter(Trainer *trainer) {
   }
 
   return '?';
-}
-
-int createTrainer(Trainer **trainer) {
-  *trainer = (Trainer *)malloc(sizeof(Trainer));
-
-  if (trainer == NULL) {
-    return 1;
-  }
-
-  (*trainer)->dir = rand() % 4;
-  (*trainer)->type = (TrainerType)(rand() % NUM_TRAINERS);
-  (*trainer)->x = 0;
-  (*trainer)->y = 0;
-  (*trainer)->defeated = 0;
-
-  return 0;
 }
 
 void destroyTrainer(Trainer *trainer) { free(trainer); }
@@ -580,5 +566,26 @@ void moveTrainers(Room *room, Player *player, Trainer **trainerToBattle) {
         break;
     }
     trainersMoved++;
+  }
+}
+
+void Trainer::choosePokemon() {
+  int numPokemon = 1;
+
+  while (rand() % 100 < 60) {
+    numPokemon++;
+
+    if (numPokemon > 5) {
+      break;
+    }
+  }
+
+  for (int i = 0; i < numPokemon; i++) {
+    int pokemonId = rand() % POSSIBLE_POKEMON + 1;
+
+    CohesivePokemon *pokemon =
+        new CohesivePokemon(gameData->pokemon[pokemonId]);
+
+    this->pokemon.push_back(pokemon);
   }
 }

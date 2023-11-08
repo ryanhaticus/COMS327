@@ -10,6 +10,7 @@ typedef class Game Game;
 class Player {
  private:
   void generateStarters();
+  void chanceEncounter();
 
  public:
   int x, y;
@@ -25,8 +26,8 @@ class Player {
     input = "";
     this->generateStarters();
   }
-};
 
-int movePlayer(int move, Game *game);
+  int movePlayer(int move, Game *game);
+};
 
 #endif

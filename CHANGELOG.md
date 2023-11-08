@@ -48,3 +48,6 @@
 - 10/30/2023, 11:19 PM: Finalized the implementation of the CLI to load in only requested data and print it.
 - 11/05/2023, 11:37 PM: Added a cohesive pokemon class that combines relevant data for a Pokemon from the various CSVs.
 - 11/07/2023, 11:43 AM: Added a starter pokemon menu and implemented the ability to select a starter pokemon.
+- 10/07/2023, 10:40 PM: Implemented logic for trainers to receive pokemon
+- 10/07/2023, 11:35 PM: When moving through tall grass, the player has a 10% chance of encountering a random pokemon
+- 10/07/2023, 11:36: PM: In the interest of not ruining the UI, trainers are capped at 6 pokemon. Per the assignment, they have a 60% chance of the n+1st pokemon up to 6.

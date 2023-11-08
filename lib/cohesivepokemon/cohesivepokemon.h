@@ -38,7 +38,7 @@ class CohesivePokemon : public Pokemon {
   bool shiny;
   int typeId;
   std::string type;
-  std::vector<PokemonMove> moves;
+  std::vector<Move> moves;
   CohesivePokemon(Pokemon pokemon) : Pokemon(pokemon) {
     this->shiny = rand() % 8912 == 0;
     this->gender = rand() % 2 ? GENDER_MALE : GENDER_FEMALE;

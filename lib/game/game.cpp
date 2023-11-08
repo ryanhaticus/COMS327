@@ -39,6 +39,8 @@ int createGame(Game *game, int trainersPerRoom) {
 
   game->state = GAME_STATE_PLAYING;
 
+  game->battle = new Battle();
+
   return 0;
 }
 
@@ -60,7 +62,7 @@ void startLoop(Game *game) {
 
     int move = getch();
 
-    while (movePlayer(move, game)) {
+    while (game->player->movePlayer(move, game)) {
       renderGame(game);
       move = getch();
     }
@@ -72,7 +74,7 @@ void startLoop(Game *game) {
                    &trainerToBattle);
 
       if (trainerToBattle != NULL) {
-        startBattle(game, trainerToBattle);
+        game->battle->startTrainerBattle(trainerToBattle);
 
         continue;
       }

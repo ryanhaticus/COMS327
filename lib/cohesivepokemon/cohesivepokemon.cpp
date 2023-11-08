@@ -53,7 +53,7 @@ void CohesivePokemon::decideMoves() {
 
   for (int i = 0; i < numMoves; i++) {
     int randomIndex = rand() % possibleMoves.size();
-    this->moves.push_back(possibleMoves[randomIndex]);
+    this->moves.push_back(gameData->moves[possibleMoves[randomIndex].move_id]);
     possibleMoves.erase(possibleMoves.begin() + randomIndex);
   }
 }

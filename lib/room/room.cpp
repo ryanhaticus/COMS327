@@ -33,8 +33,7 @@ int createRoom(Map *map, Room *room, int i, int j) {
   createPath(map, room);
 
   for (int i = 0; i < map->trainersPerRoom; i++) {
-    Trainer *trainer;
-    createTrainer(&trainer);
+    Trainer *trainer = new Trainer();
 
     if (i <= 1) {
       trainer->type = (TrainerType)i;

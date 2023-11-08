@@ -81,7 +81,7 @@ int fly(int move, Game *game) {
   return 1;
 }
 
-int movePlayer(int move, Game *game) {
+int Player::movePlayer(int move, Game *game) {
   if (move == 'q' || move == 'Q') {
     game->state = GAME_STATE_QUIT;
     return 0;
@@ -169,8 +169,8 @@ int movePlayer(int move, Game *game) {
                                            player->y + dy);
 
       if (travelStatus == 2) {
-        startBattle(game,
-                    currentRoom->trainers[player->y + dy][player->x + dx]);
+        game->battle->startTrainerBattle(
+            currentRoom->trainers[player->y + dy][player->x + dx]);
         return 0;
       }
 
@@ -238,6 +238,13 @@ int movePlayer(int move, Game *game) {
           }
         }
 
+        Tile *tile = &game->map.rooms[game->map.y][game->map.x]
+                          ->tiles[player->y][player->x];
+
+        if (tile->type == TALL_GRASS || tile->type == TALL_GRASS_2) {
+          game->player->chanceEncounter();
+        }
+
         return 0;
       }
 
@@ -255,4 +262,16 @@ void Player::generateStarters() {
     int pokemonId = rand() % POSSIBLE_POKEMON + 1;
     this->possibleStarters[i] = pokemonId;
   }
+}
+
+void Player::chanceEncounter() {
+  if (rand() % 10 != 0) {
+    return;
+  }
+
+  int pokemonId = rand() % POSSIBLE_POKEMON + 1;
+
+  CohesivePokemon *pokemon = new CohesivePokemon(gameData->pokemon[pokemonId]);
+
+  game->battle->startPokemonBattle(pokemon);
 }

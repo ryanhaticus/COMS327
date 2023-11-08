@@ -137,12 +137,48 @@ int movePokemart(int move, Game *game) {
 
 void renderBattle(Game *game) {
   renderBaseMenu(menuHeaders[3]);
-  Trainer *against = game->battle.against;
 
-  int x, y;
-  calculateStartPosition(&x, &y);
+  switch (game->battle->type) {
+    case BATTLE_TYPE_TRAINER: {
+      Trainer *against = game->battle->againstTrainer;
 
-  mvprintw(y, x, "You are battling %c!", getTrainerCharacter(against));
+      int x, y;
+      calculateStartPosition(&x, &y);
+
+      mvprintw(y, x, "You are battling %c!", getTrainerCharacter(against));
+
+      for (int i = 0; i < against->pokemon.size(); i++) {
+        CohesivePokemon *pokemon = against->pokemon[i];
+
+        mvprintw(y + i * 2, x,
+                 "%s (Level %d): %d HP, %d Attack, %d Defense, %d Speed",
+                 pokemon->identifier.c_str(), pokemon->getLevel(), pokemon->HP,
+                 pokemon->attack, pokemon->defense, pokemon->speed);
+        mvprintw(y + (i + 1) * 2 - 1, x, "Moves: %s, %s",
+                 pokemon->moves[0].identifier.c_str(),
+                 pokemon->moves[1].identifier.c_str());
+      }
+
+      break;
+    }
+    case BATTLE_TYPE_POKEMON: {
+      CohesivePokemon *against = game->battle->againstPokemon;
+
+      int x, y;
+      calculateStartPosition(&x, &y);
+
+      mvprintw(y, x, "You are battling a wild %s!",
+               against->identifier.c_str());
+
+      mvprintw(y + 2, x, "Level %d: %d HP, %d Attack, %d Defense, %d Speed",
+               against->getLevel(), against->HP, against->attack,
+               against->defense, against->speed);
+      mvprintw(y + 3, x, "Moves: %s, %s", against->moves[0].identifier.c_str(),
+               against->moves[1].identifier.c_str());
+
+      break;
+    }
+  }
 }
 
 int moveBattle(int move, Game *game) {

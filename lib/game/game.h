@@ -20,7 +20,7 @@ class Game {
   char status[128];
   GameState state;
   Menu menu;
-  Battle battle;
+  Battle *battle;
 };
 
 extern Game *game;
