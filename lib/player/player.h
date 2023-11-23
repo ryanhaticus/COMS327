@@ -18,12 +18,18 @@ class Player {
   std::string input;
   std::vector<CohesivePokemon *> pokemon;
   int possibleStarters[3];
+  int revives;
+  int potions;
+  int pokeballs;
 
   Player() {
-    x = 0;
-    y = 0;
-    flying = 0;
-    input = "";
+    this->x = 0;
+    this->y = 0;
+    this->flying = 0;
+    this->input = "";
+    this->revives = 3;
+    this->potions = 3;
+    this->pokeballs = 10;
     this->generateStarters();
   }
 

@@ -14,7 +14,7 @@ int CohesivePokemon::generateIV(Statum statum) {
 
   int iv = rand() % 16;
 
-  int constant = statum == HP ? this->level + 10 : 5;
+  int constant = statum == STATUM_HP ? this->level + 10 : 5;
 
   return floor(((((baseStat.base_stat) + iv) * 2) * this->level) / 100) +
          constant;
@@ -23,7 +23,8 @@ int CohesivePokemon::generateIV(Statum statum) {
 void CohesivePokemon::setLevel(int level) {
   this->level = level;
 
-  this->HP = this->generateIV(STATUM_HP);
+  this->maxHP = this->generateIV(STATUM_HP);
+  this->HP = this->maxHP;
   this->attack = this->generateIV(STATUM_ATTACK);
   this->defense = this->generateIV(STATUM_DEFENSE);
   this->speed = this->generateIV(STATUM_SPEED);
@@ -56,4 +57,17 @@ void CohesivePokemon::decideMoves() {
     this->moves.push_back(gameData->moves[possibleMoves[randomIndex].move_id]);
     possibleMoves.erase(possibleMoves.begin() + randomIndex);
   }
+}
+
+int CohesivePokemon::calculateDamage(CohesivePokemon* against, Move move) {
+  int left = ((((((2 * this->level) / 5) + 2) * move.power *
+                (this->attack / against->defense)) /
+               50) +
+              2);
+
+  double critical = rand() % 256 < (this->speed * 2 / 5) ? 1.5 : 1;
+  int random = rand() % 16 + 85;
+  double stab = move.type_id == this->typeId ? 1.5 : 1;
+
+  return left * critical * random * stab;
 }

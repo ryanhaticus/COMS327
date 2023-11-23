@@ -45,7 +45,9 @@ int fly(int move, Game *game) {
       return 1;
     }
 
-    if (x < 0 || x >= ROOM_WIDTH || y < 0 || y >= ROOM_HEIGHT) {
+    // 200, 200 = 0, 0
+
+    if (x < -200 || x > 200 || y < -200 || y > 200) {
       setStatus(game,
                 "Invalid fly parameters! Please enter two numbers in bounds: "
                 "`<x> <y>`");
@@ -54,6 +56,9 @@ int fly(int move, Game *game) {
     }
 
     game->player->input.clear();
+
+    x += 200;
+    y += 200;
 
     Room *room = game->map.rooms[y][x];
 

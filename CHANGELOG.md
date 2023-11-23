@@ -51,3 +51,5 @@
 - 10/07/2023, 10:40 PM: Implemented logic for trainers to receive pokemon
 - 10/07/2023, 11:35 PM: When moving through tall grass, the player has a 10% chance of encountering a random pokemon
 - 10/07/2023, 11:36: PM: In the interest of not ruining the UI, trainers are capped at 6 pokemon. Per the assignment, they have a 60% chance of the n+1st pokemon up to 6.
+- 11/22/2023, 5:26 PM: Implemented damage calculation for Pokemon in battles
+- 11/23/2023, 11:21 AM: Added visitation of Pokemarts and Pokemon Centers to replenish supplies and heal pokemon, respectively. Also, fixed a longstanding bug with the fly command.

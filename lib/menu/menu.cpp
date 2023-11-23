@@ -111,7 +111,19 @@ int moveTrainerList(int move, Game *game) {
   return 1;
 }
 
-void renderPokemonCenter(Game *game) { renderBaseMenu(menuHeaders[1]); }
+void renderPokemonCenter(Game *game) {
+  renderBaseMenu(menuHeaders[1]);
+
+  int x, y;
+  calculateStartPosition(&x, &y);
+
+  mvprintw(y + 1, x, "Your Pokemon were restored to full health!");
+  mvprintw(y + 2, x, "Press < to exit.");
+
+  for (int i = 0; i < game->player->pokemon.size(); i++) {
+    game->player->pokemon[i]->HP = game->player->pokemon[i]->maxHP;
+  }
+}
 
 int movePokemonCenter(int move, Game *game) {
   switch (move) {
@@ -123,7 +135,19 @@ int movePokemonCenter(int move, Game *game) {
   return 1;
 }
 
-void renderPokemart(Game *game) { renderBaseMenu(menuHeaders[2]); }
+void renderPokemart(Game *game) {
+  renderBaseMenu(menuHeaders[2]);
+
+  int x, y;
+  calculateStartPosition(&x, &y);
+
+  mvprintw(y + 1, x, "Your supplies were replenished!");
+  mvprintw(y + 2, x, "Press < to exit.");
+
+  game->player->pokeballs = 10;
+  game->player->potions = 3;
+  game->player->revives = 3;
+}
 
 int movePokemart(int move, Game *game) {
   switch (move) {

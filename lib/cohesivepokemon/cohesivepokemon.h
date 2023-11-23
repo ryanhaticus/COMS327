@@ -29,6 +29,7 @@ class CohesivePokemon : public Pokemon {
 
  public:
   int HP;
+  int maxHP;
   int attack;
   int defense;
   int speed;
@@ -69,6 +70,8 @@ class CohesivePokemon : public Pokemon {
   }
 
   int getLevel() { return this->level; }
+
+  int calculateDamage(CohesivePokemon* against, Move move);
 };
 
 #endif
