@@ -613,8 +613,8 @@ int moveBag(int move, Game *game) {
       return 0;
     }
 
-    if (game->player->revives == 0) {
-      setStatus(game, "You don't have any revives!");
+    if (game->player->potions == 0) {
+      setStatus(game, "You don't have any potions!");
       return 1;
     }
 
