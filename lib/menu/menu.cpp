@@ -212,8 +212,11 @@ void renderBattle(Game *game) {
   if (game->battle->subMenu == BATTLE_MENU_CHOOSE) {
     mvprintw(y + 8, x, "1. Fight");
     mvprintw(y + 9, x, "2. Bag");
-    mvprintw(y + 10, x, "3. Run");
-    mvprintw(y + 11, x, "4. Pokemon");
+    bool canRun = game->battle->type == BATTLE_TYPE_POKEMON;
+    if (canRun) {
+      mvprintw(y + 10, x, "3. Run");
+    }
+    mvprintw(y + (canRun ? 11 : 10), x, "4. Pokemon");
     return;
   }
 
@@ -287,12 +290,24 @@ int moveBattle(int move, Game *game) {
         }
         break;
       case '3':
+        if (game->battle->type == BATTLE_TYPE_TRAINER) {
+          return 1;
+        }
+
         if (game->battle->subMenu == BATTLE_MENU_CHOOSE) {
           game->state = GAME_STATE_PLAYING;
-          setStatus(game, "You ran away!");
-          game->player->immune = true;
-          return 0;
+
+          int chance = rand() % 100;
+          if (chance > 50) {
+            setStatus(game, "You ran away!");
+            game->player->immune = true;
+            return 0;
+          } else {
+            setStatus(game, "You couldn't run fast enough!");
+            goto start_enemy_turn;
+          }
         }
+
         break;
       case '4':
         if (game->battle->subMenu == BATTLE_MENU_CHOOSE) {

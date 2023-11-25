@@ -35,7 +35,12 @@ Welcome to Ryan Huellen's Pokemon Game! This is a rogue-like text-based game wri
 - Debugging
 - Integration with a sizeable Pokemon database
 - Ability to choose a starter Pokemon (three options are randomly generated from the aforementioned database)
-- List of the opponent(s) Pokemon(s) when in battle.
+- Ability to capture wild Pokemon
+- You can fight trainers and wild Pokemon (battles!)
+- Potions (heal Pokemon)
+- Revives (revive Pokemon or heal to full health)
+- Pokeballs (capture wild Pokemon)
+- Inventory system
 
 ## Game Data
 
@@ -118,10 +123,19 @@ The game features a variety of controls. Building or interface specific controls
 - `up arrow` to navigate in certain interfaces.
 - `down arrow` to navigate in certain interfaces.
 - `f` to fly between maps. After enabling fly, you'll be prompted to enter coordinates `x` and `y` like so: `<x> <y>`. When you hit enter, you will land in the desired map.
+- `b` to open the inventory interface. From here, you can use potions and revives. Moreover, you can see how many potions, revives, and pokeballs you have left!
 
 ## Buildings
 
-The game features two buildings, a Pokemon Center (C) and a Pokemart (M). Upon pathing to a respective building, you can open the building's interface with the `>` key. In order to close the interface, press the `<` key. In the future, you'll be able to buy power ups and items in these two buildings.
+The game features two buildings, a Pokemon Center (C) and a Pokemart (M). Upon pathing to a respective building, you can open the building's interface with the `>` key. In order to close the interface, press the `<` key.
+
+### Pokemon Center
+
+Upon entering a Pokemon Center, all of your pokemon are healed to full health!
+
+### Pokemart
+
+Upon entering a Pokemart, all of your supplies are replenished. This includes potions, revives, and pokeballs.
 
 ## Battles
 
@@ -130,7 +144,32 @@ Battles are currently not implemented. At this time, should you enter a battle b
 1. Encountering a wild Pokemon in tall grass (10% chance)
 2. Entering a trainer's tile
 
-You will be presented with a screen that displays the Pokemon you're battling. You can hit `escape` to exit the battle. In the future, you'll be able to select moves and battle the Pokemon.
+You will be presented with a screen that displays the Pokemon you're battling. If you're battling a trainer, new Pokemon will appear as they send them out.
+
+### Battle Interface
+
+The battle interface is fairly simple. You can do one of the following:
+
+1. Fight
+2. Bag
+3. Run
+4. Pokemon
+
+#### Fight
+
+When you select fight, you'll be presented with a list of moves. You can select a move by using number keys. Upon selecting a move, you will perform the move! Note, however, if your move's priority is less than that of the opponent and they also choose to fight, they will attack first.
+
+#### Bag
+
+When you select bag, you'll be presented with the ability to use a potion, revive, or, if you're in a wild battle, a pokeball. You can select an item by using number keys. Upon selecting an item, you will use the item!
+
+#### Run
+
+When you select run, you'll attempt to run from the battle. You can only run from a wild pokemon battle. You also have a 50% chance of failing to run. Note, this will use your turn!
+
+#### Pokemon
+
+When you select pokemon, you'll be presented with a list of your pokemon. You can select a pokemon by using number keys. Upon selecting a pokemon, you will switch to that pokemon! Note, however, switching pokemon uses a turn.
 
 ## Debugging
 
