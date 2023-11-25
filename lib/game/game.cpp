@@ -67,6 +67,11 @@ void startLoop(Game *game) {
       move = getch();
     }
 
+    if (game->player->immune) {
+      game->player->immune = false;
+      continue;
+    }
+
     if (game->state == GAME_STATE_PLAYING) {
       Trainer *trainerToBattle = NULL;
 

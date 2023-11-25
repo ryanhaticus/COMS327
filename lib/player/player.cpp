@@ -106,6 +106,11 @@ int Player::movePlayer(int move, Game *game) {
   if (game->state == GAME_STATE_PLAYING) {
     int dx = 0, dy = 0;
     switch (move) {
+      case 'B':
+        setStatus(game, "Viewing Bag");
+        prepareMenu(MENU_TYPE_BAG, &game->menu);
+        game->state = GAME_STATE_IN_MENU;
+        return 0;
       case 'f':
         setStatus(game, "Flying! Enter coordinates `<x> <y>` to land.");
         player->flying = 1;
@@ -279,4 +284,14 @@ void Player::chanceEncounter() {
   CohesivePokemon *pokemon = new CohesivePokemon(gameData->pokemon[pokemonId]);
 
   game->battle->startPokemonBattle(pokemon);
+}
+
+bool Player::allPokemonFainted() {
+  for (int i = 0; i < this->pokemon.size(); i++) {
+    if (this->pokemon[i]->HP > 0) {
+      return false;
+    }
+  }
+
+  return true;
 }

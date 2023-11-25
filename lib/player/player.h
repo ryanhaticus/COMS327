@@ -21,6 +21,7 @@ class Player {
   int revives;
   int potions;
   int pokeballs;
+  bool immune;
 
   Player() {
     this->x = 0;
@@ -30,10 +31,12 @@ class Player {
     this->revives = 3;
     this->potions = 3;
     this->pokeballs = 10;
+    this->immune = false;
     this->generateStarters();
   }
 
   int movePlayer(int move, Game *game);
+  bool allPokemonFainted();
 };
 
 #endif

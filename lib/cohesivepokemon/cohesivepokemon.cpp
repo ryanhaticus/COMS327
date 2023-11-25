@@ -39,7 +39,7 @@ void CohesivePokemon::decideMoves() {
     for (int i = 0; i < gameData->pokemonMoves.size(); i++) {
       PokemonMove possibleMove = gameData->pokemonMoves[i];
 
-      if (possibleMove.level >= this->level &&
+      if (this->level >= possibleMove.level &&
           possibleMove.pokemon_id == this->id) {
         possibleMoves.push_back(gameData->pokemonMoves[i]);
       }
@@ -70,4 +70,12 @@ int CohesivePokemon::calculateDamage(CohesivePokemon* against, Move move) {
   double stab = move.type_id == this->typeId ? 1.5 : 1;
 
   return left * critical * random * stab;
+}
+
+void CohesivePokemon::decreaseHP(int amount) {
+  this->HP -= amount;
+
+  if (this->HP < 0) {
+    this->HP = 0;
+  }
 }

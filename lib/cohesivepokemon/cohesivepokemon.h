@@ -52,8 +52,8 @@ class CohesivePokemon : public Pokemon {
       }
     }
 
-    int manhattanDistance =
-        abs(game->map.x - MAP_WIDTH / 2) + abs(game->map.y - MAP_HEIGHT / 2);
+    int manhattanDistance = abs((game->map.x - MAP_WIDTH) / 2) +
+                            abs((game->map.y - MAP_HEIGHT) / 2);
 
     if (manhattanDistance < 2) {
       manhattanDistance = 2;
@@ -72,6 +72,8 @@ class CohesivePokemon : public Pokemon {
   int getLevel() { return this->level; }
 
   int calculateDamage(CohesivePokemon* against, Move move);
+
+  void decreaseHP(int amount);
 };
 
 #endif
