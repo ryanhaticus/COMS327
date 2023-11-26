@@ -55,3 +55,4 @@
 - 11/23/2023, 11:21 AM: Added visitation of Pokemarts and Pokemon Centers to replenish supplies and heal pokemon, respectively. Also, fixed a longstanding bug with the fly command.
 - 11/24/2023, 7:30 PM: Implemented battles, including the abilities to run, use potions, use revives, use pokeballs, switch pokemon, and fight.
 - 11/24/2023, 9:31 PM: Fixed a bug where the manhattan distance wasn't being calculated properly to decide pokemon levels.
+- 11/26/2023, 12:05 AM: Fixed a longstanding bug where `-Werror` on pyrite was causing g++ to throw a sign-compare error. Moreover, appended a missing `/` to the `/share/cs327/` data path for our csv data.

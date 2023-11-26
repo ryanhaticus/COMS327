@@ -17,7 +17,7 @@ void GameData::load() {
 void GameData::loadMoves() {
   CSV* movesCSV = new CSV(this->sourceDirectory + "moves.csv");
 
-  for (int i = 0; i < movesCSV->data.size(); i++) {
+  for (size_t i = 0; i < movesCSV->data.size(); i++) {
     Move move;
     move.fromCSV(movesCSV->data[i]);
     this->moves.insert(std::pair<int, Move>(move.id, move));
@@ -31,7 +31,7 @@ void GameData::loadMoves() {
 void GameData::loadStats() {
   CSV* statsCSV = new CSV(this->sourceDirectory + "stats.csv");
 
-  for (int i = 0; i < statsCSV->data.size(); i++) {
+  for (size_t i = 0; i < statsCSV->data.size(); i++) {
     Stat stat;
     stat.fromCSV(statsCSV->data[i]);
     this->stats.insert(std::pair<int, Stat>(stat.id, stat));
@@ -45,7 +45,7 @@ void GameData::loadStats() {
 void GameData::loadExperience() {
   CSV* experienceCSV = new CSV(this->sourceDirectory + "experience.csv");
 
-  for (int i = 0; i < experienceCSV->data.size(); i++) {
+  for (size_t i = 0; i < experienceCSV->data.size(); i++) {
     Experience experience;
     experience.fromCSV(experienceCSV->data[i]);
     this->experience.insert(
@@ -61,7 +61,7 @@ void GameData::loadExperience() {
 void GameData::loadTypeNames() {
   CSV* typeNamesCSV = new CSV(this->sourceDirectory + "type_names.csv");
 
-  for (int i = 0; i < typeNamesCSV->data.size(); i++) {
+  for (size_t i = 0; i < typeNamesCSV->data.size(); i++) {
     TypeName typeName;
     typeName.fromCSV(typeNamesCSV->data[i]);
 
@@ -81,7 +81,7 @@ void GameData::loadTypeNames() {
 void GameData::loadPokemonMoves() {
   CSV* pokemonMovesCSV = new CSV(this->sourceDirectory + "pokemon_moves.csv");
 
-  for (int i = 0; i < pokemonMovesCSV->data.size(); i++) {
+  for (size_t i = 0; i < pokemonMovesCSV->data.size(); i++) {
     PokemonMove pokemonMove;
     pokemonMove.fromCSV(pokemonMovesCSV->data[i]);
     this->pokemonMoves.push_back(pokemonMove);
@@ -97,7 +97,7 @@ void GameData::loadPokemonSpecies() {
   CSV* pokemonSpeciesCSV =
       new CSV(this->sourceDirectory + "pokemon_species.csv");
 
-  for (int i = 0; i < pokemonSpeciesCSV->data.size(); i++) {
+  for (size_t i = 0; i < pokemonSpeciesCSV->data.size(); i++) {
     PokemonSpecies pokemonSpecies;
     pokemonSpecies.fromCSV(pokemonSpeciesCSV->data[i]);
     this->pokemonSpecies.insert(
@@ -113,7 +113,7 @@ void GameData::loadPokemonSpecies() {
 void GameData::loadPokemonStats() {
   CSV* pokemonStatsCSV = new CSV(this->sourceDirectory + "pokemon_stats.csv");
 
-  for (int i = 0; i < pokemonStatsCSV->data.size(); i++) {
+  for (size_t i = 0; i < pokemonStatsCSV->data.size(); i++) {
     PokemonStat pokemonStat;
     pokemonStat.fromCSV(pokemonStatsCSV->data[i]);
     this->pokemonStats.push_back(pokemonStat);
@@ -128,7 +128,7 @@ void GameData::loadPokemonStats() {
 void GameData::loadPokemonTypes() {
   CSV* pokemonTypesCSV = new CSV(this->sourceDirectory + "pokemon_types.csv");
 
-  for (int i = 0; i < pokemonTypesCSV->data.size(); i++) {
+  for (size_t i = 0; i < pokemonTypesCSV->data.size(); i++) {
     PokemonType pokemonType;
     pokemonType.fromCSV(pokemonTypesCSV->data[i]);
     this->pokemonTypes.push_back(pokemonType);
@@ -143,7 +143,7 @@ void GameData::loadPokemonTypes() {
 void GameData::loadPokemon() {
   CSV* pokemonCSV = new CSV(this->sourceDirectory + "pokemon.csv");
 
-  for (int i = 0; i < pokemonCSV->data.size(); i++) {
+  for (size_t i = 0; i < pokemonCSV->data.size(); i++) {
     Pokemon pokemon;
     pokemon.fromCSV(pokemonCSV->data[i]);
     this->pokemon.insert(std::pair<int, Pokemon>(pokemon.id, pokemon));

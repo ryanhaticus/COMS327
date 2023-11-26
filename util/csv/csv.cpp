@@ -9,7 +9,7 @@ void CSV::parseContent() {
     std::vector<std::string> row;
     std::string cell = "";
 
-    for (int i = 0; i < line.size(); i++) {
+    for (size_t i = 0; i < line.size(); i++) {
       if (line[i] == ',') {
         row.push_back(cell);
         cell = "";
