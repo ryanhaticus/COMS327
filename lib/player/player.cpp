@@ -287,7 +287,7 @@ void Player::chanceEncounter() {
 }
 
 bool Player::allPokemonFainted() {
-  for (int i = 0; i < this->pokemon.size(); i++) {
+  for (size_t i = 0; i < this->pokemon.size(); i++) {
     if (this->pokemon[i]->HP > 0) {
       return false;
     }

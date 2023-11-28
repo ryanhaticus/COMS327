@@ -2,6 +2,7 @@
 #define TRAINER_H
 
 #include <vector>
+#include <math.h>
 
 #include "../room/room.h"
 

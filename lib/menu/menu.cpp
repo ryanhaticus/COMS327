@@ -121,7 +121,7 @@ void renderPokemonCenter(Game *game) {
   mvprintw(y, x, "Your Pokemon were restored to full health!");
   mvprintw(y + 1, x, "Press < to exit.");
 
-  for (int i = 0; i < game->player->pokemon.size(); i++) {
+  for (size_t i = 0; i < game->player->pokemon.size(); i++) {
     game->player->pokemon[i]->HP = game->player->pokemon[i]->maxHP;
   }
 }
@@ -221,7 +221,7 @@ void renderBattle(Game *game) {
   }
 
   if (game->battle->subMenu == BATTLE_MENU_FIGHT) {
-    int i;
+    size_t i;
 
     for (i = 0; i < game->battle->playerPokemon->moves.size(); i++) {
       mvprintw(y + 8 + i, x, "%d. %s", i + 1,
@@ -232,7 +232,7 @@ void renderBattle(Game *game) {
   }
 
   if (game->battle->subMenu == BATTLE_MENU_POKEMON) {
-    int i;
+    size_t i;
 
     for (i = 0; i < game->player->pokemon.size(); i++) {
       mvprintw(y + 8 + i, x, "%d. %s (%d/%d)", i + 1,
@@ -376,7 +376,7 @@ int moveBattle(int move, Game *game) {
   }
 
   if (game->battle->subMenu == BATTLE_MENU_POKEMON) {
-    int pokemonIndex = move - '1';
+    size_t pokemonIndex = move - '1';
 
     if (pokemonIndex < 0 || pokemonIndex >= game->player->pokemon.size()) {
       setStatus(game, "Invalid pokemon! Please choose another.");
@@ -402,7 +402,7 @@ int moveBattle(int move, Game *game) {
   }
 
   if (game->battle->subMenu == BATTLE_MENU_FIGHT) {
-    int moveIndex = move - '1';
+    size_t moveIndex = move - '1';
 
     if (moveIndex < 0 ||
         moveIndex >= game->battle->playerPokemon->moves.size()) {
@@ -496,7 +496,7 @@ start_enemy_turn:
     if (game->battle->type == BATTLE_TYPE_TRAINER) {
       bool allDead = true;
 
-      for (int i = 0; i < game->battle->againstTrainer->pokemon.size(); i++) {
+      for (size_t i = 0; i < game->battle->againstTrainer->pokemon.size(); i++) {
         CohesivePokemon *pokemon = game->battle->againstTrainer->pokemon[i];
 
         if (pokemon->HP > 0) {
@@ -513,7 +513,7 @@ start_enemy_turn:
         return 0;
       }
 
-      for (int i = 0; i < game->battle->againstTrainer->pokemon.size(); i++) {
+      for (size_t i = 0; i < game->battle->againstTrainer->pokemon.size(); i++) {
         CohesivePokemon *pokemon = game->battle->againstTrainer->pokemon[i];
 
         if (pokemon->HP <= 0) {
@@ -618,7 +618,7 @@ int moveBag(int move, Game *game) {
       return 1;
     }
 
-    int pokemonIndex = move - '1';
+    size_t pokemonIndex = move - '1';
 
     if (pokemonIndex < 0 || pokemonIndex >= game->player->pokemon.size()) {
       setStatus(game, "Invalid pokemon! Please choose another.");
@@ -650,7 +650,7 @@ int moveBag(int move, Game *game) {
       return 1;
     }
 
-    int pokemonIndex = move - '1';
+    size_t pokemonIndex = move - '1';
 
     if (pokemonIndex < 0 || pokemonIndex >= game->player->pokemon.size()) {
       setStatus(game, "Invalid pokemon! Please choose another.");
@@ -686,7 +686,7 @@ void renderBag(Game *game) {
     mvprintw(y, x, "Choose a pokemon to use a potion on (%d left):",
              game->player->potions);
 
-    int i;
+    size_t i;
 
     for (i = 0; i < game->player->pokemon.size(); i++) {
       mvprintw(y + i + 1, x, "%d. %s (%d/%d)", i + 1,
@@ -699,7 +699,7 @@ void renderBag(Game *game) {
     mvprintw(y, x, "Choose a pokemon to use a revive on (%d left):",
              game->player->revives);
 
-    int i;
+    size_t i;
 
     for (i = 0; i < game->player->pokemon.size(); i++) {
       mvprintw(y + i + 1, x, "%d. %s (%d/%d)", i + 1,

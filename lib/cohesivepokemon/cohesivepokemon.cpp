@@ -5,7 +5,7 @@
 int CohesivePokemon::generateIV(Statum statum) {
   PokemonStat baseStat;
 
-  for (int i = 0; i < gameData->pokemonStats.size(); i++) {
+  for (size_t i = 0; i < gameData->pokemonStats.size(); i++) {
     baseStat = gameData->pokemonStats[i];
     if (baseStat.pokemon_id == this->id && baseStat.stat_id == statum) {
       break;
@@ -36,7 +36,7 @@ void CohesivePokemon::decideMoves() {
   std::vector<PokemonMove> possibleMoves;
 
   while (possibleMoves.size() == 0) {
-    for (int i = 0; i < gameData->pokemonMoves.size(); i++) {
+    for (size_t i = 0; i < gameData->pokemonMoves.size(); i++) {
       PokemonMove possibleMove = gameData->pokemonMoves[i];
 
       if (this->level >= possibleMove.level &&

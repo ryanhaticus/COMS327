@@ -8,7 +8,7 @@ void Battle::startTrainerBattle(Trainer* against) {
   this->type = BATTLE_TYPE_TRAINER;
   this->subMenu = BATTLE_MENU_CHOOSE;
 
-  for (int i = 0; i < against->pokemon.size(); i++) {
+  for (size_t i = 0; i < against->pokemon.size(); i++) {
     CohesivePokemon* pokemon = against->pokemon[i];
 
     if (pokemon->HP <= 0) {
@@ -19,7 +19,7 @@ void Battle::startTrainerBattle(Trainer* against) {
     break;
   }
 
-  for (int i = 0; i < game->player->pokemon.size(); i++) {
+  for (size_t i = 0; i < game->player->pokemon.size(); i++) {
     CohesivePokemon* pokemon = game->player->pokemon[i];
 
     if (pokemon->HP <= 0) {
@@ -42,7 +42,7 @@ void Battle::startPokemonBattle(CohesivePokemon* against) {
   this->type = BATTLE_TYPE_POKEMON;
   this->subMenu = BATTLE_MENU_CHOOSE;
 
-  for (int i = 0; i < game->player->pokemon.size(); i++) {
+  for (size_t i = 0; i < game->player->pokemon.size(); i++) {
     CohesivePokemon* pokemon = game->player->pokemon[i];
 
     if (pokemon->HP <= 0) {

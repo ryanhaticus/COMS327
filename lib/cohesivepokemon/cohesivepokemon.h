@@ -44,7 +44,7 @@ class CohesivePokemon : public Pokemon {
     this->shiny = rand() % 8912 == 0;
     this->gender = rand() % 2 ? GENDER_MALE : GENDER_FEMALE;
 
-    for (int i = 0; i < gameData->pokemonTypes.size(); i++) {
+    for (size_t i = 0; i < gameData->pokemonTypes.size(); i++) {
       if (gameData->pokemonTypes[i].pokemon_id == this->id) {
         this->typeId = gameData->pokemonTypes[i].type_id;
         this->type = gameData->typeNames[this->typeId - 1].name;
